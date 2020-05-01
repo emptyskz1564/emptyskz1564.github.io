@@ -230,7 +230,35 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateUser</span><span class="params">(user user)</span></span>&#123;</span><br><span class="line">    <span class="comment">//通过条件自动拼接动态sql</span></span><br><span class="line">    user updateUser = <span class="keyword">new</span> user();</span><br><span class="line">    updateUser.setUserId(<span class="number">6</span>);</span><br><span class="line">    updateUser.setUserName(<span class="string">"emptyskz"</span>);</span><br><span class="line">    <span class="comment">//这里会根据传递的updateUser的Id属性去修改其userName字段的内容</span></span><br><span class="line">    <span class="keyword">int</span> i = userMapper.updateById(updateUser);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h3><ul>
+<li>查询单个Id</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SelectById</span><span class="params">(Integer id)</span></span>&#123;</span><br><span class="line">    List&lt;user&gt; user = userDao.selectById(id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>查询多个Id</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectByBatchId</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//使用数组的工具类传入参数</span></span><br><span class="line">    List&lt;user&gt; users = userDao.selectBatchIds(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>条件查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectByBatchIds</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//用map来自定义查询,自动拼接为and的sql语句</span></span><br><span class="line">    HashMap&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;</span><br><span class="line">();</span><br><span class="line">    map.pust(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    map.push(<span class="string">"age"</span>,<span class="number">3</span>);</span><br><span class="line">    List&lt;user&gt; users = userDao.selectByMap(map);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><p>分页在网站使用的十分之多！</p>
+<p>1、原始的limit进行分页</p>
+<p>2、pageHelper第三方插件</p>
+<p>3、MP其实也内置了分页插件！</p>
+<blockquote>
+<p>使用方法</p>
+</blockquote>
+<p>1、配置拦截器组件即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分页插件</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PaginationInterceptor <span class="title">paginationInterceptor</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PaginationInterceptor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、直接使用Page对象即可</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPage</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//参数一：当前页</span></span><br><span class="line">    <span class="comment">//参数二：页面大小</span></span><br><span class="line">    Page&lt;user&gt; page = <span class="keyword">new</span> Page&lt;&gt;(current:<span class="number">1</span>,size:<span class="number">5</span>);</span><br><span class="line">    userDao.selectPage(page,wrapper:<span class="keyword">null</span>);</span><br><span class="line">    page.getRecords().forEach(System.out::println);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
