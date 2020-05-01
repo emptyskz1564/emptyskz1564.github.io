@@ -160,6 +160,213 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringMVC初步学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/02/SpringMVC%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/">SpringMVC初步学习</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/02/SpringMVC%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
+  	<time datetime="2020-05-01T16:45:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h2><p>MVC：模型（dao，service） 视图（jsp） 控制器（Servlet）,一种设计模式。</p>
+<p><strong>MVC框架要做哪些事情</strong></p>
+<ul>
+<li>将url映射到java类或者java类的方法</li>
+<li>封装用户提交的数据</li>
+<li>处理请求–调用相关的业务处理–封装响应数据</li>
+<li>将响应的数据进行渲染.jsp/ttml等表示层数据.</li>
+</ul>
+<h3 id="1-什么是SpringMVC"><a href="#1-什么是SpringMVC" class="headerlink" title="1.什么是SpringMVC"></a>1.什么是SpringMVC</h3><p>SpringMVC是Spring Framework的一部分，是基于Java实现MVC的轻量级Web框架。</p>
+<p><strong>SpringMVC的特点：</strong></p>
+<ul>
+<li>轻量级、简单易学</li>
+<li>高效，基于请求响应的MVC框架</li>
+<li>与Spring兼容性好，无缝结合</li>
+<li>约定优于配置</li>
+<li>功能强大：RESTful、数据验证，格式化、本地化、主题等。</li>
+<li>简洁灵活</li>
+</ul>
+<h3 id="2-实现步骤"><a href="#2-实现步骤" class="headerlink" title="2.实现步骤"></a>2.实现步骤</h3><ul>
+<li>新建一个web项目</li>
+<li>导入jar包</li>
+<li>编写web.xml，注册DispatcherServlet</li>
+</ul>
+<p>注册的DispatcherServlet，会将关联的springmvc配置文件下的所扫描的controller操作都进过springmvc配置文件关联到视图层</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--启动DispatcherServlet--&gt;</span><span class="tag">&lt;<span class="name">servlet</span>&gt;</span>    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span>    <span class="comment">&lt;!--关联一个springmvc的配置文件：【servlet-name】-servlet.xml--&gt;</span>    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span>        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>contextConfigLocation<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span>        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>classpath:springmvc-servlet.xml<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span>    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span><span class="comment">&lt;!--启动级别：1，与服务器一同启动--&gt;</span>    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span><span class="comment">&lt;!--/ 匹配所有的请求 （不包括.jsp）--&gt;</span><span class="comment">&lt;!--/* 匹配所有的请求  （包括.jsp）--&gt;</span><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span>    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>springmvc<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span>    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编写springmvc配置文件</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span>       <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span>       <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span>       <span class="attr">xmlns:mvc</span>=<span class="string">"http://www.springframework.org/schema/mvc"</span>       <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans       http://www.springframework.org/schema/beans/spring-beans.xsd       http://www.springframework.org/schema/context       http://www.springframework.org/schema/context/spring-context.xsd       http://www.springframework.org/schema/mvc       http://www.springframework.org/schema/mvc/spring-mvc.xsd "</span>&gt;</span>    <span class="comment">&lt;!--指定要扫描的包，这个包下的注解就会生效--&gt;</span>    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"cn.itcast.controller"</span>/&gt;</span>    <span class="comment">&lt;!--让springMVC不处理静态资源 http、css、mp3、mp4--&gt;</span>    <span class="tag">&lt;<span class="name">mvc:default-servlet-handler</span>/&gt;</span>    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>/&gt;</span>    <span class="comment">&lt;!--    支持mvc注解驱动        在spring中一般采用@RequestMapping注解来完成映射关系        要想使@RequestMapping注解生效        必须向上下文中注册DefaultAnnotationHandlerMapping        和一个AnnotationMethodHandlerAdapter实例        这两个实例分别在类级别和方法级别处理。        而annotation-driven配置帮助我们自动完成上述两个实例的注入。    --&gt;</span>    <span class="comment">&lt;!--视图解析器--&gt;</span>    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span> <span class="attr">id</span>=<span class="string">"internalResourceViewResolver"</span>&gt;</span>        <span class="comment">&lt;!--前缀--&gt;</span>        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span>        <span class="comment">&lt;!--后缀--&gt;</span>        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span>    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>接下来就是去创建对应的控制类，controller（相当于曾经的servlet）</li>
+</ul>
+<p>他会被自动的在springmvc配置文件中生成bean</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span>     <span class="comment">//不在需要在spring中配置bean 注解以及帮我们自动配置了</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> </span>&#123;    </span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">(Model model)</span></span>&#123;</span><br><span class="line">        <span class="comment">//封装数据        </span></span><br><span class="line">    	model.addAttribute(<span class="string">"msg"</span>,<span class="string">"hello"</span>);        </span><br><span class="line">        <span class="keyword">return</span> <span class="string">"hello"</span>; <span class="comment">//会被视图解析器处理    </span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>最后完善前端视图和controller之间的对应</li>
+<li>测试运行调试</li>
+</ul>
+<p>使用springMVC的必须配置的三大件</p>
+<p><strong>处理器映射器、处理器适配器、视图解析器</strong></p>
+<p>通常我们只要手动配置视图解析器、而处理器映射器和处理器适配器只需要开启注解驱动即可，而省去了大段的xml配置</p>
+<h3 id="3-Restful风格"><a href="#3-Restful风格" class="headerlink" title="3.Restful风格"></a>3.Restful风格</h3><p>Restful就是一个资源定位及资源操作的风格，不是标准也不是协议，只是一种风格。基于这个风格设计的软件可以更简洁，更有层次，更易于实现缓存等机制。</p>
+<p><strong>功能</strong></p>
+<ul>
+<li>资源：互联网所有的事务都可以抽象为资源</li>
+<li>资源操作：使用POST、DELETE、PUT、GET，使用不同方法对资源进行操作</li>
+<li>分别对应添加、删除、修改、查询</li>
+</ul>
+<p><strong>传统方式操作资源</strong>：通过不同的参数来实现不同的效果！方法单一，POST和GET</p>
+<p><strong>使用Restful操作资源：可以通过不同的 <em>请求方式</em> 来实现不同的效果！如下：请求地址一样，但是功能可以不同！</strong></p>
+<ul>
+<li><a href="http://127.0.0.1/item/1" target="_blank" rel="noopener">http://127.0.0.1/item/1</a>  查询，GET’</li>
+<li><a href="http://127.0.0.1/item" target="_blank" rel="noopener">http://127.0.0.1/item</a>    新增，POST</li>
+<li><a href="http://127.0.0.1/item" target="_blank" rel="noopener">http://127.0.0.1/item</a>      更新，PUT</li>
+<li><a href="http://127.0.0.1/item/1" target="_blank" rel="noopener">http://127.0.0.1/item/1</a>   删除，DELETE</li>
+</ul>
+<p><strong>小结</strong>：</p>
+<p>SpringMVC的@RequestMapping注解能够处理HTTP请求的方法，比如GET、PUT、POST、DELETE以及PATCH。</p>
+<p><strong>所有的地址栏请求默认都会是HTTP GET类型的</strong></p>
+<p>方法级别的注解变体有如下：组合注解</p>
+<ul>
+<li>@GetMapping</li>
+<li>@PostMapping</li>
+<li>@PutMapping</li>
+<li>@DeleteMapping</li>
+<li>@PatchMapping</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restful</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PostMapping</span>(<span class="string">"/add/&#123;a&#125;/&#123;b&#125;"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">test1</span><span class="params">(@PathVariable <span class="keyword">int</span> a, @PathVariable <span class="keyword">int</span> b , Model model)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = a + b;</span><br><span class="line">        model.addAttribute(<span class="string">"msg"</span>,<span class="string">"结果1为"</span>+res);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"test"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-跳转方式"><a href="#4-跳转方式" class="headerlink" title="4.跳转方式"></a>4.跳转方式</h3><ul>
+<li>ModelAndView：设置ModelAndView对象，根据view的名称，和视图解析器跳到指定的页面。<ul>
+<li>页面：视图解析器前缀+viewName+视图解析器后缀</li>
+</ul>
+</li>
+</ul>
+<p><strong>通过SpringMVC来实现转发和重定向-有视图解析器：</strong></p>
+<ul>
+<li>转发：return  “需要拼接的路径”;</li>
+<li>重定向：return“redirect：/路劲”;</li>
+</ul>
+<h3 id="5-SpringMVC数据处理"><a href="#5-SpringMVC数据处理" class="headerlink" title="5.SpringMVC数据处理"></a>5.SpringMVC数据处理</h3><ul>
+<li><p>1.当提交的数据和处理方法的参数名相同时，直接赋值</p>
+</li>
+<li><p>2.当提交的域名称和处理方法的参数名不一致时@RequestParam(“username”)：username为提交的域的名称</p>
+</li>
+<li><p>3.提交的是一个对象，要求提交的表单域和对象的属性名一致，参数使用对象即可</p>
+<p><strong>如果使用对象的话，前端传递的参数和对象名必须一致，否则就是null</strong></p>
+</li>
+</ul>
+<h3 id="6-数据显示到前端"><a href="#6-数据显示到前端" class="headerlink" title="6.数据显示到前端"></a>6.数据显示到前端</h3><ul>
+<li><p>第一种：通过ModelAndView</p>
+<p>model.addObject(键值对)</p>
+</li>
+<li><p>第二种：通过Model</p>
+<p>model.addAttribute(“msg”,name);    相当于req.addAttribute</p>
+</li>
+<li><p>第三种：通过ModelMap</p>
+<p>LinkedHashMap</p>
+<p>ModelMap：继承了LinkedHashMap，所以他拥有LinkedHashMap的全部功能！</p>
+<p>Model：精简版（大部分情况下，我们都直接使用Model）</p>
+</li>
+</ul>
+<h3 id="7-乱码问题"><a href="#7-乱码问题" class="headerlink" title="7.乱码问题"></a>7.乱码问题</h3><p>在web.xml中配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置SpringMVC的乱码过滤器--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>encoding<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-JSON"><a href="#8-JSON" class="headerlink" title="8.JSON"></a>8.JSON</h3><p>前后分离时代：</p>
+<p>后端部署后端，提供接口，提供数据；</p>
+<p>前端独立部署，负责渲染后端的数据；</p>
+<ul>
+<li>JSON(JavaScript Object Notation,JS 对象标记)是一种轻量级的数据交换格式，目前使用特别广泛。</li>
+<li>采用完全独立于编程语言的文本格式来存储和表示数据</li>
+<li>简介清晰的层次结构使得JSON成为理想的数据交换语言</li>
+<li>易于人阅读和编写，同时也易于机器解析和生成，并有效的提升网络传输效率</li>
+</ul>
+<p>在JavaScript语言中，一切都是对象，因此，任何JavaScript支持的类型都可以通过JSON来表示，列如字符串、数字、对象、数组等。看看他的要求和语法格式：</p>
+<ul>
+<li>对象表示为键值对，数据由逗号分隔</li>
+<li>花括号保存对象</li>
+<li>方括号保存数据</li>
+</ul>
+<p>JSON键值对使用来保存JavaScript对象的一种方式，和JavaScript对象的写法也大同小异，键/值对组合中的键名写在前面并且用双引号“”包裹，使用：分离，然后紧接着值</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"name"</span>:<span class="string">"liu"</span>&#125;</span><br><span class="line">&#123;<span class="attr">"age"</span>:<span class="number">3</span>&#125;</span><br><span class="line">&#123;<span class="attr">"sex"</span>:<span class="string">"男"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-fastjson"><a href="#9-fastjson" class="headerlink" title="9.fastjson"></a>9.fastjson</h3><ul>
+<li>fastjson三个主要的类：<ul>
+<li>JSONObject 代表 json对象</li>
+<li>JSONArray 代表 json对象数组</li>
+<li>JSON 代表JSONObject和JSONArray的转化</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SSM SpringMVC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/02/SpringMVC%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MybatisPlus入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -733,6 +940,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSM SpringMVC</a>
               </li>
             
             <div class="clearfix"></div>
