@@ -16,7 +16,7 @@
 <meta property="og:description" content="MybatisPlus快速入门步骤：  pojo mapper接口继承BaseMapper&lt;泛型&gt;，加上Mapper注解或Repository代表持久层，这时这个mapper接口就已经实现了所有的CRUD 使用  代码示例： 12345678public List&lt;user&gt; getAll() &amp;#123;       List&lt;user&gt; users &#x3D; ne">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-04-30T16:26:21.000Z">
-<meta property="article:modified_time" content="2020-05-01T02:45:48.294Z">
+<meta property="article:modified_time" content="2020-05-02T16:20:12.693Z">
 <meta property="article:author" content="Emptyskz">
 <meta property="article:tag" content="MybaitsPlus">
 <meta name="twitter:card" content="summary">
@@ -263,8 +263,54 @@
 <p>2、直接使用Page对象即可</p>
  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPage</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//参数一：当前页</span></span><br><span class="line">    <span class="comment">//参数二：页面大小</span></span><br><span class="line">    Page&lt;user&gt; page = <span class="keyword">new</span> Page&lt;&gt;(current:<span class="number">1</span>,size:<span class="number">5</span>);</span><br><span class="line">    userDao.selectPage(page,wrapper:<span class="keyword">null</span>);</span><br><span class="line">    page.getRecords().forEach(System.out::println);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h3><p>这里只给一下批量删除的简单操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteBatchId</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//同样使用工具类来传参</span></span><br><span class="line">    userDao.deleteBatchIds(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>));<span class="comment">//会有一个返回值，代表删除的行数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过map删除</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteMap</span><span class="params">()</span></span>&#123;</span><br><span class="line">    HashMap&lt;String,Object&gt; mao =<span class="keyword">new</span> HashMap();</span><br><span class="line">    map.put(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    userDao.deleteByMap(map);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
+
+<blockquote>
+<p> 这里总结一下关于定义的数据库中不是定义的Id而是userId时，如何使用selectById、deleteById等操作</p>
+</blockquote>
+<ul>
+<li><p>如果你的数据库是定义的user_id的话，用selectById一定会报错，毕竟字段名都不匹配，那咋办嘛，这时候就可以在我们的主键字段上加是哪个@TableId(value = 主键列名 ,type = 主键类型)，这样就标注了我们的主键，有关Id的操作也能够映射到我们想要的列了。</p>
+</li>
+<li><p>方法二就是使用使用普通的select和delete参数用Wrapper，</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">deleteUserById</span><span class="params">(Integer userId)</span> </span>&#123;</span><br><span class="line">       QueryWrapper&lt;user&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">       queryWrapper.eq(<span class="string">"user_id"</span>,userId);</span><br><span class="line">       <span class="keyword">int</span> i = userDao.delete(queryWrapper);</span><br><span class="line">       <span class="keyword">return</span> i;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        这样便能去操作我们想要的列了，Wrapper的详细用法还会在下面讲到。</p>
+<hr>
+<h3 id="逻辑删除"><a href="#逻辑删除" class="headerlink" title="逻辑删除"></a>逻辑删除</h3><blockquote>
+<p>物理删除：从数据库中直接移除</p>
+<p>逻辑删除：再数据库中没有移除，而是通过一个变量来让他失效！</p>
+</blockquote>
+<p>管理员可以查看被删除的记录！防止数据的丢失，类似于回收站。</p>
+<ul>
+<li><p>在拦截器组件中加上逻辑删除组件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ISQLInjector <span class="title">SQLInjector</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> LogicSqlInjector();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在yml配置文件中配置逻辑删除</p>
+</li>
+</ul>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br><span class="line">  <span class="attr">global-config:</span></span><br><span class="line">    <span class="attr">db-config:</span></span><br><span class="line">      <span class="attr">logic-delete-value:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">logic-not-delete-value:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>​        上面是日志配置，下面是逻辑删除配置</p>
+<ul>
+<li>在实体类中增加逻辑删除属性，并加上 <code>@TableLogic</code>注解</li>
+</ul>
+<p>再次使用删除操作，会发现日志输出使用的并不是删除操作，而是更新操作，这样便实现了逻辑删除，查询操作也会忽略这条数据(拼接条件查询)，防止了数据的丢失</p>
+<hr>
+<h3 id="性能分析插件"><a href="#性能分析插件" class="headerlink" title="性能分析插件"></a>性能分析插件</h3><p>开发中经常会遇到一些慢sql，MP也提供了性能分析插件，当超过这个时间时就会停止运行！</p>
+<p><strong>好像最新版本删除了这个插件，先挖个坑，以后再填</strong></p>
+<hr>
+<h3 id="条件构造器-Wrapper"><a href="#条件构造器-Wrapper" class="headerlink" title="条件构造器 Wrapper"></a>条件构造器 Wrapper</h3><p><strong>我们写一些复杂的sql就能够使用它</strong></p>
 
       
 
