@@ -608,6 +608,77 @@
 <p><strong>好像最新版本删除了这个插件，先挖个坑，以后再填</strong></p>
 <hr>
 <h3 id="条件构造器-Wrapper"><a href="#条件构造器-Wrapper" class="headerlink" title="条件构造器 Wrapper"></a>条件构造器 Wrapper</h3><p><strong>我们写一些复杂的sql就能够使用它</strong></p>
+<ul>
+<li>1、测试一 ：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询userName不为空，并且邮箱不为空的用户，年龄不为空的用户年龄大于等于12</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QuerryWrappe&lt;&gt;();</span><br><span class="line">    wrapper</span><br><span class="line">        .isNotNull(<span class="string">"userName"</span>)</span><br><span class="line">        .isNotNUll(<span class="string">"email"</span>)</span><br><span class="line">        .ge(<span class="string">"age"</span>,<span class="number">12</span>);</span><br><span class="line">    userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2、测试二：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询名字emptyskz</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.eq(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    user selectUser = userDao.selectOne(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>3、测试三：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询年龄20到30的用户</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.between(<span class="string">"age"</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br><span class="line">    userDao.selectCount(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4、测试四：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//模糊查询</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//左和右	%t%</span></span><br><span class="line">    wrapper</span><br><span class="line">        .notLike(<span class="string">"name"</span>,<span class="string">"e"</span>)	<span class="comment">//不包含e</span></span><br><span class="line">        .likeRight(<span class="string">"email"</span>,<span class="string">"t"</span>);	<span class="comment">//相当于t%，匹配t开头的</span></span><br><span class="line">    List&lt;Map&lt;String,Object&gt;&gt; maps = userDao.selectMaps(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>5、测试五</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//拼接子查询in</span></span><br><span class="line">    wrapper.inSql(<span class="string">"id"</span>;<span class="string">"select id from user where id&lt;3"</span>);</span><br><span class="line">    List&lt;Object&gt; objects = userDao.selectObjs(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>6、测试六</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//排序</span></span><br><span class="line">    wrapper.orderByDesc(<span class="string">"id"</span>);</span><br><span class="line">    List&lt;user&gt; users = userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其余的测试可以按照官方文档进行学习，这里不多赘述。</p>
+</blockquote>
+<hr>
+<h3 id="性能分析插件-1"><a href="#性能分析插件-1" class="headerlink" title="性能分析插件"></a>性能分析插件</h3><p>开发中经常会遇到一些慢sql，MP也提供了性能分析插件，当超过这个时间时就会停止运行！</p>
+<p><strong>好像最新版本删除了这个插件，先挖个坑，以后再填</strong></p>
+<hr>
+<h3 id="条件构造器-Wrapper-1"><a href="#条件构造器-Wrapper-1" class="headerlink" title="条件构造器 Wrapper"></a>条件构造器 Wrapper</h3><p><strong>我们写一些复杂的sql就能够使用它</strong></p>
+<ul>
+<li>1、测试一 ：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询userName不为空，并且邮箱不为空的用户，年龄不为空的用户年龄大于等于12</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QuerryWrappe&lt;&gt;();</span><br><span class="line">    wrapper</span><br><span class="line">        .isNotNull(<span class="string">"userName"</span>)</span><br><span class="line">        .isNotNUll(<span class="string">"email"</span>)</span><br><span class="line">        .ge(<span class="string">"age"</span>,<span class="number">12</span>);</span><br><span class="line">    userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2、测试二：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询名字emptyskz</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.eq(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    user selectUser = userDao.selectOne(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>3、测试三：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询年龄20到30的用户</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.between(<span class="string">"age"</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br><span class="line">    userDao.selectCount(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4、测试四：</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//模糊查询</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//左和右	%t%</span></span><br><span class="line">    wrapper</span><br><span class="line">        .notLike(<span class="string">"name"</span>,<span class="string">"e"</span>)	<span class="comment">//不包含e</span></span><br><span class="line">        .likeRight(<span class="string">"email"</span>,<span class="string">"t"</span>);	<span class="comment">//相当于t%，匹配t开头的</span></span><br><span class="line">    List&lt;Map&lt;String,Object&gt;&gt; maps = userDao.selectMaps(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>5、测试五</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//拼接子查询in</span></span><br><span class="line">    wrapper.inSql(<span class="string">"id"</span>;<span class="string">"select id from user where id&lt;3"</span>);</span><br><span class="line">    List&lt;Object&gt; objects = userDao.selectObjs(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>6、测试六</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//排序</span></span><br><span class="line">    wrapper.orderByDesc(<span class="string">"id"</span>);</span><br><span class="line">    List&lt;user&gt; users = userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其余的测试可以按照官方文档进行学习，这里不多赘述。</p>
+</blockquote>
 
       
 
