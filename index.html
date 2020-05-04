@@ -160,6 +160,185 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MySQL联表查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">MySQL联表查询</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
+  	<time datetime="2020-05-04T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MySQL联表查询"><a href="#MySQL联表查询" class="headerlink" title="MySQL联表查询"></a>MySQL联表查询</h2><blockquote>
+<p>JOIN对比</p>
+</blockquote>
+<p><img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2%5C1588583098062.png" alt="1588583098062"></p>
+<ul>
+<li>7种JOIN理论</li>
+</ul>
+<img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/1588583244711.png" class title="SQL JOINS">
+
+<p><img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588583244711.png" alt="1588583244711"></p>
+<blockquote>
+<p>思路</p>
+</blockquote>
+<ul>
+<li><p>1、分析需求，分析查询的字段来自哪些表，(连接查询)</p>
+</li>
+<li><p>2、确定使用哪种连接查询？ 7种</p>
+</li>
+<li><p>3、确定交叉点（这两个表中哪个数据是相同的）</p>
+</li>
+<li><p>4、确定判断条件</p>
+</li>
+</ul>
+<blockquote>
+<p>例</p>
+</blockquote>
+<ul>
+<li>我们现在又两种表，一张student表，一张result表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>StudentNO</th>
+<th>StudentName</th>
+<th>Sex</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>SubjectNO</th>
+<th>StudentNO</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>需求：我们要查询出参加考试的同学的所有成绩</li>
+<li>既然我们要查出参加考试的同学，那么没有参加考试的同学我们便不需要查询出，显然没有参加考试的同学是不可能在result表中的，所以我们Right JOIN去连接result表，这样，存在于student表中的学生但是没有存在于result表中的学生将不会查询出。</li>
+<li>交叉点：StudentNO</li>
+<li>判断条件：学生表的StudentNO = 成绩表中的StudentNO</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select s.studentNO,studentName,SubjectNO,Result</span><br><span class="line">from student as s</span><br><span class="line">right join result as t</span><br><span class="line">where s.studentNO &#x3D; r.studentNO</span><br></pre></td></tr></table></figure>
+
+<p>若使用左连接方式，将会把所有学生查出，包括没有参加考试的</p>
+<hr>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Inner JOIN</td>
+<td>如果表中至少有一个匹配，就返回行</td>
+</tr>
+<tr>
+<td>LEFT JOIN</td>
+<td>即使右表中没有值也会从左表中返回值</td>
+</tr>
+<tr>
+<td>RIGHT JOIN</td>
+<td>即使左表中没有值也会从右表中返回值</td>
+</tr>
+</tbody></table>
+<hr>
+<ul>
+<li>需求：查询缺考的同学</li>
+</ul>
+<p>这时我们便可以使用左连接很容易的就能查询出缺考的同学</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select s.studentNO,studentName,SubjectNO,Result</span><br><span class="line">from student as s</span><br><span class="line">left join result as r</span><br><span class="line">on s.studentNO&#x3D;r.studentNO</span><br><span class="line">where Result is null</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="JOIN-ON-和-WHERE"><a href="#JOIN-ON-和-WHERE" class="headerlink" title="JOIN ON 和 WHERE"></a>JOIN ON 和 WHERE</h3><blockquote>
+<p> JOIN ON叫做连接查询，而WHERE叫做等值查询</p>
+</blockquote>
+<p><strong>在使用 left jion 的前提下</strong></p>
+<ul>
+<li>1、 on条件是在生成临时表(联表)时使用的条件，它不管on中的条件是否为真，都会返回左边表中的记录，所以on中的条件可以说是只约束了右表。</li>
+<li>2、where条件是在临时表(联表)生成好后，再对临时表进行过滤的条件。这时已经没有left join的含义（必须返回左边表的记录）了，条件不为真的就全部过滤掉。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-spring中GET和POST方法获取参数的几种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1364,6 +1543,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
             
             <div class="clearfix"></div>
