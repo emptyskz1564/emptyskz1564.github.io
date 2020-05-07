@@ -6,20 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>spring中GET和POST方法获取参数的几种方法 | Emptyskz的博客</title>
+  <title>Redis入门 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SpringMVC中POST和GET方法获取参数的几种方式 对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中  GET方法参数的获取 直接在方法体中获取url中对应的参数  1234@RequestMapping(value &#x3D; &quot;&#x2F;sold&#x2F;&amp;#123;bookId&amp;#125;&quot;,method &#x3D; RequestMethod">
+  <meta name="description" content="NoSQL的四大分类KV键值对：  新浪：Redis 美团：Redis+Tair 阿里、百度：Redis+memecache  文档型数据库（bson格式 和json一样）：  MongoDB(一般必须掌握) MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！ MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spring中GET和POST方法获取参数的几种方法">
-<meta property="og:url" content="http://yoursite.com/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="Redis入门">
+<meta property="og:url" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
-<meta property="og:description" content="SpringMVC中POST和GET方法获取参数的几种方式 对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中  GET方法参数的获取 直接在方法体中获取url中对应的参数  1234@RequestMapping(value &#x3D; &quot;&#x2F;sold&#x2F;&amp;#123;bookId&amp;#125;&quot;,method &#x3D; RequestMethod">
+<meta property="og:description" content="NoSQL的四大分类KV键值对：  新浪：Redis 美团：Redis+Tair 阿里、百度：Redis+memecache  文档型数据库（bson格式 和json一样）：  MongoDB(一般必须掌握) MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！ MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-05-04T08:11:00.000Z">
-<meta property="article:modified_time" content="2020-05-04T08:12:38.817Z">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588749901418.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588752723844.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588752950463.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588824672280.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588824835110.png">
+<meta property="article:published_time" content="2020-05-07T15:40:01.000Z">
+<meta property="article:modified_time" content="2020-05-07T15:41:42.221Z">
 <meta property="article:author" content="Emptyskz">
-<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588749901418.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -163,59 +169,181 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-spring中GET和POST方法获取参数的几种方法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Redis入门" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      spring中GET和POST方法获取参数的几种方法
+      Redis入门
     </h1>
   
 
         
-        <a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+        <a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" class="archive-article-date">
+  	<time datetime="2020-05-07T15:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="SpringMVC中POST和GET方法获取参数的几种方式"><a href="#SpringMVC中POST和GET方法获取参数的几种方式" class="headerlink" title="SpringMVC中POST和GET方法获取参数的几种方式"></a>SpringMVC中POST和GET方法获取参数的几种方式</h2><blockquote>
-<p>对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中</p>
+        <h2 id="NoSQL的四大分类"><a href="#NoSQL的四大分类" class="headerlink" title="NoSQL的四大分类"></a>NoSQL的四大分类</h2><p><strong>KV键值对：</strong></p>
+<ul>
+<li>新浪：Redis</li>
+<li>美团：Redis+Tair</li>
+<li>阿里、百度：Redis+memecache</li>
+</ul>
+<p><strong>文档型数据库（bson格式 和json一样）：</strong></p>
+<ul>
+<li>MongoDB(一般必须掌握)<ul>
+<li>MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！</li>
+<li>MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富，最像关系型数据库的！</li>
+</ul>
+</li>
+<li>ConthDB</li>
+</ul>
+<p><strong>列存储数据库：</strong></p>
+<ul>
+<li>HBASE</li>
+<li>分布式文件系统</li>
+</ul>
+<p><strong>图关系数据库：</strong></p>
+<ul>
+<li>它不是用来存图形的，放的是关系，比如：朋友圈社交网络，广告推荐</li>
+<li>Neo4j，InfoGrid</li>
+</ul>
+<blockquote>
+<p>四者对比</p>
 </blockquote>
-<h3 id="GET方法参数的获取"><a href="#GET方法参数的获取" class="headerlink" title="GET方法参数的获取"></a>GET方法参数的获取</h3><ul>
-<li>直接在方法体中获取url中对应的参数</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/sold/&#123;bookId&#125;"</span>,method = RequestMethod.POST)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sold</span><span class="params">(@PathVariable(<span class="string">"bookId"</span>)</span> <span class="keyword">int</span> bookId)</span>&#123;</span><br><span class="line">    bookServiceImpl.sold(bookId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@PathVariable注解便将url中的bookId和方法参数中的bookId关联了，当然当两者同名式@PathVariable注解中可不加参数。</p>
+<p><img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588749901418.png" alt="1588749901418"></p>
+<h2 id="Redis入门"><a href="#Redis入门" class="headerlink" title="Redis入门"></a>Redis入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
+<p>Redis是什么？</p>
+</blockquote>
+<p>Redis（Remote Dictionary Server），即远程服务字典， 是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。 </p>
+<p>Redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。 </p>
+<p>免费并且开源！是当下最热门的NoSQL技术之一！也被人们称之为结构化数据库。</p>
+<blockquote>
+<p>Redis能干嘛？</p>
+</blockquote>
+<p>1、内存存储、持久化，内存中是断点即失的，所以持久化很重要（rdb、aof）</p>
+<p>2、效率高，可以用于高速缓存</p>
+<p>3、发布订阅系统</p>
+<p>4、地图信息分析</p>
+<p>5、计时器、计数器（浏览量！）</p>
+<p>6、。。。</p>
+<blockquote>
+<p>特性</p>
+</blockquote>
+<p>1、多样的数据类型</p>
+<p>2、持久化</p>
+<p>3、集群</p>
+<p>4、事务</p>
+<p>。。。。</p>
+<blockquote>
+<p>学习中需要用到的东西</p>
+</blockquote>
+<p>1、<a href="https://redis.io/" target="_blank" rel="noopener">Redis英文官网</a></p>
+<p>2、<a href="https://redis.cn/" target="_blank" rel="noopener">Redis中文官网</a></p>
+<p>3、下载地址，通过官网下载即可</p>
+<p><strong>Windows在Github上下载(停更了很久了)，推荐在Linux上搭建</strong></p>
+<h3 id="Windos安装"><a href="#Windos安装" class="headerlink" title="Windos安装"></a>Windos安装</h3><p>1、window下载地址：<a href="https://github.com/microsoftarchive/redis/releases" target="_blank" rel="noopener">https://github.com/microsoftarchive/redis/releases</a></p>
+<p>2、解压到环境目录下</p>
+<p>3、开启Redis，双击exe即开启。</p>
+<p><img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588752723844.png" alt="1588752723844"></p>
+<p>4、使用Redis客户端来连接Redis</p>
+<p><img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588752950463.png" alt="1588752950463"></p>
+<h3 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h3><p>直接在线安装即可</p>
 <ul>
-<li>直接在方法体中指定参数</li>
+<li>修改配置文件：改为后台运行 daemonize yes</li>
+<li>启动Redis</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>请求路径为…./get?id=1</p>
+<p><img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588824672280.png" alt="1588824672280"></p>
 <ul>
-<li>使用requestParam</li>
+<li>查看进程</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(@RequestParam(name = <span class="string">"id"</span>, required = <span class="keyword">true</span>)</span> Integer id) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>请求路径同上</p>
-<h3 id="POST方法获取对象"><a href="#POST方法获取对象" class="headerlink" title="POST方法获取对象"></a>POST方法获取对象</h3><ul>
-<li>当我们接受的json数据由对象的实体类时</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody User user)</span> </span>&#123;</span><br><span class="line">       list.add(user);</span><br><span class="line">       <span class="keyword">return</span> user;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>这里传来的json数据将会被自动封装为实体类</strong></p>
+<p><img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1588824835110.png" alt="1588824835110"></p>
 <ul>
-<li>当我们没有对应的实体类来封装时，我们可以使用map来接受json数据</li>
+<li>后面使用单机多Redis服务，使用不同的端口和配置文件启动</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">     <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">     	Integer id = (Integer) map.get(<span class="string">"id"</span>);</span><br><span class="line">     	String name = (String) map.get(<span class="string">"name"</span>);</span><br><span class="line">     	Integer age = (Integer) map.get(<span class="string">"age"</span>);</span><br><span class="line">     	List&lt;String&gt; hobby=(List&lt;String&gt;) map.get(<span class="string">"hobby"</span>);</span><br><span class="line">    	User user = <span class="keyword">new</span> User(id, name, age, hobby);</span><br><span class="line">     	list.add(user);</span><br><span class="line">     	<span class="keyword">return</span> user;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
-
-
+<hr>
+<h2 id="Redis基本知识"><a href="#Redis基本知识" class="headerlink" title="Redis基本知识"></a>Redis基本知识</h2><ul>
+<li><p>默认有16个数据库</p>
+<p>默认使用的是第0个，可以使用select进行切换数据库，使用<code>dbsize</code>查看数据库大小</p>
+</li>
+<li><p>除了简单的<code>set</code> <code>get</code> 进行键值对的存取外，使用<code>keys *</code> 可以查看所有的key</p>
+</li>
+<li><p><code>flushall</code>清空所有的键值对，<code>flushdb</code>清空当前库</p>
+</li>
+</ul>
+<blockquote>
+<p>Redis是单线程的！</p>
+</blockquote>
+<p>明白Redis是很快的，是基于内存操作的，CPU不是Redis的技术瓶颈，Redis的技术瓶颈是根据内存和网络带宽来决定的。</p>
+<p><strong>Redis为什么单线程还这么快？</strong></p>
+<p>1、误区1：高性能的服务器一定是多线程的？</p>
+<p>2、误区2：多线程（CPU上下文会切换！）一定比单线程效率高！</p>
+<p><strong>核心：</strong>Redis是将所有的数据放在内存中，所以说单线程去操作是效率最高的，多线程(CPU上下文会切换：耗时的操作！)对于内存来说没有上下文切换是效率最高的。</p>
+<h2 id="五大数据类型"><a href="#五大数据类型" class="headerlink" title="五大数据类型"></a>五大数据类型</h2><h3 id="Redis-Key"><a href="#Redis-Key" class="headerlink" title="Redis-Key"></a>Redis-Key</h3><p><code>EXISTS key</code>：判断键是否存在</p>
+<p><code>move key index</code>：移动key到index数据库</p>
+<p><code>del key</code>：删除key</p>
+<p><code>EXPIRE key second</code>：设置key多少秒之后过期</p>
+<p><code>ttl key</code>：查看key多少秒后过期</p>
+<p><code>type key</code>：查看key的类型</p>
+<p>后面有不会的命令可以在官方文档查看</p>
+<hr>
+<h3 id="String-字符串"><a href="#String-字符串" class="headerlink" title="String(字符串)"></a>String(字符串)</h3><p>90%的java程序员只会使用String类型！</p>
+<p><code>APPEND key &quot;str&quot;</code>：在key后添加拼接字符串,如果当前key不存在则添加这个key</p>
+<p><code>STRLEN key</code>：查看key的长度</p>
+<p><code>incr key</code>：加一</p>
+<p><code>decr key</code>：减一</p>
+<p><code>incrby key 10</code>：加10</p>
+<p><code>decrby key 10</code>：减10</p>
+<p> <code>getrange key start end</code>：获取部分字符串，-1可表示最后</p>
+<p><code>setrange key start end</code>：修改string</p>
+<p><code>setnx key str</code>：如果这个键不存在就设置，设置成功返回1，失败返回0</p>
+<p><code>setex key second str</code>：设置这个键的同时设置过期时间</p>
+<p><code>mset key value key value....</code>：批量生产键值对</p>
+<p><code>mget key ...</code>：批量取出键值对</p>
+<p><code>msetnx k1 v1 k2 v2</code>：如果不存在则批量生成键值对，如果一旦有的设置失败了，所有的将不会设置，是一个原子性的操作。</p>
+<p><code>getset key value</code>：先获取原来的值，再设置新的值</p>
+<p><strong>进行对象的存储：</strong></p>
+<p><code>set user:1:username zhangsan user:1:age 2</code> ：这里的key是一个巧妙的设计：user:{id}:{filed}</p>
+<hr>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><ul>
+<li><p>在Redis里面我们依旧可以吧List完成堆栈，队列。</p>
+</li>
+<li><p>Redis的list中，最后push进去的index为0</p>
+</li>
+</ul>
+<p><code>LPUSH list value</code>：向List的头部push元素</p>
+<p><code>RPUSH list value</code>：向List的尾部push元素</p>
+<p><code>LRANGE list 0 -1</code>：获取去list中的所有元素</p>
+<p><code>LPOP list</code>：移除左边的第一个</p>
+<p><code>RPOP list</code>：移除右边得第一个</p>
+<p><code>lindex list index</code>：通过下标获取值</p>
+<p><code>Llen</code>：获取list的长度</p>
+<p><code>lrem list count value</code>：从list中移除count个value</p>
+<p><code>ltrim list start end</code>：截取部分</p>
+<p><code>rpoplpush list1 list2</code>：将list1的最后一个元素放到list2的第一个元素中</p>
+<p><code>lset list index str</code>：更新指定index的内容</p>
+<p><code>linsert list before value str</code>：在指定的值之前插入str(after在之后插)</p>
+<hr>
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p><strong>set中的值是不可重复的</strong></p>
+<p><code>sadd myset str</code>：创建或者向myset中加入元素</p>
+<p><code>SMEMBERS myset</code>：查看myset中的所有元素</p>
+<p><code>SISMEMBERS myset str</code>：查看str是否在myset中</p>
+<p><code>scard myset</code>：获取set中的元素个数</p>
+<p><code>srem myset value</code>：移除set中的value</p>
+<p><code>srandmember myset count</code>：随机抽取count个数据出来</p>
+<p><code>spop myset</code>：随机移除元素</p>
+<p><code>smove sourceset tarset value</code>：sourceset中的value移动到tarset中</p>
+<p><code>SDIFF set1 set2</code>：差集</p>
+<p><code>SINTER set1 set2</code>：交集</p>
+<p><code>SUNION set1 set2</code>：并集</p>
+<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Map集合，key-map!</p>
+<h3 id="Zset"><a href="#Zset" class="headerlink" title="Zset"></a>Zset</h3><h2 id="三种特殊数据类型"><a href="#三种特殊数据类型" class="headerlink" title="三种特殊数据类型"></a>三种特殊数据类型</h2><h3 id="geospatial"><a href="#geospatial" class="headerlink" title="geospatial"></a>geospatial</h3><h3 id="hyperloglog"><a href="#hyperloglog" class="headerlink" title="hyperloglog"></a>hyperloglog</h3><h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3>
       
 
       
@@ -249,7 +377,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
@@ -305,7 +433,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -319,18 +447,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MySQL联表查询
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">StringBuffer和StringBuilder</div>
+    <a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NoSQL概述</div>
       <i class="icon-circle-right"></i>
     </a>
   
