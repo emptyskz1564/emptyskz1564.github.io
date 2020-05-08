@@ -6,20 +6,41 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>spring中GET和POST方法获取参数的几种方法 | Emptyskz的博客</title>
+  <title>Cache的设计由来 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="SpringMVC中POST和GET方法获取参数的几种方式 对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中  GET方法参数的获取 直接在方法体中获取url中对应的参数  1234@RequestMapping(value &#x3D; &quot;&#x2F;sold&#x2F;&amp;#123;bookId&amp;#125;&quot;,method &#x3D; RequestMethod">
+  <meta name="description" content="Cache的设计由来      程序访问的局部性    这里需要注意的有：  主存与CPU之间只能通过字来进行传输，所以数组中的每一个元素都要进过一次传输 而主存和Cache之间是可以通过块来进行传输的，所以在1000ns中已经传输了10个元素到Cache中了。 Cache与CPU之间的传输十分的快，所以利用了Cache的储存结构，比不使用Cache的存储结构会快一个数量级。  概念：  命中率H">
 <meta property="og:type" content="article">
-<meta property="og:title" content="spring中GET和POST方法获取参数的几种方法">
-<meta property="og:url" content="http://yoursite.com/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="Cache的设计由来">
+<meta property="og:url" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
-<meta property="og:description" content="SpringMVC中POST和GET方法获取参数的几种方式 对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中  GET方法参数的获取 直接在方法体中获取url中对应的参数  1234@RequestMapping(value &#x3D; &quot;&#x2F;sold&#x2F;&amp;#123;bookId&amp;#125;&quot;,method &#x3D; RequestMethod">
+<meta property="og:description" content="Cache的设计由来      程序访问的局部性    这里需要注意的有：  主存与CPU之间只能通过字来进行传输，所以数组中的每一个元素都要进过一次传输 而主存和Cache之间是可以通过块来进行传输的，所以在1000ns中已经传输了10个元素到Cache中了。 Cache与CPU之间的传输十分的快，所以利用了Cache的储存结构，比不使用Cache的存储结构会快一个数量级。  概念：  命中率H">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-05-04T08:11:00.000Z">
-<meta property="article:modified_time" content="2020-05-04T08:12:38.817Z">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588770908260.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588772623598.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588854901912.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588855003444.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588856305495.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588905161903.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588905521175.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588906499505.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588906549564.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588907954338.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588908875330.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588909438814.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588910861207.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588911073149.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588913883876.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914032640.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914413513.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914638196.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914932766.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588915060013.png">
+<meta property="article:published_time" content="2020-05-08T16:31:14.000Z">
+<meta property="article:modified_time" content="2020-05-08T16:45:10.379Z">
 <meta property="article:author" content="Emptyskz">
-<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="计算机组成原理">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588770908260.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -163,57 +184,179 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-spring中GET和POST方法获取参数的几种方法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Cache的设计由来" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      spring中GET和POST方法获取参数的几种方法
+      Cache的设计由来
     </h1>
   
 
         
-        <a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+        <a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" class="archive-article-date">
+  	<time datetime="2020-05-08T16:31:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="SpringMVC中POST和GET方法获取参数的几种方式"><a href="#SpringMVC中POST和GET方法获取参数的几种方式" class="headerlink" title="SpringMVC中POST和GET方法获取参数的几种方式"></a>SpringMVC中POST和GET方法获取参数的几种方式</h2><blockquote>
-<p>对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中</p>
+        <h2 id="Cache的设计由来"><a href="#Cache的设计由来" class="headerlink" title="Cache的设计由来"></a>Cache的设计由来</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588770908260.png" class title="a">
+
+
+
+
+
+<h3 id="程序访问的局部性"><a href="#程序访问的局部性" class="headerlink" title="程序访问的局部性"></a>程序访问的局部性</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588772623598.png" class title="b">
+
+
+
+<p><strong>这里需要注意的有：</strong></p>
+<ul>
+<li>主存与CPU之间只能通过字来进行传输，所以数组中的每一个元素都要进过一次传输</li>
+<li>而主存和Cache之间是可以通过块来进行传输的，所以在1000ns中已经传输了10个元素到Cache中了。</li>
+<li>Cache与CPU之间的传输十分的快，所以利用了Cache的储存结构，比不使用Cache的存储结构会快一个数量级。</li>
+</ul>
+<p><strong>概念：</strong></p>
+<blockquote>
+<p>命中率H：CPU欲访问的信息已在Cache中的比率</p>
 </blockquote>
-<h3 id="GET方法参数的获取"><a href="#GET方法参数的获取" class="headerlink" title="GET方法参数的获取"></a>GET方法参数的获取</h3><ul>
-<li>直接在方法体中获取url中对应的参数</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/sold/&#123;bookId&#125;"</span>,method = RequestMethod.POST)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sold</span><span class="params">(@PathVariable(<span class="string">"bookId"</span>)</span> <span class="keyword">int</span> bookId)</span>&#123;</span><br><span class="line">    bookServiceImpl.sold(bookId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@PathVariable注解便将url中的bookId和方法参数中的bookId关联了，当然当两者同名式@PathVariable注解中可不加参数。</p>
+<p>设一个程序执行期间，Cache的总命中次数为Nc，访问主存的总次数为Nm，则H=Nc/(Nc+Nm)，缺失率为M=1-H。</p>
+<p>设tc为命中时的Cache访问时间，tm为 未命中时的访问时间，Cache——主存系统的平均访问时间Ta为 Ta=H*tc+(1-H)tm</p>
 <ul>
-<li>直接在方法体中指定参数</li>
+<li>一个简单的例题</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588854901912.png" class title="c">
 
-<p>请求路径为…./get?id=1</p>
+
+
+
+
+<p><strong>小结：</strong></p>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588855003444.png" class title="d">
+
+
+
+
+
+
+
+<h2 id="Cache是如何存放主存中的数据的"><a href="#Cache是如何存放主存中的数据的" class="headerlink" title="Cache是如何存放主存中的数据的"></a>Cache是如何存放主存中的数据的</h2><h3 id="方法一：全相联映射"><a href="#方法一：全相联映射" class="headerlink" title="方法一：全相联映射"></a>方法一：全相联映射</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588856305495.png" class title="e">
+
+
+
 <ul>
-<li>使用requestParam</li>
+<li>由于一个Cache行中，行长为64B，所以有6位表示数据(黑色部分)</li>
+<li>由于有8个Cache行，所以有3位来表示Cache行地址(蓝色部分)</li>
+<li>有效位代表这个Cache行是否被占用，从主存到Cache是随机存放的</li>
+<li>在主存中代表块地址的则是高的22位代表那一块</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(@RequestParam(name = <span class="string">"id"</span>, required = <span class="keyword">true</span>)</span> Integer id) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法二：对号入座：直接映射"><a href="#方法二：对号入座：直接映射" class="headerlink" title="方法二：对号入座：直接映射"></a>方法二：对号入座：直接映射</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588905161903.png" class title="f">
 
-<p>请求路径同上</p>
-<h3 id="POST方法获取对象"><a href="#POST方法获取对象" class="headerlink" title="POST方法获取对象"></a>POST方法获取对象</h3><ul>
-<li>当我们接受的json数据由对象的实体类时</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody User user)</span> </span>&#123;</span><br><span class="line">       list.add(user);</span><br><span class="line">       <span class="keyword">return</span> user;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>这里传来的json数据将会被自动封装为实体类</strong></p>
+
 <ul>
-<li>当我们没有对应的实体类来封装时，我们可以使用map来接受json数据</li>
+<li>直接映射是固定的主存块只能放入对应的Cache行中，依照主存块中的蓝色部分放入到Cache中</li>
+<li>由于蓝色部分的位地址是相同的，所以存入Cache行时，我们只需要存入主存中的蓝色部分的地址信息即可，这样需要存储的额外信息就比全相联映射要少</li>
+<li>但是由于固定的块只能放入固定的行中，所以Cache行的利用率没有第一种的高</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">     <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">     	Integer id = (Integer) map.get(<span class="string">"id"</span>);</span><br><span class="line">     	String name = (String) map.get(<span class="string">"name"</span>);</span><br><span class="line">     	Integer age = (Integer) map.get(<span class="string">"age"</span>);</span><br><span class="line">     	List&lt;String&gt; hobby=(List&lt;String&gt;) map.get(<span class="string">"hobby"</span>);</span><br><span class="line">    	User user = <span class="keyword">new</span> User(id, name, age, hobby);</span><br><span class="line">     	list.add(user);</span><br><span class="line">     	<span class="keyword">return</span> user;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="方法三：按号分组，组内随意放：组相联映射"><a href="#方法三：按号分组，组内随意放：组相联映射" class="headerlink" title="方法三：按号分组，组内随意放：组相联映射"></a>方法三：按号分组，组内随意放：组相联映射</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588905521175.png" class title="g">
+
+
+
+
+
+<ul>
+<li>分为四组，则组号信息由两位即可确定，主存中紫色部分的组号信息只能存入固定的Cache行中，组内味随机存放，这样便结合了法一和法二的优点了</li>
+<li>需要额外存放的是，主存高位信息中的绿色和蓝色部分</li>
+</ul>
+<h3 id="三种方法对比"><a href="#三种方法对比" class="headerlink" title="三种方法对比"></a>三种方法对比</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588906499505.png" class title="h">
+
+
+
+
+
+
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588906549564.png" class title="i">
+
+
+
+
+
+<h2 id="四种替换算法"><a href="#四种替换算法" class="headerlink" title="四种替换算法"></a>四种替换算法</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588907954338.png" class title="j">
+
+
+
+<h3 id="一个例题："><a href="#一个例题：" class="headerlink" title="一个例题："></a>一个例题：</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588908875330.png" class title="k">
+
+
+
+<ul>
+<li>由于是全相联映射，所以是随机存放的，标记位直接存放对应的主存块号即可，用于判断这个Cache行中的内容来自主存的哪一块，这样下次又要访问同样的块时，便能直接在Cache中命中</li>
+</ul>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588909438814.png" class title="l">
+
+
+
+<ul>
+<li>由于是直接映射，我们将主存中的块编号按照除8来进行分组(蓝色)，以模8来进行确定块在Cache行中的位置(蓝色)</li>
+<li>所以命中的条件是，组号相同(标记)，且有效位为1</li>
+</ul>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588910861207.png" class title="m">
+
+
+
+<ul>
+<li>结合上面的两种地址映射方式</li>
+</ul>
+<p><strong>在考试中一般采用表格的形式分析是否命中：</strong></p>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588911073149.png" class title="n">
+
+
+
+<ul>
+<li>后进的放在组的下面，出按照不同的替换策略来决定。</li>
+</ul>
+<h2 id="写策略"><a href="#写策略" class="headerlink" title="写策略"></a>写策略</h2><h3 id="命中时的写策略"><a href="#命中时的写策略" class="headerlink" title="命中时的写策略"></a>命中时的写策略</h3><ul>
+<li>不立即写回主存</li>
+</ul>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588913883876.png" class title="o">
+
+
+
+<ul>
+<li>经过缓冲立即写回主存，可能会溢出</li>
+</ul>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914032640.png" class title="p">
+
+
+
+<h3 id="不命中时的写策略"><a href="#不命中时的写策略" class="headerlink" title="不命中时的写策略"></a>不命中时的写策略</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914413513.png" class title="q">
+
+
+
+<ul>
+<li>把主存中的块调入Cache是指，将主存块中的地址位传入Cache行中</li>
+</ul>
+<img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914638196.png" class title="r">
+
+
+
+
+
+<h3 id="写策略小结"><a href="#写策略小结" class="headerlink" title="写策略小结"></a>写策略小结</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588914932766.png" class title="s">
+
+
+
+<ul>
+<li>第一种搭配中Cache和主存中的内容可能会不一致，因为不是立即写回，而是等到有替换的内容时才会被写回</li>
+<li>第二种搭配保持了主存与Cache的一致性，但是缓存会有溢出现象</li>
+</ul>
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588915060013.png" class title="t">
 
 
       
@@ -249,7 +392,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
         		</li>
       		
 		</ul>
@@ -305,7 +448,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -319,18 +462,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          MySQL联表查询
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">StringBuffer和StringBuilder</div>
+    <a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Redis入门</div>
       <i class="icon-circle-right"></i>
     </a>
   
