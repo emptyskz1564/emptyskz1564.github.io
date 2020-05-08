@@ -578,7 +578,32 @@
 <p><code>SINTER set1 set2</code>：交集</p>
 <p><code>SUNION set1 set2</code>：并集</p>
 <h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Map集合，key-map!</p>
-<h3 id="Zset"><a href="#Zset" class="headerlink" title="Zset"></a>Zset</h3><h2 id="三种特殊数据类型"><a href="#三种特殊数据类型" class="headerlink" title="三种特殊数据类型"></a>三种特殊数据类型</h2><h3 id="geospatial"><a href="#geospatial" class="headerlink" title="geospatial"></a>geospatial</h3><h3 id="hyperloglog"><a href="#hyperloglog" class="headerlink" title="hyperloglog"></a>hyperloglog</h3><h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3>
+<p><code>hset myhash k1 v1</code>：创建hash或向myhash中添加键值对</p>
+<p><code>hget myhash k1</code>：取值</p>
+<p><code>hmset</code>：批量添加键值对</p>
+<p><code>hmget</code>：批量取值</p>
+<p><code>hgetall</code>：获取全部</p>
+<p><code>hdel myhash k1</code>：删除指定key</p>
+<p><code>hlen</code> myhahs：获取myhash中有多少个键值对</p>
+<p><code>hexists myhash k1</code>：是否存在key</p>
+<p><code>hkeys myhash</code>：获取所有的key</p>
+<p><code>hvals myhash</code>：获取所有的values</p>
+<p><code>hincrby</code>：增加</p>
+<p><code>hdecrby</code>：减少</p>
+<p><code>hsetnx</code>：如果不存在则设置键值对，否则不执行</p>
+<p>hash变更的数据user name age，尤其是用户信息之类的，经常变动的信息！hash更适合于对象的储存，String更适合字符串存储！</p>
+<h3 id="Zset-有序集合"><a href="#Zset-有序集合" class="headerlink" title="Zset(有序集合)"></a>Zset(有序集合)</h3><p>在set的基础上增加了一个值，用来表示优先级</p>
+<p><code>zadd myzset 1 one 2 two</code>：添加一个或多个值</p>
+<p><code>zrange myzset 0 -1</code>：获取所有的值(按照优先级)</p>
+<p><code>zrange myzset -inf +inf</code>：从小到大显示元素</p>
+<p><code>zrange myzset -inf +inf withscores</code>“从小到大显示元素并且附带优先级</p>
+<p><code>zrem myzset k1</code>：移除k1值</p>
+<p><code>zcard myzset</code>：获取去元素个数</p>
+<p><code>zrevrange myzset 0 -1</code>：从大到小进行排序</p>
+<p>案例思路：存储班级成绩表，工资表</p>
+<p>普通消息，1，重要消息，2，带权重进行判断</p>
+<p>排行榜应用实现</p>
+<h2 id="三种特殊数据类型"><a href="#三种特殊数据类型" class="headerlink" title="三种特殊数据类型"></a>三种特殊数据类型</h2><h3 id="geospatial"><a href="#geospatial" class="headerlink" title="geospatial"></a>geospatial</h3><h3 id="hyperloglog"><a href="#hyperloglog" class="headerlink" title="hyperloglog"></a>hyperloglog</h3><h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3>
       
 
       
