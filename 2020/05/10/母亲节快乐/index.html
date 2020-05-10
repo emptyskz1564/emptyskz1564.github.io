@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Emptyskz的博客</title>
+  <title>母亲节快乐 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="祝妈妈母亲节快乐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="母亲节快乐">
+<meta property="og:url" content="http://yoursite.com/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="祝妈妈母亲节快乐">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/webp.webp.png">
+<meta property="article:published_time" content="2020-05-10T14:16:05.000Z">
+<meta property="article:modified_time" content="2020-05-10T14:23:17.143Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="母亲节">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/webp.webp.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -158,230 +165,50 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-MybatisPlus入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-母亲节快乐" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">MybatisPlus入门</a>
+    <h1 class="article-title" itemprop="name">
+      母亲节快乐
     </h1>
   
 
         
-        <a href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-04-30T16:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
+        <a href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/" class="archive-article-date">
+  	<time datetime="2020-05-10T14:16:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-10</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="MybatisPlus快速入门"><a href="#MybatisPlus快速入门" class="headerlink" title="MybatisPlus快速入门"></a>MybatisPlus快速入门</h2><p><strong>步骤：</strong></p>
-<ul>
-<li>pojo</li>
-<li>mapper接口继承BaseMapper&lt;泛型&gt;，加上Mapper注解或Repository代表持久层，这时这个mapper接口就已经实现了所有的CRUD</li>
-<li>使用</li>
-</ul>
-<p><strong>代码示例：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;user&gt; <span class="title">getAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       List&lt;user&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    	<span class="comment">//userDao为继承了BaseMapper的接口类，在成员变量中已经自动装配</span></span><br><span class="line">    	<span class="comment">//查询所有的用户</span></span><br><span class="line">    	<span class="comment">//这里参数是一个Wrapper，条件构造器，这里我们先不用</span></span><br><span class="line">       users = userDao.selectList(<span class="keyword">null</span>);</span><br><span class="line">       <span class="keyword">return</span> users;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>注意点：我们需要在主启动类上去扫描我们的Mapper类 <code>@MapperScan(&quot;com.liu.dao&quot;)</code></li>
-</ul>
-<hr>
-<h3 id="配置日志"><a href="#配置日志" class="headerlink" title="配置日志"></a>配置日志</h3><blockquote>
-<p>我们现在所有的sql是不可见的，所以我们需要配置日志来查看我们的SQL语句的执行</p>
-</blockquote>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mybatis:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>在yml配置文件中加上以上配置信息即可打开默认的控制台输出日志</li>
-</ul>
-<hr>
-<h3 id="CRUD扩展"><a href="#CRUD扩展" class="headerlink" title="CRUD扩展"></a>CRUD扩展</h3><blockquote>
-<p>Insert插入</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">regist</span><span class="params">(user user)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//这里的registUser为测试数据,后期还需改为传来的user</span></span><br><span class="line">    user registUser = <span class="keyword">new</span> user();</span><br><span class="line">    registUser.setUserName(<span class="string">"琦玉"</span>);</span><br><span class="line">    registUser.setPassWord(<span class="string">"156486"</span>);</span><br><span class="line">    registUser.setUserPic(<span class="string">"https:////"</span>);</span><br><span class="line">    <span class="keyword">int</span> insert = userDao.insert(registUser);</span><br><span class="line">    <span class="keyword">return</span> insert;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>查看数据信息可看到这里的userId是自动生成的而非数据库自增所生成的id值</p>
-</blockquote>
-<h5 id="主键生成策略：雪花算法"><a href="#主键生成策略：雪花算法" class="headerlink" title="主键生成策略：雪花算法"></a>主键生成策略：雪花算法</h5><p>雪花是主键生成的一种策略，也是分布式系统唯一id生成策略</p>
-<p><strong>雪花算法：</strong></p>
-<p>snowflake是Twitter开源的分布式ID生成算法，结果是一个long型的ID。其核心思想是：使用41bit作为毫秒数，10bit作为机器的ID(5个bit是数据中心，5个bit是机器ID)，12bit作为毫秒内的流水号(意味着每个节点在每毫秒可以产生4096个ID)，最后还有一个符号位，永远是0。</p>
-<blockquote>
-<p>主键自增</p>
-</blockquote>
-<p>我们需要配置主键自增：</p>
-<p>1、实体类字段上 <code>@TableId(type = IdType.AUTO)</code></p>
-<p>2、数据库字段一定要自增！</p>
-<p>此处的IdType是枚举类型，可以查看源码查看其余几种</p>
-<blockquote>
-<p>update更新</p>
-</blockquote>
-<ul>
-<li><p>updateById(user T)</p>
-<p>这里是要传入一个user实体类，然后会根据user的id属性去修改对应的实体类</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">updateUser</span><span class="params">(user user)</span></span>&#123;</span><br><span class="line">    <span class="comment">//通过条件自动拼接动态sql</span></span><br><span class="line">    user updateUser = <span class="keyword">new</span> user();</span><br><span class="line">    updateUser.setUserId(<span class="number">6</span>);</span><br><span class="line">    updateUser.setUserName(<span class="string">"emptyskz"</span>);</span><br><span class="line">    <span class="comment">//这里会根据传递的updateUser的Id属性去修改其userName字段的内容</span></span><br><span class="line">    <span class="keyword">int</span> i = userMapper.updateById(updateUser);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="查询操作"><a href="#查询操作" class="headerlink" title="查询操作"></a>查询操作</h3><ul>
-<li>查询单个Id</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SelectById</span><span class="params">(Integer id)</span></span>&#123;</span><br><span class="line">    List&lt;user&gt; user = userDao.selectById(id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查询多个Id</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectByBatchId</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//使用数组的工具类传入参数</span></span><br><span class="line">    List&lt;user&gt; users = userDao.selectBatchIds(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>条件查询</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectByBatchIds</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//用map来自定义查询,自动拼接为and的sql语句</span></span><br><span class="line">    HashMap&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;</span><br><span class="line">();</span><br><span class="line">    map.pust(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    map.push(<span class="string">"age"</span>,<span class="number">3</span>);</span><br><span class="line">    List&lt;user&gt; users = userDao.selectByMap(map);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h3><p>分页在网站使用的十分之多！</p>
-<p>1、原始的limit进行分页</p>
-<p>2、pageHelper第三方插件</p>
-<p>3、MP其实也内置了分页插件！</p>
-<blockquote>
-<p>使用方法</p>
-</blockquote>
-<p>1、配置拦截器组件即可</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分页插件</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PaginationInterceptor <span class="title">paginationInterceptor</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PaginationInterceptor();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2、直接使用Page对象即可</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPage</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//参数一：当前页</span></span><br><span class="line">    <span class="comment">//参数二：页面大小</span></span><br><span class="line">    Page&lt;user&gt; page = <span class="keyword">new</span> Page&lt;&gt;(current:<span class="number">1</span>,size:<span class="number">5</span>);</span><br><span class="line">    userDao.selectPage(page,wrapper:<span class="keyword">null</span>);</span><br><span class="line">    page.getRecords().forEach(System.out::println);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h3><p>这里只给一下批量删除的简单操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteBatchId</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//同样使用工具类来传参</span></span><br><span class="line">    userDao.deleteBatchIds(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>));<span class="comment">//会有一个返回值，代表删除的行数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>通过map删除</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testDeleteMap</span><span class="params">()</span></span>&#123;</span><br><span class="line">    HashMap&lt;String,Object&gt; mao =<span class="keyword">new</span> HashMap();</span><br><span class="line">    map.put(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    userDao.deleteByMap(map);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p> 这里总结一下关于定义的数据库中不是定义的Id而是userId时，如何使用selectById、deleteById等操作</p>
-</blockquote>
-<ul>
-<li><p>如果你的数据库是定义的user_id的话，用selectById一定会报错，毕竟字段名都不匹配，那咋办嘛，这时候就可以在我们的主键字段上加是哪个@TableId(value = 主键列名 ,type = 主键类型)，这样就标注了我们的主键，有关Id的操作也能够映射到我们想要的列了。</p>
-</li>
-<li><p>方法二就是使用使用普通的select和delete参数用Wrapper，</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">deleteUserById</span><span class="params">(Integer userId)</span> </span>&#123;</span><br><span class="line">       QueryWrapper&lt;user&gt; queryWrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">       queryWrapper.eq(<span class="string">"user_id"</span>,userId);</span><br><span class="line">       <span class="keyword">int</span> i = userDao.delete(queryWrapper);</span><br><span class="line">       <span class="keyword">return</span> i;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>​        这样便能去操作我们想要的列了，Wrapper的详细用法还会在下面讲到。</p>
-<hr>
-<h3 id="逻辑删除"><a href="#逻辑删除" class="headerlink" title="逻辑删除"></a>逻辑删除</h3><blockquote>
-<p>物理删除：从数据库中直接移除</p>
-<p>逻辑删除：再数据库中没有移除，而是通过一个变量来让他失效！</p>
-</blockquote>
-<p>管理员可以查看被删除的记录！防止数据的丢失，类似于回收站。</p>
-<ul>
-<li><p>在拦截器组件中加上逻辑删除组件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> ISQLInjector <span class="title">SQLInjector</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> LogicSqlInjector();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在yml配置文件中配置逻辑删除</p>
-</li>
-</ul>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mybatis-plus:</span></span><br><span class="line">  <span class="attr">configuration:</span></span><br><span class="line">    <span class="attr">log-impl:</span> <span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br><span class="line">  <span class="attr">global-config:</span></span><br><span class="line">    <span class="attr">db-config:</span></span><br><span class="line">      <span class="attr">logic-delete-value:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">logic-not-delete-value:</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p>​        上面是日志配置，下面是逻辑删除配置</p>
-<ul>
-<li>在实体类中增加逻辑删除属性，并加上 <code>@TableLogic</code>注解</li>
-</ul>
-<p>再次使用删除操作，会发现日志输出使用的并不是删除操作，而是更新操作，这样便实现了逻辑删除，查询操作也会忽略这条数据(拼接条件查询)，防止了数据的丢失</p>
-<hr>
-<h3 id="性能分析插件"><a href="#性能分析插件" class="headerlink" title="性能分析插件"></a>性能分析插件</h3><p>开发中经常会遇到一些慢sql，MP也提供了性能分析插件，当超过这个时间时就会停止运行！</p>
-<p><strong>好像最新版本删除了这个插件，先挖个坑，以后再填</strong></p>
-<hr>
-<h3 id="条件构造器-Wrapper"><a href="#条件构造器-Wrapper" class="headerlink" title="条件构造器 Wrapper"></a>条件构造器 Wrapper</h3><p><strong>我们写一些复杂的sql就能够使用它</strong></p>
-<ul>
-<li>1、测试一 ：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询userName不为空，并且邮箱不为空的用户，年龄不为空的用户年龄大于等于12</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QuerryWrappe&lt;&gt;();</span><br><span class="line">    wrapper</span><br><span class="line">        .isNotNull(<span class="string">"userName"</span>)</span><br><span class="line">        .isNotNUll(<span class="string">"email"</span>)</span><br><span class="line">        .ge(<span class="string">"age"</span>,<span class="number">12</span>);</span><br><span class="line">    userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>2、测试二：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询名字emptyskz</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.eq(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    user selectUser = userDao.selectOne(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>3、测试三：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询年龄20到30的用户</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.between(<span class="string">"age"</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br><span class="line">    userDao.selectCount(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>4、测试四：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//模糊查询</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//左和右	%t%</span></span><br><span class="line">    wrapper</span><br><span class="line">        .notLike(<span class="string">"name"</span>,<span class="string">"e"</span>)	<span class="comment">//不包含e</span></span><br><span class="line">        .likeRight(<span class="string">"email"</span>,<span class="string">"t"</span>);	<span class="comment">//相当于t%，匹配t开头的</span></span><br><span class="line">    List&lt;Map&lt;String,Object&gt;&gt; maps = userDao.selectMaps(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>5、测试五</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//拼接子查询in</span></span><br><span class="line">    wrapper.inSql(<span class="string">"id"</span>;<span class="string">"select id from user where id&lt;3"</span>);</span><br><span class="line">    List&lt;Object&gt; objects = userDao.selectObjs(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>6、测试六</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//排序</span></span><br><span class="line">    wrapper.orderByDesc(<span class="string">"id"</span>);</span><br><span class="line">    List&lt;user&gt; users = userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>其余的测试可以按照官方文档进行学习，这里不多赘述。</p>
-</blockquote>
-<hr>
-<h3 id="性能分析插件-1"><a href="#性能分析插件-1" class="headerlink" title="性能分析插件"></a>性能分析插件</h3><p>开发中经常会遇到一些慢sql，MP也提供了性能分析插件，当超过这个时间时就会停止运行！</p>
-<p><strong>好像最新版本删除了这个插件，先挖个坑，以后再填</strong></p>
-<hr>
-<h3 id="条件构造器-Wrapper-1"><a href="#条件构造器-Wrapper-1" class="headerlink" title="条件构造器 Wrapper"></a>条件构造器 Wrapper</h3><p><strong>我们写一些复杂的sql就能够使用它</strong></p>
-<ul>
-<li>1、测试一 ：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询userName不为空，并且邮箱不为空的用户，年龄不为空的用户年龄大于等于12</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QuerryWrappe&lt;&gt;();</span><br><span class="line">    wrapper</span><br><span class="line">        .isNotNull(<span class="string">"userName"</span>)</span><br><span class="line">        .isNotNUll(<span class="string">"email"</span>)</span><br><span class="line">        .ge(<span class="string">"age"</span>,<span class="number">12</span>);</span><br><span class="line">    userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>2、测试二：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询名字emptyskz</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.eq(<span class="string">"userName"</span>,<span class="string">"emptyskz"</span>);</span><br><span class="line">    user selectUser = userDao.selectOne(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>3、测试三：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//查询年龄20到30的用户</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    wrapper.between(<span class="string">"age"</span>,<span class="number">20</span>,<span class="number">30</span>);</span><br><span class="line">    userDao.selectCount(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>4、测试四：</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//模糊查询</span></span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//左和右	%t%</span></span><br><span class="line">    wrapper</span><br><span class="line">        .notLike(<span class="string">"name"</span>,<span class="string">"e"</span>)	<span class="comment">//不包含e</span></span><br><span class="line">        .likeRight(<span class="string">"email"</span>,<span class="string">"t"</span>);	<span class="comment">//相当于t%，匹配t开头的</span></span><br><span class="line">    List&lt;Map&lt;String,Object&gt;&gt; maps = userDao.selectMaps(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>5、测试五</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test5</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//拼接子查询in</span></span><br><span class="line">    wrapper.inSql(<span class="string">"id"</span>;<span class="string">"select id from user where id&lt;3"</span>);</span><br><span class="line">    List&lt;Object&gt; objects = userDao.selectObjs(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>6、测试六</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test6</span><span class="params">()</span></span>&#123;</span><br><span class="line">    QueryWrapper&lt;user&gt; wrapper = <span class="keyword">new</span> QueryWrapper&lt;&gt;();</span><br><span class="line">    <span class="comment">//排序</span></span><br><span class="line">    wrapper.orderByDesc(<span class="string">"id"</span>);</span><br><span class="line">    List&lt;user&gt; users = userDao.selectList(wrapper);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>其余的测试可以按照官方文档进行学习，这里不多赘述。</p>
-</blockquote>
-
+        <h1 id="祝妈妈母亲节快乐"><a href="#祝妈妈母亲节快乐" class="headerlink" title="祝妈妈母亲节快乐"></a>祝妈妈母亲节快乐</h1><img src="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/webp.webp.png" class title="a">
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -392,7 +219,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MybaitsPlus</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">母亲节</a>
         		</li>
       		
 		</ul>
@@ -401,16 +228,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">通过Jedis操作Redis</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -430,381 +316,14 @@
 
 
 
-
-  
-    <article id="post-存储系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">存储系统</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-04-29T08:35:07.245Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>title: 存储系统<br>date: 2020-04-29 16:35:07<br>tags: 计算机组成原理</p>
-<h2 id="存储系统"><a href="#存储系统" class="headerlink" title="存储系统"></a>存储系统</h2><ul>
-<li>存储器与cpu的协同工作<ul>
-<li>存储器的简单模型及寻址的概念</li>
-<li>主存与CPU的连接</li>
-<li>双口RAM和多模块存储器</li>
-<li>高速缓冲存储器</li>
-<li>虚拟存储器</li>
-</ul>
-</li>
-<li>半导体存储器<ul>
-<li>存储芯片的基本结构</li>
-<li>SRAM、DRAM的工作原理</li>
-<li>ROM的特点和基本类型</li>
-</ul>
-</li>
-<li>基本概念<ul>
-<li>分类</li>
-<li>性能指标</li>
-</ul>
-</li>
-</ul>
-<h3 id="主存储器"><a href="#主存储器" class="headerlink" title="主存储器"></a>主存储器</h3><img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588078591051.png" class title="存储系统">
-
-
-
-
-
-<p><strong>由于每条绿线中经过了两个存储单元，所以这个存储体中一次只能有一个读信号，即只有一条红线为1，否则每一条绿线中就会有两个输入信号。</strong></p>
-<img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588078811411.png" class title="主存储器的简单模型">
-
-
-
-<p><strong>所以每一次只能有一行的控制信息为有效</strong></p>
-<img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588080813759.png" class title="主存储器的简单模型2">
-
-
-
-<ul>
-<li><p>地址线有几位就有2^n个存储单元</p>
-</li>
-<li><p>总容量=存储单元个数 * 存储字长(行 * 列)=2^3 * 8bit(上图中有8位)</p>
-</li>
-<li><p>片选器：两种工作模式  1.低电平有效  2.高电平有效   决定了哪种电平下电路的开关</p>
-</li>
-<li><p>读、写控制线决定何时读入和写出，两条线也可以合并</p>
-</li>
-</ul>
-<p><strong>封装好后的模型：</strong></p>
-<img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588081322696.png" class title="主存储器的简单模型3">
-
-
-
-<ul>
-<li>1、存储矩阵：由大量相同的位存储单元阵列构成。</li>
-<li>2、译码驱动：将来自地址总线的地址信息翻译成对存储单元的选通信号，该信号在读写电路的配合下完成对选中单元的读写操作。</li>
-<li>3、读写电路：包括读出放大器和写入电路，用来完成读写操作。</li>
-<li>4、读写控制线：决定芯片进行读写操作</li>
-<li>5、片选线：确定哪个存储芯片被选中。可用于容量扩充</li>
-<li>6、地址线：是单向输入的，其位数与存储字的个数有关。</li>
-<li>7、数据线：是双向的，其位数与读出或写入的数据位数有关。</li>
-<li>n条数据线代表n位</li>
-<li>n条地址线代表有2^n个存储单元</li>
-<li>所以这个模型为8*8位的存储芯片</li>
-<li>常见的描述：<ul>
-<li>8k*2位，即2^13 * 8bit=8KB</li>
-<li>8k*1位，即2^13 * 1bit=8Kb=1KB</li>
-</ul>
-</li>
-<li>K：2^10        M：2^20        G:2^30         T:2^40</li>
-</ul>
-<h3 id="寻址"><a href="#寻址" class="headerlink" title="寻址"></a>寻址</h3><img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588082954494.png" class title="主存储器的简单模型4">
-
-
-
-<h3 id="半导体存储器"><a href="#半导体存储器" class="headerlink" title="半导体存储器"></a>半导体存储器</h3><img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588084897170.png" class title="主存储器的简单模型5">
-
-
-
-<img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588088865213.png" class title="主存储器的简单模型6">
-
-
-
-<img src="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/1588088885939.png" class title="主存储器的简单模型7">
-
-
-
-<ul>
-<li>半导体存储芯片的基本结构<ul>
-<li>存储矩阵、译码电路、读写电路</li>
-<li>地址线、数据线、读写控制线、片选线</li>
-</ul>
-</li>
-<li>RAM-易失性<ul>
-<li>SRAM：触发器存储信息，速度快，成本高，集成度低，常用作高速缓存</li>
-<li>DRAM：电容存储信息，需刷新，速度慢，成本低，集成度高，常用作主存(SDRAM)</li>
-<li>DRAM的刷新：集中刷新、分散刷新、异步刷新<ul>
-<li>不需要CPU控制</li>
-<li>以行为单位，仅需要行地址</li>
-<li>存储器中所有芯片同时刷新</li>
-</ul>
-</li>
-<li>RAM的读写周期</li>
-</ul>
-</li>
-<li>ROM-非易失性<ul>
-<li>特点：结构简单，位密度比RAM高；</li>
-<li>非易失性，可靠性高</li>
-</ul>
-</li>
-<li>类型：MROM、PROM、EPROM、Flash Memory、SSD</li>
-</ul>
-<h3 id="存储器的分类"><a href="#存储器的分类" class="headerlink" title="存储器的分类"></a>存储器的分类</h3>
-
-
-
-
-
-
-
-<p><strong>存储器的性能指标</strong></p>
-<ul>
-<li><p>存储容量：存储字数 * 字长(如1M * 8位)</p>
-</li>
-<li><p>单位成本：单位价格=总成本/总容量。</p>
-</li>
-<li><p>存储速度：数据传输率=数据的宽度/存储周期。</p>
-</li>
-</ul>
-  
-
-
-
-<p>不同的存储器恢复时间执行的操作是不同的。</p>
-<p><strong>存储系统的概念模型：</strong></p>
-
-
-
-
-
-
-
-
-<h3 id="本节回顾："><a href="#本节回顾：" class="headerlink" title="本节回顾："></a>本节回顾：</h3>
-
-<p>![1588153643859](C:\Users\empty\AppData\Roaming\Typora\typora-user-images\1588153643859.png</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-初始SpringBoot" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/">初始SpringBoot</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/" class="archive-article-date">
-  	<time datetime="2020-04-29T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="微服务阶段"><a href="#微服务阶段" class="headerlink" title="微服务阶段"></a>微服务阶段</h2><p>javase：OOP，面向对象</p>
-<p>mysql：持久化</p>
-<p>html+css+js+jquery+框架：视图</p>
-<p>javaweb：独立开发MVC三层架构的网站：原始</p>
-<p>ssm：框架简化了我们的开发流程，配置也开始较为复杂</p>
-<p>war：tomcat运行</p>
-<p>spring再简化：SpringBoot-jar：内嵌tomcat；微服务框架！</p>
-<p>服务越来越多：springcloud</p>
-<p><strong>何为微服务：</strong>微服务是一种架构思想，就如同MVC三层架构，微服务是将整个应用中的业务进行拆分，然后分别部署在不同的服务器上进行负载均衡，做到了将应用的水平拆分。</p>
-<p><strong>单体架构的缺点：</strong>当我们要修改一个小地方时，我们都需要停掉整个服务，重新打包、部署这个应用war包。特别是对于大型应用，我们不可能把所有的内容都放在一个应用中，我们如何维护如何分工合作都是问题。</p>
-<img src="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/1588127634032.png" class title="springboot">
-
-
-
-
-
-<h2 id="SpringBoot学习"><a href="#SpringBoot学习" class="headerlink" title="SpringBoot学习"></a>SpringBoot学习</h2><p>​        springboot是基于spring开发，springboot本身并不提供spring框架的核心特型已经扩展功能，只是用于快速、敏捷地开发新一代基于spring框架的应用程序。也就是说，它并不是用来替代spring的解决方案，而是和spring框架紧密结合用于提升spring开发者体验的工具。springboot以约定大于配置的核心思想，默认帮我们进行了很多配置，多数springboot应用只需要很少的spring配置。同时它集成了大量常用的第三方库配置(例如Redis、MongoDB、Jpa、RabbitMQ、Quartz等等)，SpringBoot应用中这些第三方库几乎可以零配置的开箱即用。</p>
-<p>​        简单来说就是springboot其实并不是什么新的框架，他默认配置了很多框架的使用方式，就像maven整合了所有的jar包，springboot整合了所有的框架！</p>
-<p>​        <strong>SpringBoot的主要优点：</strong></p>
-<ul>
-<li>为所有的Spring开发者更快的入门</li>
-<li>开箱即用，提供各种默认配置来简化项目配置</li>
-<li>内嵌式容器简化Web项目</li>
-<li>没有冗余代码生成和XML配置的要求</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我的第一个博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">我的第一个博客</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-04-28T08:32:35.796Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="我的第一篇博客"><a href="#我的第一篇博客" class="headerlink" title="我的第一篇博客"></a>我的第一篇博客</h2><p>我将在此记录自己的java学习之旅，分享所学所想，望与各位共同进步。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -827,8 +346,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
