@@ -15,18 +15,18 @@
 <meta property="og:site_name" content="Emptyskz的博客">
 <meta property="og:description" content="Redis课程安排 nosql讲解 阿里巴巴架构演进 nosql数据模型 Nosql四大分类 CAP BASE Redis入门 Redis安装(Windows &amp; Linux服务器) 五大基本数据类型 String List Set Hash Zset   三种特殊数据类型 geo hyperloglog bitmap   Redis配置详解 Redis持久化 RDB AOF   Redi">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587706265713.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587707730566.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587721879998.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588738599794.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588740107038.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588742895691.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587706265713.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587707730566.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587721879998.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588738599794.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588740107038.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588742895691.png">
 <meta property="article:published_time" content="2020-05-06T05:37:59.000Z">
 <meta property="article:modified_time" content="2020-05-06T06:07:45.884Z">
 <meta property="article:author" content="Emptyskz">
 <meta property="article:tag" content="NoSQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587706265713.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587706265713.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -230,7 +230,7 @@
 <li>SpringBoot集成Redis操作</li>
 <li>Redis的时间分析</li>
 </ul>
-<h2 id="Nosql概述"><a href="#Nosql概述" class="headerlink" title="Nosql概述"></a>Nosql概述</h2><h3 id="为什么要用Nosql"><a href="#为什么要用Nosql" class="headerlink" title="为什么要用Nosql"></a>为什么要用Nosql</h3><h5 id="1、单机MySQL的年代！"><a href="#1、单机MySQL的年代！" class="headerlink" title="1、单机MySQL的年代！"></a>1、单机MySQL的年代！</h5><img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587706265713.png" class width="1">
+<h2 id="Nosql概述"><a href="#Nosql概述" class="headerlink" title="Nosql概述"></a>Nosql概述</h2><h3 id="为什么要用Nosql"><a href="#为什么要用Nosql" class="headerlink" title="为什么要用Nosql"></a>为什么要用Nosql</h3><h5 id="1、单机MySQL的年代！"><a href="#1、单机MySQL的年代！" class="headerlink" title="1、单机MySQL的年代！"></a>1、单机MySQL的年代！</h5><img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587706265713.png" class width="1">
 
 <p>90年代，一个基本的网站访问量一般不会太大，单个数据库完全足够！</p>
 <p>那个时代，更多的去使用静态网页Html~服务器根本没有太大的压力</p>
@@ -240,7 +240,7 @@
 <p>​    3.访问量(读写混合)，一个服务器承受不了</p>
 <h5 id="2-Memcached-缓存-MySQL-垂直拆分-读写分离"><a href="#2-Memcached-缓存-MySQL-垂直拆分-读写分离" class="headerlink" title="2.Memcached(缓存)+MySQL+垂直拆分(读写分离)"></a>2.Memcached(缓存)+MySQL+垂直拆分(读写分离)</h5><p>网站80%的情况都是在读，每次都要去查询数据库的话就十分的麻烦！所以说我们希望减轻数据库的压力，我们可以使用缓存来提高效率！</p>
 <p>发展过程：优化数据结构和索引–&gt;文件缓存(IO)–&gt;Memcached(当时最热门的技术！)</p>
-<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587707730566.png" class width="2">
+<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587707730566.png" class width="2">
 
 
 
@@ -250,7 +250,7 @@
 <p>转战Innodb：行锁</p>
 <p>慢慢的就开始使用分库分表来解决写的压力！MySQL在那个年代推出了表分区，然而并没有多少公司用！</p>
 <p>MySQL的集群，很好的满足了大部分的需求。</p>
-<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587721879998.png" class width="3">
+<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1587721879998.png" class width="3">
 
 
 
@@ -295,7 +295,7 @@
 <p>2、高可扩展</p>
 <p>3、高性能</p>
 <p>真正的公司中的实践：NoSQL+RDBMS一起使用才是最强的</p>
-<h3 id="阿里巴巴演进分析"><a href="#阿里巴巴演进分析" class="headerlink" title="阿里巴巴演进分析"></a>阿里巴巴演进分析</h3><img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588738599794.png" class width="5">
+<h3 id="阿里巴巴演进分析"><a href="#阿里巴巴演进分析" class="headerlink" title="阿里巴巴演进分析"></a>阿里巴巴演进分析</h3><img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588738599794.png" class width="5">
 
 
 
@@ -310,11 +310,11 @@
 <li>数据要改造，大面积改造</li>
 </ul>
 <p>解决方法：统一的数据层UDSL（就如同JDBC）</p>
-<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588740107038.png" class width="6">
+<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588740107038.png" class width="6">
 
 
 
-<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588742895691.png" class width="7">
+<img src="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/05/06/NoSQL%E6%A6%82%E8%BF%B0/1588742895691.png" class width="7">
 
 
 
@@ -561,27 +561,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">计算机组成原理</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">MybaitsPlus</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SSM SpringMVC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javase</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -593,15 +577,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">SSM SpringMVC</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javase</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">计算机组成原理</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">母亲节</a>
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -610,6 +602,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">母亲节</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
               </li>
             
             <div class="clearfix"></div>
@@ -766,5 +766,5 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
 
 </div>
   </div>
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-shizuku"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
