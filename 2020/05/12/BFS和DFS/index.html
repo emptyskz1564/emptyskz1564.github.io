@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Emptyskz的博客</title>
+  <title>BFS和DFS | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="DFS和BFS预备知识：对于图的存储，除了直接使用Map来进行存储之外，我们还可以使用邻接矩阵和邻接表来进行存储图结构  邻接矩阵：       邻接表          广度优先搜索BFS 主要思想：使用一个队列进行维护   首现将我们的第一个元素入队 弹出元素，然后标记上visited，也就是我们的第一个元素，然后遍历这个元素的所有邻接点，将这些节点依次入队 然后弹出一个节点，标记上visit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BFS和DFS">
+<meta property="og:url" content="http://yoursite.com/2020/05/12/BFS%E5%92%8CDFS/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="DFS和BFS预备知识：对于图的存储，除了直接使用Map来进行存储之外，我们还可以使用邻接矩阵和邻接表来进行存储图结构  邻接矩阵：       邻接表          广度优先搜索BFS 主要思想：使用一个队列进行维护   首现将我们的第一个元素入队 弹出元素，然后标记上visited，也就是我们的第一个元素，然后遍历这个元素的所有邻接点，将这些节点依次入队 然后弹出一个节点，标记上visit">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285445907.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285494864.png">
+<meta property="article:published_time" content="2020-05-12T12:21:59.000Z">
+<meta property="article:modified_time" content="2020-05-12T12:28:24.200Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="算法">
+<meta property="article:tag" content="图">
+<meta property="article:tag" content="BFS DFS">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285445907.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -158,36 +169,121 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-BFS和DFS" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/12/BFS%E5%92%8CDFS/" class="archive-article-date">
-  	<time datetime="2020-05-12T12:21:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/12/BFS%E5%92%8CDFS/">BFS和DFS</a>
+    <h1 class="article-title" itemprop="name">
+      BFS和DFS
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/05/12/BFS%E5%92%8CDFS/" class="archive-article-date">
+  	<time datetime="2020-05-12T12:21:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DFS和BFS"><a href="#DFS和BFS" class="headerlink" title="DFS和BFS"></a>DFS和BFS</h1><h2 id="预备知识："><a href="#预备知识：" class="headerlink" title="预备知识："></a>预备知识：</h2><p>对于图的存储，除了直接使用Map来进行存储之外，我们还可以使用邻接矩阵和邻接表来进行存储图结构</p>
+<ul>
+<li>邻接矩阵：</li>
+</ul>
+<img src="/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285445907.png" class title="a">
+
+
+
+<ul>
+<li>邻接表</li>
+</ul>
+<img src="/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285494864.png" class title="b">
+
+
+
+
+
+
+
+<h2 id="广度优先搜索BFS"><a href="#广度优先搜索BFS" class="headerlink" title="广度优先搜索BFS"></a>广度优先搜索BFS</h2><blockquote>
+<p>主要思想：使用一个队列进行维护</p>
+</blockquote>
+<ul>
+<li>首现将我们的第一个元素入队</li>
+<li>弹出元素，然后标记上visited，也就是我们的第一个元素，然后遍历这个元素的所有邻接点，将这些节点依次入队</li>
+<li>然后弹出一个节点，标记上visited，并将这个节点的邻接点依次入队，直到队列为空。</li>
+</ul>
+<p><strong>如果我们的搜索对象是树，那么便实现了层序遍历</strong></p>
+<h2 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h2><blockquote>
+<p>主要思想：使用一个堆栈来进行维护</p>
+</blockquote>
+<ul>
+<li>首先我们将我们的第一个元素入栈</li>
+<li>弹出一个元素，然后标记上visited，也就是我们的第一个元素，然后遍历这个元素的所有邻接点，将这些节点依次入栈</li>
+<li>然后弹出一个节点，标记上visited，并将这个节点的邻接点入栈，直到栈为空。</li>
+</ul>
+<p><strong>其实跟递归调用是一样的思想</strong></p>
+<h1 id="利用BFS的特性求解算法题"><a href="#利用BFS的特性求解算法题" class="headerlink" title="利用BFS的特性求解算法题"></a>利用BFS的特性求解算法题</h1><blockquote>
+<p>由于一旦当我们到达某个节点时，我们便会将这个点做上标记，所以BFS所求出的路劲必定为最优解</p>
+</blockquote>
+<hr>
+<p>例：</p>
+<p>小明买了块高端大气上档次的电子手表，他正准备调时间呢。<br>在 M78 星云，时间的计量单位和地球上不同，M78 星云的一个小时有 n 分钟。<br>大家都知道，手表只有一个按钮可以把当前的数加一。在调分钟的时候，如果当前显示的数是 0 ，那么按一下按钮就会变<br>成 1，再按一次变成 2 。如果当前的数是 n  - 1，按一次后会变成 0 。<br>作为强迫症患者，小明一定要把手表的时间调对。如果手表上的时间比当前时间多1，则要按 n  - 1 次加一按钮才能调回<br>正确时间。<br>小明想，如果手表可以再添加一个按钮，表示把当前的数加 k 该多好啊……<br>他想知道，如果有了这个  + k 按钮，按照最优策略按键，从任意一个分钟数调到另外任意一个分钟数最多要按多少次。<br>注意，按  + k 按钮时，如果加k后数字超过n - 1, 则会对n取模。<br>比如，n = 10, k = 6 的时候，假设当前时间是0，连按2次  + k 按钮，则调为2。</p>
+<p>「输入格式」<br>一行两个整数 n, k ，意义如题。</p>
+<p>「输出格式」<br>一行一个整数<br>表示：按照最优策略按键，从一个时间调到另一个时间最多要按多少次。</p>
+<p>「样例输入」<br>5 3</p>
+<p>「样例输出」<br>2</p>
+<hr>
+<blockquote>
+<p> 由于我们每次要么走一格，要么走K格，所以我们可以将这个简单的线性结构转换为图结构。</p>
+</blockquote>
+<p>用邻接表来表示：</p>
+<p>1 :  2-&gt;1+k</p>
+<p>2 :  3-&gt;2+k</p>
+<p>…..</p>
+<p>所以我们用BFS来进行求解，将调手表看做对图的处理，利用队列当前所能到达的地点（时间），一个记录步数，一个记录是否到达过，所得结果必定为最优解</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">100005</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, k;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) dp[i] = i; <span class="comment">// 初始化为多少分钟就要调多少次，默认一次调一分钟 </span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; n; i += k) <span class="comment">//从0出发，每+k步数就加一次 </span></span><br><span class="line">		dp[i] = dp[i - k] + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = k + <span class="number">1</span>; i &lt; n; i += k) <span class="comment">// 从1出发，每+k步数就加一次 </span></span><br><span class="line">		dp[i] = dp[i - k] + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123; <span class="comment">// 如果结果收敛，则停止循环，这里我们算他们的和，如果他们的步数和不变了，说明收敛了 </span></span><br><span class="line">		<span class="keyword">int</span> now_sum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; n; i++) &#123;</span><br><span class="line">			now_sum += dp[i];</span><br><span class="line">			dp[i] = <span class="built_in">min</span>(dp[(i + n - k) % n] + <span class="number">1</span>, dp[i - <span class="number">1</span>] + <span class="number">1</span>);<span class="comment">// 每一步都可以由上一步调k步或者1步得到 </span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (now_sum == sum) <span class="keyword">break</span>;</span><br><span class="line">		sum = now_sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> maxdp = dp[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">		<span class="comment">//		cout&lt;&lt;dp[i]&lt;&lt;" ";</span></span><br><span class="line">		maxdp = <span class="built_in">max</span>(dp[i], maxdp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; maxdp &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -211,368 +307,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/12/BFS%E5%92%8CDFS/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" class="archive-article-date">
-  	<time datetime="2020-05-11T10:21:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">平衡二叉树</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/" class="archive-article-date">
-  	<time datetime="2020-05-10T14:16:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/">母亲节快乐</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">母亲节</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/" class="archive-article-date">
-  	<time datetime="2020-05-09T09:48:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">通过Jedis操作Redis</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" class="archive-article-date">
-  	<time datetime="2020-05-08T16:31:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">Cache的设计由来</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-05-07T15:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-07</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">Redis入门</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" class="archive-article-date">
-  	<time datetime="2020-05-06T05:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">NoSQL概述</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
-  	<time datetime="2020-05-04T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">MySQL联表查询</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">spring中GET和POST方法获取参数的几种方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" class="archive-article-date">
-  	<time datetime="2020-05-03T11:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">StringBuffer和StringBuilder</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javase</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &amp;raquo;</a>
-    </nav>
   
 
 
@@ -597,8 +430,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

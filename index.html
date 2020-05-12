@@ -160,6 +160,157 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-BFS和DFS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/12/BFS%E5%92%8CDFS/">BFS和DFS</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/12/BFS%E5%92%8CDFS/" class="archive-article-date">
+  	<time datetime="2020-05-12T12:21:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="DFS和BFS"><a href="#DFS和BFS" class="headerlink" title="DFS和BFS"></a>DFS和BFS</h1><h2 id="预备知识："><a href="#预备知识：" class="headerlink" title="预备知识："></a>预备知识：</h2><p>对于图的存储，除了直接使用Map来进行存储之外，我们还可以使用邻接矩阵和邻接表来进行存储图结构</p>
+<ul>
+<li>邻接矩阵：</li>
+</ul>
+<img src="/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285445907.png" class title="a">
+
+
+
+<ul>
+<li>邻接表</li>
+</ul>
+<img src="/2020/05/12/BFS%E5%92%8CDFS/05/12/BFS%E5%92%8CDFS/1589285494864.png" class title="b">
+
+
+
+
+
+
+
+<h2 id="广度优先搜索BFS"><a href="#广度优先搜索BFS" class="headerlink" title="广度优先搜索BFS"></a>广度优先搜索BFS</h2><blockquote>
+<p>主要思想：使用一个队列进行维护</p>
+</blockquote>
+<ul>
+<li>首现将我们的第一个元素入队</li>
+<li>弹出元素，然后标记上visited，也就是我们的第一个元素，然后遍历这个元素的所有邻接点，将这些节点依次入队</li>
+<li>然后弹出一个节点，标记上visited，并将这个节点的邻接点依次入队，直到队列为空。</li>
+</ul>
+<p><strong>如果我们的搜索对象是树，那么便实现了层序遍历</strong></p>
+<h2 id="深度优先搜索"><a href="#深度优先搜索" class="headerlink" title="深度优先搜索"></a>深度优先搜索</h2><blockquote>
+<p>主要思想：使用一个堆栈来进行维护</p>
+</blockquote>
+<ul>
+<li>首先我们将我们的第一个元素入栈</li>
+<li>弹出一个元素，然后标记上visited，也就是我们的第一个元素，然后遍历这个元素的所有邻接点，将这些节点依次入栈</li>
+<li>然后弹出一个节点，标记上visited，并将这个节点的邻接点入栈，直到栈为空。</li>
+</ul>
+<p><strong>其实跟递归调用是一样的思想</strong></p>
+<h1 id="利用BFS的特性求解算法题"><a href="#利用BFS的特性求解算法题" class="headerlink" title="利用BFS的特性求解算法题"></a>利用BFS的特性求解算法题</h1><blockquote>
+<p>由于一旦当我们到达某个节点时，我们便会将这个点做上标记，所以BFS所求出的路劲必定为最优解</p>
+</blockquote>
+<hr>
+<p>例：</p>
+<p>小明买了块高端大气上档次的电子手表，他正准备调时间呢。<br>在 M78 星云，时间的计量单位和地球上不同，M78 星云的一个小时有 n 分钟。<br>大家都知道，手表只有一个按钮可以把当前的数加一。在调分钟的时候，如果当前显示的数是 0 ，那么按一下按钮就会变<br>成 1，再按一次变成 2 。如果当前的数是 n  - 1，按一次后会变成 0 。<br>作为强迫症患者，小明一定要把手表的时间调对。如果手表上的时间比当前时间多1，则要按 n  - 1 次加一按钮才能调回<br>正确时间。<br>小明想，如果手表可以再添加一个按钮，表示把当前的数加 k 该多好啊……<br>他想知道，如果有了这个  + k 按钮，按照最优策略按键，从任意一个分钟数调到另外任意一个分钟数最多要按多少次。<br>注意，按  + k 按钮时，如果加k后数字超过n - 1, 则会对n取模。<br>比如，n = 10, k = 6 的时候，假设当前时间是0，连按2次  + k 按钮，则调为2。</p>
+<p>「输入格式」<br>一行两个整数 n, k ，意义如题。</p>
+<p>「输出格式」<br>一行一个整数<br>表示：按照最优策略按键，从一个时间调到另一个时间最多要按多少次。</p>
+<p>「样例输入」<br>5 3</p>
+<p>「样例输出」<br>2</p>
+<hr>
+<blockquote>
+<p> 由于我们每次要么走一格，要么走K格，所以我们可以将这个简单的线性结构转换为图结构。</p>
+</blockquote>
+<p>用邻接表来表示：</p>
+<p>1 :  2-&gt;1+k</p>
+<p>2 :  3-&gt;2+k</p>
+<p>…..</p>
+<p>所以我们用BFS来进行求解，将调手表看做对图的处理，利用队列当前所能到达的地点（时间），一个记录步数，一个记录是否到达过，所得结果必定为最优解</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> dp[<span class="number">100005</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, k;</span><br><span class="line">	<span class="built_in">cin</span> &gt;&gt; n &gt;&gt; k;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) dp[i] = i; <span class="comment">// 初始化为多少分钟就要调多少次，默认一次调一分钟 </span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; n; i += k) <span class="comment">//从0出发，每+k步数就加一次 </span></span><br><span class="line">		dp[i] = dp[i - k] + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = k + <span class="number">1</span>; i &lt; n; i += k) <span class="comment">// 从1出发，每+k步数就加一次 </span></span><br><span class="line">		dp[i] = dp[i - k] + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>) &#123; <span class="comment">// 如果结果收敛，则停止循环，这里我们算他们的和，如果他们的步数和不变了，说明收敛了 </span></span><br><span class="line">		<span class="keyword">int</span> now_sum = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; n; i++) &#123;</span><br><span class="line">			now_sum += dp[i];</span><br><span class="line">			dp[i] = <span class="built_in">min</span>(dp[(i + n - k) % n] + <span class="number">1</span>, dp[i - <span class="number">1</span>] + <span class="number">1</span>);<span class="comment">// 每一步都可以由上一步调k步或者1步得到 </span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (now_sum == sum) <span class="keyword">break</span>;</span><br><span class="line">		sum = now_sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> maxdp = dp[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">		<span class="comment">//		cout&lt;&lt;dp[i]&lt;&lt;" ";</span></span><br><span class="line">		maxdp = <span class="built_in">max</span>(dp[i], maxdp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; maxdp &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">BFS DFS</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/12/BFS%E5%92%8CDFS/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-平衡二叉树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1663,107 +1814,6 @@
 
 
   
-    <article id="post-虚拟机无法连接网络的一种解决办法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">虚拟机无法连接网络的一种解决办法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-02T05:49:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Ubuntu1910无法连接网路的一种解决办法"><a href="#Ubuntu1910无法连接网路的一种解决办法" class="headerlink" title="Ubuntu1910无法连接网路的一种解决办法"></a>Ubuntu1910无法连接网路的一种解决办法</h2><p>​        自从换了新电脑之后，VM虚拟机安装的各种系统都无法连接上网络，检查虚拟机的网络连接方式也都是以NAT模式，按理来说不应该存在网络无法连接的问题才对。网上的各种解决办法也都大同小异，没有任何作用，于是只好自己摸索。</p>
-<hr>
-<h3 id="记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。"><a href="#记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。" class="headerlink" title="记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。"></a>记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。</h3><ul>
-<li><p>打开本机的网络属性设置</p>
-</li>
-<li><p>打卡更改适配器设置</p>
-</li>
-<li><p>打开本机的WLAN属性的共享设置</p>
-</li>
-<li><p>共享连接都是开的就先关掉</p>
-</li>
-</ul>
-  <img src="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/1588398115559.png" class title="This is an example image">
-
-
-
-<ul>
-<li><p>然后再次开启共享</p>
-<img src="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/1588398157909.png" class title="a1">
-
-
-
-</li>
-</ul>
-<ul>
-<li>再次查看虚拟机便连接成功了</li>
-</ul>
-<hr>
-<h5 id="这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。"><a href="#这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。" class="headerlink" title="这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。"></a>这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。</h5>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟机 Ubuntu</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1911,6 +1961,18 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">图</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">BFS DFS</a>
               </li>
             
             <div class="clearfix"></div>
