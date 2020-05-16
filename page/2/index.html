@@ -160,6 +160,111 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-spring中GET和POST方法获取参数的几种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">spring中GET和POST方法获取参数的几种方法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="SpringMVC中POST和GET方法获取参数的几种方式"><a href="#SpringMVC中POST和GET方法获取参数的几种方式" class="headerlink" title="SpringMVC中POST和GET方法获取参数的几种方式"></a>SpringMVC中POST和GET方法获取参数的几种方式</h2><blockquote>
+<p>对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中</p>
+</blockquote>
+<h3 id="GET方法参数的获取"><a href="#GET方法参数的获取" class="headerlink" title="GET方法参数的获取"></a>GET方法参数的获取</h3><ul>
+<li>直接在方法体中获取url中对应的参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/sold/&#123;bookId&#125;"</span>,method = RequestMethod.POST)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sold</span><span class="params">(@PathVariable(<span class="string">"bookId"</span>)</span> <span class="keyword">int</span> bookId)</span>&#123;</span><br><span class="line">    bookServiceImpl.sold(bookId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@PathVariable注解便将url中的bookId和方法参数中的bookId关联了，当然当两者同名式@PathVariable注解中可不加参数。</p>
+<ul>
+<li>直接在方法体中指定参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>请求路径为…./get?id=1</p>
+<ul>
+<li>使用requestParam</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(@RequestParam(name = <span class="string">"id"</span>, required = <span class="keyword">true</span>)</span> Integer id) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>请求路径同上</p>
+<h3 id="POST方法获取对象"><a href="#POST方法获取对象" class="headerlink" title="POST方法获取对象"></a>POST方法获取对象</h3><ul>
+<li>当我们接受的json数据由对象的实体类时</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody User user)</span> </span>&#123;</span><br><span class="line">       list.add(user);</span><br><span class="line">       <span class="keyword">return</span> user;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这里传来的json数据将会被自动封装为实体类</strong></p>
+<ul>
+<li>当我们没有对应的实体类来封装时，我们可以使用map来接受json数据</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">     <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">     	Integer id = (Integer) map.get(<span class="string">"id"</span>);</span><br><span class="line">     	String name = (String) map.get(<span class="string">"name"</span>);</span><br><span class="line">     	Integer age = (Integer) map.get(<span class="string">"age"</span>);</span><br><span class="line">     	List&lt;String&gt; hobby=(List&lt;String&gt;) map.get(<span class="string">"hobby"</span>);</span><br><span class="line">    	User user = <span class="keyword">new</span> User(id, name, age, hobby);</span><br><span class="line">     	list.add(user);</span><br><span class="line">     	<span class="keyword">return</span> user;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-StringBuffer和StringBuilder" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1365,6 +1470,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">虚拟存储器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">prim算法</a>
               </li>
             
             <div class="clearfix"></div>
