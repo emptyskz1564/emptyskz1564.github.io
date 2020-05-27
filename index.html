@@ -160,6 +160,164 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-CPU的功能和结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/">CPU的功能和结构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2020-05-27T07:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="CPU的功能和结构"><a href="#CPU的功能和结构" class="headerlink" title="CPU的功能和结构"></a>CPU的功能和结构</h1><blockquote>
+<p>本章总览</p>
+</blockquote>
+<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590376566304.png" class="" title="a">
+
+
+
+<h2 id="CPU的功能"><a href="#CPU的功能" class="headerlink" title="CPU的功能"></a>CPU的功能</h2><img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590376843518.png" class="" title="b">
+
+
+
+<ul>
+<li>指令控制：完成取指令、分析指令和执行指令的操作，即程序的顺序控制。</li>
+<li>操作控制：一条指令的功能往往是由若干操作信号的组合来实现的。CPU管理并产生由内存取出的每条指令的操作信号，把各种操作信号送往相应的部件。从而控制这些部件按指令的要求进行动作。</li>
+<li>时间控制：对各种操作加以时间上的控制。时间控制要为每条指令按时间顺序提供应有的控制信号</li>
+<li>数据加工：对数据进行算术和逻辑运算</li>
+<li>中断处理：对计算机运行过程中出现的异常情况和特殊请求进行处理</li>
+</ul>
+<blockquote>
+<p>运算器和控制器对这些功能的分摊</p>
+</blockquote>
+<p><strong>运算器：</strong></p>
+<ul>
+<li>对数据进行加工</li>
+</ul>
+<p><strong>控制器：</strong></p>
+<ul>
+<li>取指令：自动形成指令地址；自动发出取指令的命令。</li>
+<li>分析指令：操作码译码(分析本条指令要完成什么操作)；产生操作数的有效地址。</li>
+<li>执行指令：根据分析指令得到的”操作命令”和”操作数地址”，形成操作信号控制序列，控制运算器、存储器以及I/O设备完成相应的操作。</li>
+<li>中断处理：管理总线及输入输出；处理异常情况(如掉电)和特殊请求(如打印机请求打印一行字符)</li>
+</ul>
+<h2 id="运算器的基本结构"><a href="#运算器的基本结构" class="headerlink" title="运算器的基本结构"></a>运算器的基本结构</h2>
+
+
+
+<blockquote>
+<p>组成</p>
+</blockquote>
+<ul>
+<li>算术逻辑单元(ALU)：主要功能是进行算术/逻辑运算</li>
+<li>通用寄存器</li>
+</ul>
+<p><strong>注意点：</strong></p>
+<p>如果所有的寄存器和ALU进行直连，则ALU无法判断用哪一个寄存器所传输的信号</p>
+<ul>
+<li><p>解决办法1：使用多路选择器根据控制信号选择一路输出(如上图)，C2为控制信号</p>
+</li>
+<li><p>解决办法2：使用三态门可以控制每一路是否输出，如下图</p>
+<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590378831287.png" class="" title="d">
+
+
+
+</li>
+</ul>
+<p><strong>以上两种设计方法都是专用数据通路方式：根据指令执行过程中的数据和地址的流动方向安排连接线路。这种方式性能较高，基本不存在数据冲突现象，但结构复杂，硬件量大，不易实现。</strong></p>
+<blockquote>
+<p>另一种方式：CPU内部单总线方式</p>
+</blockquote>
+<p><strong>将所有寄存器的输入端和输出端都连接到一条公共的通路上</strong></p>
+<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590379490793.png" class="" title="e">
+
+
+
+<ul>
+<li>特点：结构简单，容易实现，但数据传输存在较多冲突现象，性能较低</li>
+</ul>
+<blockquote>
+<p>完整结构</p>
+</blockquote>
+<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590382730530.png" class="" title="f">
+
+
+
+<h2 id="控制器的基本结构"><a href="#控制器的基本结构" class="headerlink" title="控制器的基本结构"></a>控制器的基本结构</h2><ul>
+<li>程序计数器：用于指出下一条指令在主存中的存放地址。CPU就是根据PC的内容去主存中取指令的。因程序中指令是顺序执行的，所以PC有自增功能。</li>
+<li>指令寄存器：用于保存当前正在执行的那条指令。</li>
+<li>指令译码器：仅对操作码字段进行译码，向控制器提供特定的操作信号 。</li>
+<li>微操作信号发射器：根据IR的内容(指令)、PSW到的内容(状态信号)及时序信号，产生控制整个计算机系统所需 的各种控制信号，其结构有组合逻辑型和存储逻辑型两种</li>
+<li>时序系统：用于产生各种时序信号，他们都是由统一钟分频得到</li>
+<li>存储器地址寄存器：用于存放所要访问的主存单元地址</li>
+<li>存储器数据寄存器：用于存放向主存写入的信息或从主存中读出的信息。</li>
+</ul>
+<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590385794734.png" class="" title="g">
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-指令系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1040,95 +1198,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Cache的设计由来" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">Cache的设计由来</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" class="archive-article-date">
-  	<time datetime="2020-05-08T16:31:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Cache的设计由来"><a href="#Cache的设计由来" class="headerlink" title="Cache的设计由来"></a>Cache的设计由来</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588770908260.png" class="" title="a">
-
-
-
-
-
-<h3 id="程序访问的局部性"><a href="#程序访问的局部性" class="headerlink" title="程序访问的局部性"></a>程序访问的局部性</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588772623598.png" class="" title="b">
-
-
-
-<p><strong>这里需要注意的有：</strong></p>
-<ul>
-<li>主存与CPU之间只能通过字来进行传输，所以数组中的每一个元素都要进过一次传输</li>
-<li>而主存和Cache之间是可以通过块来进行传输的，所以在1000ns中已经传输了10个元素到Cache中了。</li>
-<li>Cache与CPU之间的传输十分的快，所以利用了Cache的储存结构，比不使用Cache的存储结构会快一个数量级。</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">展开全文 >></a>
         </p>
       
 
