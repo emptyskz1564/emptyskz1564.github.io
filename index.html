@@ -160,6 +160,109 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-kmp算法next数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/">kmp算法next数组</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/" class="archive-article-date">
+  	<time datetime="2020-05-28T12:34:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="KMP算法中的next数组"><a href="#KMP算法中的next数组" class="headerlink" title="KMP算法中的next数组"></a>KMP算法中的next数组</h1><p>先贴上代码，只梳理下这个算法最不好理解的地方，已经next数组的优化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] kmpNext(String dest)&#123;</span><br><span class="line">    <span class="comment">//创意一个和模式串长度一样的数组</span></span><br><span class="line">	<span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[dest.length()];</span><br><span class="line">    <span class="comment">//初始化next[0] = 0;</span></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//第一层循环i代表模式串的子串的长度，j则是子串中前后缀相同的大小，我们的目的就是求出这个大小，然后存放在对应的next数组中，子串长度为0时，前后缀相同长度默认为0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt; dest.length(); i++)&#123;</span><br><span class="line">        <span class="comment">//在循环中处理两种情况，最后将求出的前后缀相同长度j赋值给next[i]</span></span><br><span class="line">        <span class="comment">//第一种当匹配时，这里从最开始说一下，思想有点类似动态规划，子问题逐渐推出终解的感觉，比如当i=1，j=0时，这时的子串为"AA",由于dest.charAt(i) == dest.charAt(j)，所以j=1，然后next[i] = 1；代表"AA"子串中前后缀相同长度为1，若i=2时，子串为"AAA"，这时也满足匹配要求，所以j=2，然后next[i] = 2；所以我们可以这么理解i永远指向新加入子串的字符，j永远指向下一个要匹配的字符，而j-1就是我们已经确定的相等子串的长度。</span></span><br><span class="line">        <span class="keyword">if</span>(dest.charAt(i) == dest.charAt(j))&#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//重点来了！！！！！！！</span></span><br><span class="line">        <span class="comment">//当下一个加入子串的字符与已经匹配长度的下一个字符j+1不相等时怎么办呢？我们可能第一反应是：既然这个最大匹配串的下一个字符不匹配，那我们就只能缩小长度了，那应该缩小多少呢，难道再从0开始重新匹配？当然是不需要的，我们已知我们已经匹配出了j-1的相同前后缀的子串大小了，然后我们就要从这j-1的子串中去找答案。先别急，我们再来明确一下，next数组中存放的是对应长度的子串的最大相等前后缀大小，而我们已经有了j-1的匹配长度，我们是不是可以从这个j-1长度的子串中去找一下个最大相等前后缀的大小呢？其中有一点转换关系，可以看看代码下面给出的图，图中的k对应这个代码里面的j，j对应代码中的i。然后我们按图讲一讲这个转换关系，我们已经有的j-1长的已经匹配的长度(图中的A1,A2)，那么next[j-1]就是这个这个已经匹配的子串中的最大相等前后缀长度(图中的B1,B2),又因为A1=A2，所以B2=B3,B3=B1，然后我们在去检测这个j是否与next[j-1]是否相等，最终找出这个长度，同时这个长度也对应于将要匹配的下标，所以我们将next[j-1]赋值给j，直到匹配为止。</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;<span class="number">0</span> &amp;&amp; dest.charAt(i) != dest.charAt(j))&#123;</span><br><span class="line">            j = next[j-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        next[i] = j;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<img src="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/1590645059875.png" class="" title="a">
+
+<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p><strong>图中是由其他博客[<a href="https://www.cnblogs.com/tangzhengyue/p/4315393.html]截取的,但是这个图中的next数组与我写的next数组是由区别的，图中的next数组表示的是不包含当前位的最大相同前后缀(也就是除去当前i下标的字符，前面的字符的最大相同前后缀)，而我写的是包含当前位的。所以图中的转换直接为next[k]就是下一个要匹配的位置，而我这里要进行减1操作，即next[j-1]，这里也有个小细节就是长度与下标的关系，因为我的next数组是包含当前位的，所以失配时是传入前一位的next[j-1]值，而图中的不包含当前位，就是直接传入当前位的next[k]值，而这个next长度就是刚好对应的下一个要匹配的字符的下标，因为下标是从0开始的，就比如图中的B1的长度为3，那么next[k]的下标就是3。由此可见next数组传入的就是子串的长度(可以看作是一个方法或者函数，返回值为最长前后缀的长度)。" target="_blank" rel="noopener">https://www.cnblogs.com/tangzhengyue/p/4315393.html]截取的,但是这个图中的next数组与我写的next数组是由区别的，图中的next数组表示的是不包含当前位的最大相同前后缀(也就是除去当前i下标的字符，前面的字符的最大相同前后缀)，而我写的是包含当前位的。所以图中的转换直接为next[k]就是下一个要匹配的位置，而我这里要进行减1操作，即next[j-1]，这里也有个小细节就是长度与下标的关系，因为我的next数组是包含当前位的，所以失配时是传入前一位的next[j-1]值，而图中的不包含当前位，就是直接传入当前位的next[k]值，而这个next长度就是刚好对应的下一个要匹配的字符的下标，因为下标是从0开始的，就比如图中的B1的长度为3，那么next[k]的下标就是3。由此可见next数组传入的就是子串的长度(可以看作是一个方法或者函数，返回值为最长前后缀的长度)。</a></strong></p>
+<p>上面的next是未经优化的next数组，而且由于网上已经各种教材的差异，next数组的求法也有些细微的差别，但是整体的思想是相同的。</p>
+<h2 id="next数组的优化"><a href="#next数组的优化" class="headerlink" title="next数组的优化"></a>next数组的优化</h2><p><strong>上面我们已经解决了最核心的一步思想了，接下来我们来看看如何优化next数组</strong></p>
+<blockquote>
+<p>下面我们使用不包含当前位且next[0]=-1的next数组，实际中我们也大多数使用的是这种</p>
+</blockquote>
+<img src="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/1590666823270.png" class="" title="b">
+
+
+
+<p>如图当b、c失配时，将调用next数组得知需要右移2位，但是b与c还是失配，于是我们再次调用next数组，出现了不必要的步骤。我们可以看出来这里情况有点特殊，特殊在于p[next[j]]与我们正在进行匹配的一位是相同的都是b，所以这时这时失配时，我们要去找next[next[j]]，不需要再中间浪费一步。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//优化过后的next 数组求法  </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetNextval</span><span class="params">(<span class="keyword">char</span>* p, <span class="keyword">int</span> next[])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> pLen = <span class="built_in">strlen</span>(p);  </span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">-1</span>;  </span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">-1</span>;  </span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">while</span> (j &lt; pLen - <span class="number">1</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="comment">//p[k]表示前缀，p[j]表示后缀    </span></span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">-1</span> || p[j] == p[k])  </span><br><span class="line">        &#123;  </span><br><span class="line">            ++j;  </span><br><span class="line">            ++k;  </span><br><span class="line">            <span class="comment">//较之前next数组求法，改动在下面4行  </span></span><br><span class="line">            <span class="keyword">if</span> (p[j] != p[k])  </span><br><span class="line">                next[j] = k;   <span class="comment">//之前只有这一行  </span></span><br><span class="line">            <span class="keyword">else</span>  </span><br><span class="line">            	<span class="comment">//因为不能出现p[j] = p[ next[j]]，所以当出现时需要继续递归，k = next[k] = next[next[k]]，否则由于p[j] = p[next[j]]，我们在回退后还是比较相同的内容，所以必将失败，重复不必要的操作。</span></span><br><span class="line">                next[j] = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">else</span>  </span><br><span class="line">        &#123;  </span><br><span class="line">            k = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h3><p>这里的next数组由于不包含当前下标的字符，所以当前下标所指的永远是即将要进行比较的一位，所以当第一位匹配之后，进行++操作后便指向下一个要比较的位，然后我们再看p[j] 与 p[k]，即p[j]与p[next[j]]的关系，或者说是失配时要回退的位于当前位的关系，如果相等，则我们继续回退，所以执行递归调用 next[j] = next[k]</p>
+<p><strong>重点：</strong>只要出现了p[next[j]] = p[j]的情况，则把next[j]的值再次递归 。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">kmp</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-CPU的功能和结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1058,98 +1161,6 @@
 
 
   
-    <article id="post-通过Jedis操作Redis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">通过Jedis操作Redis</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/" class="archive-article-date">
-  	<time datetime="2020-05-09T09:48:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="通过Jedis操作Redis"><a href="#通过Jedis操作Redis" class="headerlink" title="通过Jedis操作Redis"></a>通过Jedis操作Redis</h2><p>我们要使用java来操作Redis</p>
-<blockquote>
-<p>什么是Jedis 是Redis官方推荐的java连接开发工具！使用java操作Redis中间件！如果你要使用java操作redis，那么一定要对Jedis十分熟悉！</p>
-</blockquote>
-<blockquote>
-<p>测试</p>
-</blockquote>
-<p>1、导入依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2、编码测试：</p>
-<ul>
-<li>连接数据库</li>
-<li>操作命令</li>
-<li>断开连接！</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liu.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPing</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1、创建Jedis对象</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>,<span class="number">6379</span>);</span><br><span class="line">        <span class="comment">//jedis所有的方法就是我们之前学习的命令</span></span><br><span class="line">        System.out.println(jedis.ping());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之前学过的基本命令都被改写为了Jedis对象中的同名方法，直接使用即可</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1321,6 +1332,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Floyd算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kmp</a>
               </li>
             
             <div class="clearfix"></div>
