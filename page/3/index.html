@@ -160,6 +160,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-MybatisPlus入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">MybatisPlus入门</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/" class="archive-article-date">
+  	<time datetime="2020-04-30T16:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MybatisPlus快速入门"><a href="#MybatisPlus快速入门" class="headerlink" title="MybatisPlus快速入门"></a>MybatisPlus快速入门</h2><p><strong>步骤：</strong></p>
+<ul>
+<li>pojo</li>
+<li>mapper接口继承BaseMapper&lt;泛型&gt;，加上Mapper注解或Repository代表持久层，这时这个mapper接口就已经实现了所有的CRUD</li>
+<li>使用</li>
+</ul>
+<p><strong>代码示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;user&gt; <span class="title">getAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       List&lt;user&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    	<span class="comment">//userDao为继承了BaseMapper的接口类，在成员变量中已经自动装配</span></span><br><span class="line">    	<span class="comment">//查询所有的用户</span></span><br><span class="line">    	<span class="comment">//这里参数是一个Wrapper，条件构造器，这里我们先不用</span></span><br><span class="line">       users = userDao.selectList(<span class="keyword">null</span>);</span><br><span class="line">       <span class="keyword">return</span> users;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意点：我们需要在主启动类上去扫描我们的Mapper类 <code>@MapperScan(&quot;com.liu.dao&quot;)</code></li>
+</ul>
+<hr>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MybaitsPlus</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-存储系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -704,6 +790,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">kmp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
               </li>
             
             <div class="clearfix"></div>
