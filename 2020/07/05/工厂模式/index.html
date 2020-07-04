@@ -6,33 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>指令系统 | Emptyskz的博客</title>
+  <title>工厂模式 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="指令系统    指令(又称机器指令) 是指示计算机执行某种操作的命令，是计算机运行的最小功能单位。 一台计算机的所有指令的集合构成该机的指令系统，也称为指令集。 一台计算机只能执行自己指令系统中的指令，不能执行其他系统的指令。  指令格式 一条指令就是机器语言的一个语句，它是一组有意义的二进制代码。 一条指令通常要包括操作码字段和地址码字段两部分：">
+  <meta name="description" content="工厂模式OOP七大原则：  开闭原则：一个软件的实体应当对拓展开放，对修改关闭 依赖倒转原则：要针对接口编程，不要针对实现编程 迪米特法则：只与你直接的朋友通信，而避免和陌生人通信  工厂模式核心本质： 实例化对象不使用new，用工厂方法代替 将选择实现类，创建对象 统一管理和控制，从而将调用者跟我们的实现类解耦。  简单工厂模式 用来生产同一等级结构中的任意产品(对于增加新的产品，需要扩展已有代">
 <meta property="og:type" content="article">
-<meta property="og:title" content="指令系统">
-<meta property="og:url" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:title" content="工厂模式">
+<meta property="og:url" content="http://yoursite.com/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
-<meta property="og:description" content="指令系统    指令(又称机器指令) 是指示计算机执行某种操作的命令，是计算机运行的最小功能单位。 一台计算机的所有指令的集合构成该机的指令系统，也称为指令集。 一台计算机只能执行自己指令系统中的指令，不能执行其他系统的指令。  指令格式 一条指令就是机器语言的一个语句，它是一组有意义的二进制代码。 一条指令通常要包括操作码字段和地址码字段两部分：">
+<meta property="og:description" content="工厂模式OOP七大原则：  开闭原则：一个软件的实体应当对拓展开放，对修改关闭 依赖倒转原则：要针对接口编程，不要针对实现编程 迪米特法则：只与你直接的朋友通信，而避免和陌生人通信  工厂模式核心本质： 实例化对象不使用new，用工厂方法代替 将选择实现类，创建对象 统一管理和控制，从而将调用者跟我们的实现类解耦。  简单工厂模式 用来生产同一等级结构中的任意产品(对于增加新的产品，需要扩展已有代">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590148235849.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590149307217.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590149329866.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590150319046.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590150530487.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590151270557.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590151494093.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590151476990.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590152895107.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590153843465.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590154122050.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590154205687.png">
-<meta property="article:published_time" content="2020-05-24T13:58:44.000Z">
-<meta property="article:modified_time" content="2020-05-24T14:06:01.085Z">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850704336.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850785721.png">
+<meta property="article:published_time" content="2020-07-04T17:11:13.000Z">
+<meta property="article:modified_time" content="2020-07-04T17:13:59.053Z">
 <meta property="article:author" content="Emptyskz">
-<meta property="article:tag" content="计算机组成原理">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="工厂模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590148235849.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850704336.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -176,95 +167,118 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-指令系统" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-工厂模式" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      指令系统
+      工厂模式
     </h1>
   
 
         
-        <a href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-05-24T13:58:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
+        <a href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-04T17:11:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h1><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590148235849.png" class="" title="a">
-
-
-
-<h2 id="指令-又称机器指令"><a href="#指令-又称机器指令" class="headerlink" title="指令(又称机器指令)"></a>指令(又称机器指令)</h2><ul>
-<li>是指示计算机执行某种操作的命令，是计算机运行的最小功能单位。</li>
-<li>一台计算机的所有指令的集合构成该机的指令系统，也称为指令集。</li>
-<li>一台计算机只能执行自己指令系统中的指令，不能执行其他系统的指令。</li>
+        <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>OOP七大原则：</p>
+<ul>
+<li>开闭原则：一个软件的实体应当对拓展开放，对修改关闭</li>
+<li>依赖倒转原则：要针对接口编程，不要针对实现编程</li>
+<li>迪米特法则：只与你直接的朋友通信，而避免和陌生人通信</li>
 </ul>
-<h2 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h2><ul>
-<li>一条指令就是机器语言的一个语句，它是一组有意义的二进制代码。</li>
-<li>一条指令通常要包括操作码字段和地址码字段两部分：</li>
+<h3 id="工厂模式核心本质："><a href="#工厂模式核心本质：" class="headerlink" title="工厂模式核心本质："></a>工厂模式核心本质：</h3><ul>
+<li>实例化对象不使用new，用工厂方法代替</li>
+<li>将选择实现类，创建对象 统一管理和控制，从而将调用者跟我们的实现类解耦。</li>
 </ul>
-<img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590149307217.png" class="" title="b">
-
-<a id="more"></a>
-
-<h4 id="四地址指令"><a href="#四地址指令" class="headerlink" title="四地址指令"></a>四地址指令</h4><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590149329866.png" class="" title="c">
-
-
-
-<p><strong>指令含义</strong>：(A1)OP(A2) - &gt; A3，A4=下一条将要执行指令的地址</p>
-<p>A1与A2通过OP操作得到的数据存放到A3中，</p>
-<img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590150319046.png" class="" title="d">
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><blockquote>
+<p>用来生产同一等级结构中的任意产品(对于增加新的产品，需要扩展已有代码)</p>
+</blockquote>
+<p>比如我们现在有一家汽车生产商</p>
+<p>那么按照简单工厂模式，我们就可以写出这样的结构</p>
+<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850704336.png" class="" title="a">
 
 
 
 <blockquote>
-<p>优化</p>
+<p>产品实现car接口，车工厂统一管理所有的对象生产</p>
 </blockquote>
-<h4 id="三地址指令"><a href="#三地址指令" class="headerlink" title="三地址指令"></a>三地址指令</h4><p>我们将数据统一排放在一个区，将指令也统一排放在一个区，一个指令执行完成之后，自动的在下一个存储单元获取指令即可。</p>
-<p>这时我们需要一个程序计数器PC，来控制指令地址的变化</p>
-<img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590150530487.png" class="" title="e">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p><strong>变化：四地址指令中Ai只有6位，现在Ai被扩充到了8位，能够表示的位置大大增加了！但是完成一次指令还是需要四次访存。</strong></p>
-<h4 id="二地址指令"><a href="#二地址指令" class="headerlink" title="二地址指令"></a>二地址指令</h4><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590151270557.png" class="" title="f">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//方法一：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getCar</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name==<span class="string">"Tesla"</span>)&#123;</span><br><span class="line">            Tesla tesla = <span class="keyword">new</span> Tesla();</span><br><span class="line">            <span class="keyword">return</span> tesla;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(name==<span class="string">"WuLin"</span>)&#123;</span><br><span class="line">            WuLin wuLin = <span class="keyword">new</span> WuLin();</span><br><span class="line">            <span class="keyword">return</span> wuLin;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//方法二：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getTesla</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getWuLin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="一地址指令"><a href="#一地址指令" class="headerlink" title="一地址指令"></a>一地址指令</h4><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590151494093.png" class="" title="g">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="零地址指令"><a href="#零地址指令" class="headerlink" title="零地址指令"></a>零地址指令</h4><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590151476990.png" class="" title="h">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="拓展操作码"><a href="#拓展操作码" class="headerlink" title="拓展操作码"></a>拓展操作码</h2><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590152895107.png" class="" title="i">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        Tesla tesla = new Tesla();</span></span><br><span class="line"><span class="comment">//        WuLin wuLin = new WuLin();</span></span><br><span class="line"><span class="comment">//        tesla.name();</span></span><br><span class="line"><span class="comment">//        wuLin.name();</span></span><br><span class="line">        <span class="comment">//在不使用工厂模式下，我们对对象的操作都是基于new的</span></span><br><span class="line">        <span class="comment">//在使用工厂模式后，用户不在需要处理对象的初始化，而是直接调用工程的静态方法即可获取到对象</span></span><br><span class="line"></span><br><span class="line">        Car wuLin = CarFactory.getCar(<span class="string">"WuLin"</span>);</span><br><span class="line">        wuLin.name();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>显然</strong>我们可以看出，这个简单工厂模式其实并不满足OOP的开闭原则，因为一旦我们需要添加产品，按我们就必须去修改原来的工厂类，这对后期扩展会造成很大的麻烦，但是简单工厂的结构简单，代码量相对较少。</p>
+<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>同样的生产模式，我们用工厂方法模式实现的结构如下</p>
+<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850785721.png" class="" title="b">
 
 
 
-<p><strong>在设计扩展操作码指令格式时，必须注意以下两点：</strong></p>
-<ul>
-<li>在不允许短码是长码的前缀，即短操作码不能与长操作码的前面部分的代码相同</li>
-<li>各指令的操作码一定不能重复</li>
+<blockquote>
+<p>产品实现car接口，工厂实现carFactory接口，每个工厂生产固定的产品</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//我们将工厂换为接口，相当于在产品与工厂又加了一层</span></span><br><span class="line">    <span class="comment">//而不同的产品我们有不同的工厂方法</span></span><br><span class="line">    <span class="function">Car <span class="title">getCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeslaFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLinFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>显然</strong>工厂方法模式满足OOP闭合原则，有着不错的扩展性，我们不在需要修改原有的工厂类，只需要增加新的产品和对应的接口即可，但是代码量大，结构复杂</p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><ul>
+<li>定义：抽象工厂模式提供了一个创建一系列相关或者相互依赖对象的接口，无需指定他们具体的类</li>
+<li>适用场景：<ul>
+<li>客户端(应用层)不依赖产品类实例如何被创建，实现等细节</li>
+<li>强调一系列相关的产品对象(属于同一产品族)一起使用创建对象需要大量的重复代码</li>
+<li>提供一个产品类的库，所有的产品以同样的接口出现，从而使得客户端不依赖于具体的实现</li>
 </ul>
-<p>通常情况下，对使用频率较高的指令，分配较短的操作码；对使用频率较低的指令，分配较长的操作码，从而尽可能减少指令译码和分析的时间。</p>
-<img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590153843465.png" class="" title="j">
-
-
-
-<h2 id="操作码分类"><a href="#操作码分类" class="headerlink" title="操作码分类"></a>操作码分类</h2><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590154122050.png" class="" title="k">
-
-
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590154205687.png" class="" title="l">
-
+</li>
+<li>优点：<ul>
+<li>具体产品在应用层的代码隔离，无需关心创建的细节</li>
+<li>将一个系列的产品统一到一起创建</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>规定了所有可能被创建的产品集合，产品族中扩展新的产品困难；</li>
+<li>增加了系统的抽象性和理解难度</li>
+</ul>
+</li>
+</ul>
+<p><strong>抽象工厂就是工厂的工厂，是一层更加抽象的内容，类似于一个什么都能造的工厂，然后根据不同的品牌创建出不同品牌的工厂。所以抽象工厂中有比较复杂的系统逻辑，类与类之间也有相互依赖，所以其扩展性非常差，只适合在设计好，不会有频繁更新的产品集合之间使用</strong></p>
 
       
 
@@ -299,7 +313,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">工厂模式</a>
         		</li>
       		
 		</ul>
@@ -355,7 +373,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -369,18 +387,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          CPU的功能和结构
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Floyd算法</div>
+    <a href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单例模式</div>
       <i class="icon-circle-right"></i>
     </a>
   
