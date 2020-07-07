@@ -160,6 +160,119 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-虚拟存储器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">虚拟存储器</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/" class="archive-article-date">
+  	<time datetime="2020-05-14T14:30:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><blockquote>
+<p>虚拟存储器是一个逻辑模型</p>
+</blockquote>
+<h2 id="功能："><a href="#功能：" class="headerlink" title="功能："></a>功能：</h2><p>用户给出一个地址，叫做虚地址或逻辑地址，虚拟存储器要给出该地址对应的数据。</p>
+<h2 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h2><p>由辅助硬件将虚地址映射到主存当中的某个单元，主存单元地址称为实地址或物理地址</p>
+<h2 id="虚拟空间与主存空间的映射方式"><a href="#虚拟空间与主存空间的映射方式" class="headerlink" title="虚拟空间与主存空间的映射方式"></a>虚拟空间与主存空间的映射方式</h2><h3 id="方式一：页式虚拟存储器"><a href="#方式一：页式虚拟存储器" class="headerlink" title="方式一：页式虚拟存储器"></a>方式一：页式虚拟存储器</h3><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589437188055.png" class="" title="a">
+
+
+
+<ul>
+<li>页表实际在主存中</li>
+<li>页表拼接页表起始地址指向主存地址所在的页表地址，然后取出实际地址</li>
+<li>再去Cache-主存中去寻找数据</li>
+</ul>
+<h3 id="方式二：段式虚拟存储器"><a href="#方式二：段式虚拟存储器" class="headerlink" title="方式二：段式虚拟存储器"></a>方式二：段式虚拟存储器</h3><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589437869744.png" class="" title="b">
+
+
+
+<h3 id="方式三：段页虚拟存储器"><a href="#方式三：段页虚拟存储器" class="headerlink" title="方式三：段页虚拟存储器"></a>方式三：段页虚拟存储器</h3><p>把程序按逻辑结构分段，每段再划分为固定大小的页，主存空间也划分为大小相等的页，程序对主存的调入、调出仍以页为基本传送单位。每个程序对应一个段表，每段对应一个页表。</p>
+<p>虚拟地址：段号+段内页号+页内地址</p>
+<img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589458019204.png" class="" title="c">
+
+
+
+<h1 id="一个例题"><a href="#一个例题" class="headerlink" title="一个例题"></a>一个例题</h1><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589459336971.png" class="" title="d">
+
+
+
+<ul>
+<li>虚拟地址的高5位03FFF对应实页号的4位，表中为0153，然后替换掉虚拟地址，得到主存实地址</li>
+<li>第二个的FF180对应的实页地址位为0002，但是我们发现有效位为0，因为这是个快表，所以是在Cache中，有效位为0代表没有命中，所以为TLB缺失。</li>
+</ul>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589459765986.png" class="" title="e">
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟存储器</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-BFS和DFS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1052,99 +1165,6 @@
 
 
   
-    <article id="post-StringBuffer和StringBuilder" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">StringBuffer和StringBuilder</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" class="archive-article-date">
-  	<time datetime="2020-05-03T11:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="StringBuffer和StringBuilder"><a href="#StringBuffer和StringBuilder" class="headerlink" title="StringBuffer和StringBuilder"></a>StringBuffer和StringBuilder</h2><ul>
-<li><p>StringBuffer和StringBuilder是可变长的，而String是不可边长的字符串</p>
-<p>先来看看下面的代码</p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String str=<span class="string">"abc"</span>;</span><br><span class="line">System.out.println(str);</span><br><span class="line">str=str+<span class="string">"de"</span>;</span><br><span class="line">System.out.println(str);</span><br></pre></td></tr></table></figure>
-
-<p>​        很明显这里会先输出abc，然后再输出adcde，看似是对str进行了修改，实则不然，JVM对这里的处理是，首先创建一个String对象str，并把“abc”赋值给str，然后在第三行中，其实JVM又创建了一个新的对象也名为str，然后再把原来的str的值和“de”加起来再赋值给新的str，而原来的str就会被JVM的垃圾回收机制（当指向这个对象的引用为0时，回收这个对象）给回收掉了，所以，str实际上并没有被更改，也就是前面说的String对象一旦创建之后就不可更改了。 </p>
-<p>​        所以当我们要是用的字符串进行多次更改的时候，使用String效率是非常低的，因为在这个更改的过程中，会有多次的对象创建和对象的回收操作。因此这时我们便要使用SringBuffer和StringBuilder了，这两者创建出的对象都是变量，所有的更改操作都是直接操作的，所以速度会更快</p>
-<ul>
-<li><p>在线程安全上，StringBuilder是线程不安全的，而StringBuffer是线程安全的</p>
-<pre><code>如果一个StringBuffer对象在字符串缓冲区被多个线程使用时，StringBuffer中很多方法可以带有synchronized(方法锁)关键字，所以可以保证线程是安全的，但StringBuilder的方法则没有该关键字，所以不能保证线程安全，有可能会出现一些错误的操作。所以如果要进行的操作是多线程的，那么就要使用StringBuffer，但是在单线程的情况下，还是建议使用速度比较快的StringBuilder。 </code></pre></li>
-<li><p>总结一下就是：</p>
-<ul>
-<li>String类：不可变性final，操作量较少的时候使用</li>
-<li>StringBuffer：可变长，多线程数据量较大的时候使用，效率低，但是线程安全</li>
-<li>StringBuilder：可变长，单线程数据量较大的时候使用，效率高，但是线程不安全</li>
-</ul>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javase</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1336,6 +1356,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">建造者模式</a>
               </li>
             
             <div class="clearfix"></div>
