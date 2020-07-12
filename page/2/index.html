@@ -160,6 +160,122 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-prim算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/16/prim%E7%AE%97%E6%B3%95/">prim算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/16/prim%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-05-16T07:08:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h1><ul>
+<li>普利姆算法求最小生成树，也就是在包含n个顶点的连通图中，找出只有(n-1)条边包含所有n个顶点的连通子图，也就是所谓的极小连通子图</li>
+<li>普利姆算法如下<ul>
+<li>设G=(V,E)是连通图，T=(U,D)是最小生成树，V,U是顶点集合，E，D是边的集合</li>
+<li>若从顶u开始构造最小生成树，则从集合V中取出顶点u放入集合U中，标记顶点v的visited[u]=1</li>
+<li>若集合U中顶点ui与集合V-U中的顶点vj之间存在边，则寻找这些边中权值最小的边，但不能构成回路，将顶点vj加入集合U中，将边(ui，vj)加入集合D中，标记visited[vj]=1</li>
+<li>重复步骤2，直到U与V相等，即所有顶点都被标记访问过，此时D中有n-1条边</li>
+</ul>
+</li>
+</ul>
+<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><img src="/2020/05/16/prim%E7%AE%97%E6%B3%95/1589608212675.png" class="" title="a">
+
+
+
+<h3 id="核心代码片段"><a href="#核心代码片段" class="headerlink" title="核心代码片段"></a>核心代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码中graph类中verxs属性表示节点的个数</span></span><br><span class="line"><span class="comment">//graph.weight数组为节点的邻接矩阵，值为权值，用10000代表不通</span></span><br><span class="line"><span class="comment">//graph.data为节点信息或者值</span></span><br><span class="line"><span class="comment">//用visited[]数组记录是否已经访问</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">visited[<span class="number">0</span>] = <span class="number">1</span>;	<span class="comment">//从第一个节点开始，可以自定</span></span><br><span class="line"><span class="comment">//第一层for循环代表我们要产生n-1条边</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; graph.verxs; k++)&#123;</span><br><span class="line">    <span class="comment">//第二层for循环是我们在遍历已经访问过的点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; graph.verxs &amp;&amp; visited[i] == <span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="comment">//第二层for循环是我们通过我们已经访问过的节点，去访问未访问过的节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt; graph.verxs &amp;&amp; visited[j] == <span class="number">0</span>;j++)&#123;</span><br><span class="line">            <span class="comment">// 判断是为了从这些未访问的与访问过的节点所产生的边中选出最短边，用h1、h2记录下来</span></span><br><span class="line">            <span class="keyword">if</span>(graph.weight[i][j] &lt; minWeight)&#123;</span><br><span class="line">                minWeight = graph.weight[i][j];</span><br><span class="line">                h1 = i;</span><br><span class="line">                h2 = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//打印选出的最短边</span></span><br><span class="line">    System.out.println(<span class="string">"边&lt;"</span> + graph.data[h1] + <span class="string">","</span> + graph.data[h2] + <span class="string">"&gt; 权值："</span> + minWeight);</span><br><span class="line">    <span class="comment">//标记这个未访问的节点</span></span><br><span class="line">    visited[h2] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//重置最小权值</span></span><br><span class="line">    minWeight = <span class="number">10000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>核心思想：贪心算法，每次都是选出局部最优解，最终求出全局最优解。</p>
+</blockquote>
+<hr>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
+<li><p>优化后只有两层循环，时间复杂度降为O(n²)</p>
+</li>
+<li><p>优化点：</p>
+<p>可以这么理解，上面的方法是遍历顶点，所以在既要遍历出发顶点又要遍历终点，所以会出现三重循环，而优化后，我们引进了一个dist数组，用来存放侯选边，所以是对边进行遍历从而只有两层循环</p>
+</li>
+<li><p>侯选边dist数组的解释：我们不关心出发点具体是哪一个(但是是从已经访问过的顶点出发的)，只关心终点，数组中存放的是到达这个终点的最短距离，而被选取的对象是从我们已经访问过的顶点出发的边。所以初始化时，将出发点的所有邻接点的距离都存入dist，而更新时，我们只需要比较最新访问的顶点的所有邻接点的距离和原dist数组的距离进行比较，存入短边即可。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 10000</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">bool</span> visit[N];</span><br><span class="line"><span class="keyword">int</span> dist[N] = &#123; <span class="number">0</span>, &#125;;</span><br><span class="line"><span class="keyword">int</span> graph[N][N] = &#123; &#123;INF,<span class="number">7</span>,<span class="number">4</span>,INF,INF,INF&#125;,  <span class="comment">//INF代表两点之间不可达</span></span><br><span class="line">                    &#123;<span class="number">7</span>,INF,<span class="number">6</span>,<span class="number">2</span>,INF,<span class="number">4</span>&#125;,</span><br><span class="line">                    &#123;<span class="number">4</span>,<span class="number">6</span>,INF,INF,<span class="number">9</span>,<span class="number">8</span>&#125;,</span><br><span class="line">                    &#123;INF,<span class="number">2</span>,INF,INF,INF,<span class="number">7</span>&#125;,</span><br><span class="line">                    &#123;INF,INF,<span class="number">9</span>,INF,INF,<span class="number">1</span>&#125;,</span><br><span class="line">                    &#123;INF,<span class="number">4</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">1</span>,INF&#125;</span><br><span class="line">                  &#125;;</span><br><span class="line">intprim(<span class="keyword">int</span> cur)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> index = cur;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">memset</span>(visit,<span class="literal">false</span>, <span class="keyword">sizeof</span>(visit));</span><br><span class="line">    visit[cur] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">        dist[i] = graph[cur][i];<span class="comment">//初始化，每个与a邻接的点的距离存入dist</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; N; i++)		<span class="comment">//生成n-1条边</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> minor = INF;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[j] &amp;&amp; dist[j] &lt; minor)          <span class="comment">//找到未访问的点中，距离当前最小生成树距离最小的点</span></span><br><span class="line">            &#123;</span><br><span class="line">                minor = dist[j];</span><br><span class="line">                index = j;				<span class="comment">//由新加入的顶点去更新dist数组，因为dist中的终点可能可以由新的顶点产生更小的路径，而这个更小的路径我们就需要更新到dist中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        visit[index] = <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        sum += minor;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[j] &amp;&amp; dist[j]&gt;graph[index][j])    <span class="comment">//dist数组中只存放到达j顶点的最短边，更新后的dist数组会经过下一次循环获取到新的最短边</span></span><br><span class="line">            &#123;</span><br><span class="line">                dist[j] = graph[index][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> sum;               <span class="comment">//返回最小生成树的总路径值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; prim(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//从顶点a开始</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">prim算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/16/prim%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-虚拟存储器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1060,111 +1176,6 @@
 
 
   
-    <article id="post-spring中GET和POST方法获取参数的几种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">spring中GET和POST方法获取参数的几种方法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="SpringMVC中POST和GET方法获取参数的几种方式"><a href="#SpringMVC中POST和GET方法获取参数的几种方式" class="headerlink" title="SpringMVC中POST和GET方法获取参数的几种方式"></a>SpringMVC中POST和GET方法获取参数的几种方式</h2><blockquote>
-<p>对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中</p>
-</blockquote>
-<h3 id="GET方法参数的获取"><a href="#GET方法参数的获取" class="headerlink" title="GET方法参数的获取"></a>GET方法参数的获取</h3><ul>
-<li>直接在方法体中获取url中对应的参数</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/sold/&#123;bookId&#125;"</span>,method = RequestMethod.POST)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sold</span><span class="params">(@PathVariable(<span class="string">"bookId"</span>)</span> <span class="keyword">int</span> bookId)</span>&#123;</span><br><span class="line">    bookServiceImpl.sold(bookId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>@PathVariable注解便将url中的bookId和方法参数中的bookId关联了，当然当两者同名式@PathVariable注解中可不加参数。</p>
-<ul>
-<li>直接在方法体中指定参数</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>请求路径为…./get?id=1</p>
-<ul>
-<li>使用requestParam</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(@RequestParam(name = <span class="string">"id"</span>, required = <span class="keyword">true</span>)</span> Integer id) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>请求路径同上</p>
-<h3 id="POST方法获取对象"><a href="#POST方法获取对象" class="headerlink" title="POST方法获取对象"></a>POST方法获取对象</h3><ul>
-<li>当我们接受的json数据由对象的实体类时</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody User user)</span> </span>&#123;</span><br><span class="line">       list.add(user);</span><br><span class="line">       <span class="keyword">return</span> user;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>这里传来的json数据将会被自动封装为实体类</strong></p>
-<ul>
-<li>当我们没有对应的实体类来封装时，我们可以使用map来接受json数据</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">     <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">     	Integer id = (Integer) map.get(<span class="string">"id"</span>);</span><br><span class="line">     	String name = (String) map.get(<span class="string">"name"</span>);</span><br><span class="line">     	Integer age = (Integer) map.get(<span class="string">"age"</span>);</span><br><span class="line">     	List&lt;String&gt; hobby=(List&lt;String&gt;) map.get(<span class="string">"hobby"</span>);</span><br><span class="line">    	User user = <span class="keyword">new</span> User(id, name, age, hobby);</span><br><span class="line">     	list.add(user);</span><br><span class="line">     	<span class="keyword">return</span> user;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1360,6 +1371,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">建造者模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
               </li>
             
             <div class="clearfix"></div>

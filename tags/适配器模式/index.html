@@ -6,26 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Redis入门 | Emptyskz的博客</title>
+  <title>Tag: 适配器模式 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="NoSQL的四大分类KV键值对：  新浪：Redis 美团：Redis+Tair 阿里、百度：Redis+memecache  文档型数据库（bson格式 和json一样）：  MongoDB(一般必须掌握) MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！ MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Redis入门">
-<meta property="og:url" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Emptyskz的博客">
+<meta property="og:url" content="http://yoursite.com/tags/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
-<meta property="og:description" content="NoSQL的四大分类KV键值对：  新浪：Redis 美团：Redis+Tair 阿里、百度：Redis+memecache  文档型数据库（bson格式 和json一样）：  MongoDB(一般必须掌握) MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！ MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588749901418.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588752723844.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588752950463.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588824672280.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588824835110.png">
-<meta property="article:published_time" content="2020-05-07T15:40:01.000Z">
-<meta property="article:modified_time" content="2020-05-18T15:23:30.116Z">
 <meta property="article:author" content="Emptyskz">
-<meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588749901418.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -169,373 +158,64 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Redis入门" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Redis入门
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-12T13:24:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">适配器模式</a>
     </h1>
   
 
-        
-        <a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-05-07T15:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="NoSQL的四大分类"><a href="#NoSQL的四大分类" class="headerlink" title="NoSQL的四大分类"></a>NoSQL的四大分类</h2><p><strong>KV键值对：</strong></p>
-<ul>
-<li>新浪：Redis</li>
-<li>美团：Redis+Tair</li>
-<li>阿里、百度：Redis+memecache</li>
-</ul>
-<p><strong>文档型数据库（bson格式 和json一样）：</strong></p>
-<ul>
-<li>MongoDB(一般必须掌握)<ul>
-<li>MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！</li>
-<li>MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富，最像关系型数据库的！</li>
-</ul>
-</li>
-<li>ConthDB</li>
-</ul>
-<p><strong>列存储数据库：</strong></p>
-<ul>
-<li>HBASE</li>
-<li>分布式文件系统</li>
-</ul>
-<p><strong>图关系数据库：</strong></p>
-<ul>
-<li>它不是用来存图形的，放的是关系，比如：朋友圈社交网络，广告推荐</li>
-<li>Neo4j，InfoGrid</li>
-</ul>
-<a id="more"></a>
-
-<blockquote>
-<p>四者对比</p>
-</blockquote>
-<img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588749901418.png" class="" title="a">
-
-
-
-
-
-<h2 id="Redis入门"><a href="#Redis入门" class="headerlink" title="Redis入门"></a>Redis入门</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><blockquote>
-<p>Redis是什么？</p>
-</blockquote>
-<p>Redis（Remote Dictionary Server），即远程服务字典， 是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。 </p>
-<p>Redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。 </p>
-<p>免费并且开源！是当下最热门的NoSQL技术之一！也被人们称之为结构化数据库。</p>
-<blockquote>
-<p>Redis能干嘛？</p>
-</blockquote>
-<p>1、内存存储、持久化，内存中是断点即失的，所以持久化很重要（rdb、aof）</p>
-<p>2、效率高，可以用于高速缓存</p>
-<p>3、发布订阅系统</p>
-<p>4、地图信息分析</p>
-<p>5、计时器、计数器（浏览量！）</p>
-<p>6、。。。</p>
-<blockquote>
-<p>特性</p>
-</blockquote>
-<p>1、多样的数据类型</p>
-<p>2、持久化</p>
-<p>3、集群</p>
-<p>4、事务</p>
-<p>。。。。</p>
-<blockquote>
-<p>学习中需要用到的东西</p>
-</blockquote>
-<p>1、<a href="https://redis.io/" target="_blank" rel="noopener">Redis英文官网</a></p>
-<p>2、<a href="https://redis.cn/" target="_blank" rel="noopener">Redis中文官网</a></p>
-<p>3、下载地址，通过官网下载即可</p>
-<p><strong>Windows在Github上下载(停更了很久了)，推荐在Linux上搭建</strong></p>
-<h3 id="Windos安装"><a href="#Windos安装" class="headerlink" title="Windos安装"></a>Windos安装</h3><p>1、window下载地址：<a href="https://github.com/microsoftarchive/redis/releases" target="_blank" rel="noopener">https://github.com/microsoftarchive/redis/releases</a></p>
-<p>2、解压到环境目录下</p>
-<p>3、开启Redis，双击exe即开启。</p>
-<img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588752723844.png" class="" title="b">
-
-
-
-<p>4、使用Redis客户端来连接Redis</p>
-<img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588752950463.png" class="" title="c">
-
-
-
-<h3 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h3><p>直接在线安装即可</p>
-<ul>
-<li>修改配置文件：改为后台运行 daemonize yes</li>
-<li>启动Redis</li>
-</ul>
-<img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588824672280.png" class="" title="d">
-
-
-
-<ul>
-<li>查看进程</li>
-</ul>
-<img src="/2020/05/07/Redis%E5%85%A5%E9%97%A8/1588824835110.png" class="" title="e">
-
-
-
-<ul>
-<li>后面使用单机多Redis服务，使用不同的端口和配置文件启动</li>
-</ul>
-<hr>
-<h2 id="Redis基本知识"><a href="#Redis基本知识" class="headerlink" title="Redis基本知识"></a>Redis基本知识</h2><ul>
-<li><p>默认有16个数据库</p>
-<p>默认使用的是第0个，可以使用select进行切换数据库，使用<code>dbsize</code>查看数据库大小</p>
-</li>
-<li><p>除了简单的<code>set</code> <code>get</code> 进行键值对的存取外，使用<code>keys *</code> 可以查看所有的key</p>
-</li>
-<li><p><code>flushall</code>清空所有的键值对，<code>flushdb</code>清空当前库</p>
-</li>
-</ul>
-<blockquote>
-<p>Redis是单线程的！</p>
-</blockquote>
-<p>明白Redis是很快的，是基于内存操作的，CPU不是Redis的技术瓶颈，Redis的技术瓶颈是根据内存和网络带宽来决定的。</p>
-<p><strong>Redis为什么单线程还这么快？</strong></p>
-<p>1、误区1：高性能的服务器一定是多线程的？</p>
-<p>2、误区2：多线程（CPU上下文会切换！）一定比单线程效率高！</p>
-<p><strong>核心：</strong>Redis是将所有的数据放在内存中，所以说单线程去操作是效率最高的，多线程(CPU上下文会切换：耗时的操作！)对于内存来说没有上下文切换是效率最高的。</p>
-<h2 id="五大数据类型"><a href="#五大数据类型" class="headerlink" title="五大数据类型"></a>五大数据类型</h2><h3 id="Redis-Key"><a href="#Redis-Key" class="headerlink" title="Redis-Key"></a>Redis-Key</h3><p><code>EXISTS key</code>：判断键是否存在</p>
-<p><code>move key index</code>：移动key到index数据库</p>
-<p><code>del key</code>：删除key</p>
-<p><code>EXPIRE key second</code>：设置key多少秒之后过期</p>
-<p><code>ttl key</code>：查看key多少秒后过期</p>
-<p><code>type key</code>：查看key的类型</p>
-<p>后面有不会的命令可以在官方文档查看</p>
-<hr>
-<h3 id="String-字符串"><a href="#String-字符串" class="headerlink" title="String(字符串)"></a>String(字符串)</h3><p>90%的java程序员只会使用String类型！</p>
-<p><code>APPEND key &quot;str&quot;</code>：在key后添加拼接字符串,如果当前key不存在则添加这个key</p>
-<p><code>STRLEN key</code>：查看key的长度</p>
-<p><code>incr key</code>：加一</p>
-<p><code>decr key</code>：减一</p>
-<p><code>incrby key 10</code>：加10</p>
-<p><code>decrby key 10</code>：减10</p>
-<p> <code>getrange key start end</code>：获取部分字符串，-1可表示最后</p>
-<p><code>setrange key start end</code>：修改string</p>
-<p><code>setnx key str</code>：如果这个键不存在就设置，设置成功返回1，失败返回0</p>
-<p><code>setex key second str</code>：设置这个键的同时设置过期时间</p>
-<p><code>mset key value key value....</code>：批量生产键值对</p>
-<p><code>mget key ...</code>：批量取出键值对</p>
-<p><code>msetnx k1 v1 k2 v2</code>：如果不存在则批量生成键值对，如果一旦有的设置失败了，所有的将不会设置，是一个原子性的操作。</p>
-<p><code>getset key value</code>：先获取原来的值，再设置新的值</p>
-<p><strong>进行对象的存储：</strong></p>
-<p><code>set user:1:username zhangsan user:1:age 2</code> ：这里的key是一个巧妙的设计：user:{id}:{filed}</p>
-<hr>
-<h3 id="List"><a href="#List" class="headerlink" title="List"></a>List</h3><ul>
-<li><p>在Redis里面我们依旧可以吧List完成堆栈，队列。</p>
-</li>
-<li><p>Redis的list中，最后push进去的index为0</p>
-</li>
-</ul>
-<p><code>LPUSH list value</code>：向List的头部push元素</p>
-<p><code>RPUSH list value</code>：向List的尾部push元素</p>
-<p><code>LRANGE list 0 -1</code>：获取去list中的所有元素</p>
-<p><code>LPOP list</code>：移除左边的第一个</p>
-<p><code>RPOP list</code>：移除右边得第一个</p>
-<p><code>lindex list index</code>：通过下标获取值</p>
-<p><code>Llen</code>：获取list的长度</p>
-<p><code>lrem list count value</code>：从list中移除count个value</p>
-<p><code>ltrim list start end</code>：截取部分</p>
-<p><code>rpoplpush list1 list2</code>：将list1的最后一个元素放到list2的第一个元素中</p>
-<p><code>lset list index str</code>：更新指定index的内容</p>
-<p><code>linsert list before value str</code>：在指定的值之前插入str(after在之后插)</p>
-<hr>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p><strong>set中的值是不可重复的</strong></p>
-<p><code>sadd myset str</code>：创建或者向myset中加入元素</p>
-<p><code>SMEMBERS myset</code>：查看myset中的所有元素</p>
-<p><code>SISMEMBERS myset str</code>：查看str是否在myset中</p>
-<p><code>scard myset</code>：获取set中的元素个数</p>
-<p><code>srem myset value</code>：移除set中的value</p>
-<p><code>srandmember myset count</code>：随机抽取count个数据出来</p>
-<p><code>spop myset</code>：随机移除元素</p>
-<p><code>smove sourceset tarset value</code>：sourceset中的value移动到tarset中</p>
-<p><code>SDIFF set1 set2</code>：差集</p>
-<p><code>SINTER set1 set2</code>：交集</p>
-<p><code>SUNION set1 set2</code>：并集</p>
-<h3 id="Hash"><a href="#Hash" class="headerlink" title="Hash"></a>Hash</h3><p>Map集合，key-map!</p>
-<p><code>hset myhash k1 v1</code>：创建hash或向myhash中添加键值对</p>
-<p><code>hget myhash k1</code>：取值</p>
-<p><code>hmset</code>：批量添加键值对</p>
-<p><code>hmget</code>：批量取值</p>
-<p><code>hgetall</code>：获取全部</p>
-<p><code>hdel myhash k1</code>：删除指定key</p>
-<p><code>hlen</code> myhahs：获取myhash中有多少个键值对</p>
-<p><code>hexists myhash k1</code>：是否存在key</p>
-<p><code>hkeys myhash</code>：获取所有的key</p>
-<p><code>hvals myhash</code>：获取所有的values</p>
-<p><code>hincrby</code>：增加</p>
-<p><code>hdecrby</code>：减少</p>
-<p><code>hsetnx</code>：如果不存在则设置键值对，否则不执行</p>
-<p>hash变更的数据user name age，尤其是用户信息之类的，经常变动的信息！hash更适合于对象的储存，String更适合字符串存储！</p>
-<h3 id="Zset-有序集合"><a href="#Zset-有序集合" class="headerlink" title="Zset(有序集合)"></a>Zset(有序集合)</h3><p>在set的基础上增加了一个值，用来表示优先级</p>
-<p><code>zadd myzset 1 one 2 two</code>：添加一个或多个值</p>
-<p><code>zrange myzset 0 -1</code>：获取所有的值(按照优先级)</p>
-<p><code>zrange myzset -inf +inf</code>：从小到大显示元素</p>
-<p><code>zrange myzset -inf +inf withscores</code>“从小到大显示元素并且附带优先级</p>
-<p><code>zrem myzset k1</code>：移除k1值</p>
-<p><code>zcard myzset</code>：获取去元素个数</p>
-<p><code>zrevrange myzset 0 -1</code>：从大到小进行排序</p>
-<p>案例思路：存储班级成绩表，工资表</p>
-<p>普通消息，1，重要消息，2，带权重进行判断</p>
-<p>排行榜应用实现</p>
-<h2 id="三种特殊数据类型"><a href="#三种特殊数据类型" class="headerlink" title="三种特殊数据类型"></a>三种特殊数据类型</h2><h3 id="geospatial"><a href="#geospatial" class="headerlink" title="geospatial"></a>geospatial</h3><h3 id="hyperloglog"><a href="#hyperloglog" class="headerlink" title="hyperloglog"></a>hyperloglog</h3><h3 id="bitmaps"><a href="#bitmaps" class="headerlink" title="bitmaps"></a>bitmaps</h3>
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">适配器模式</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/07/Redis%E5%85%A5%E9%97%A8/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Cache的设计由来
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">NoSQL概述</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -559,9 +239,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
