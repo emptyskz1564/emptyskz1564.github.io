@@ -160,6 +160,92 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Kruskal算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/">Kruskal算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-05-17T07:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="克鲁斯卡尔-Kruskal-算法"><a href="#克鲁斯卡尔-Kruskal-算法" class="headerlink" title="克鲁斯卡尔(Kruskal)算法"></a>克鲁斯卡尔(Kruskal)算法</h1><ul>
+<li>克鲁斯卡尔算法，是用来求加权连通图的最小生成树的算法。</li>
+<li>基本思想：按照权值从小到大的顺序选择n-1条边，并保证这n-1条边不构成回路</li>
+<li>具体做法：首现构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并是森林中不产生回路，直至森林变成一颗树为止</li>
+</ul>
+<p><strong>由上我们可以知道，我么需要三个核心方法，一个是排序的方法，一个是由顶点获取下标的方法，还一个是传入一个下标，获取这个下标对应顶点的终点。</strong></p>
+<img src="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/1589691859352.png" class="" title="a">
+
+
+
+
+
+
+
+<p><strong>其中排序很好解决，判断是否形成回路，我们需要一些技巧</strong></p>
+<ul>
+<li>处理方式：记录顶点在“最小生成树”中的终点，顶点的终点是在“最小生成树”中与它连通的最大顶点。每次需要将一条边加入到最小生成树时，判断该边的两个顶点的终点是否重合，重合的话则会构成回路。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getEnd</span><span class="params">(<span class="keyword">int</span>[] ends,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(ends[i] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//这个操作就是比如A-&gt;B,返回B，然后再用B去找下一个,B-&gt;C,如果C没有下一个了，便返回C，于是得到了终点</span></span><br><span class="line">        i = ends[i];	</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="核心算法"><a href="#核心算法" class="headerlink" title="核心算法"></a>核心算法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kruskal</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] ends = <span class="keyword">new</span> <span class="keyword">int</span>[edgeNum];	<span class="comment">//用于保存"已有最小生成树"中的每个顶点在最小生成树中的终点</span></span><br><span class="line">    <span class="comment">//创建结果数组，保存最后的最小生成树</span></span><br><span class="line">    EData[] rets = <span class="keyword">new</span> EData[edgeNum];</span><br><span class="line">    <span class="comment">//EData类中有start、end、weight三个属性，分别表示起点终点权值。</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过邻接矩阵获取图中所有边的集合</span></span><br><span class="line">    EData[] edges = getEdges();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按照边的权值大小进行排序</span></span><br><span class="line">    sortEdges(edges);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//遍历edges数组，将边添加到最小生成树中时，判断准备加入的边是否会形成回路，如果没有就加入到rets，否则就不加入</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; endgeNum;i ++)&#123;</span><br><span class="line">        <span class="comment">//获取第i条边的第一个顶点,和第二个顶点的下标 顶点的存储为 ['A','B','C','D'...]</span></span><br><span class="line">        <span class="keyword">int</span> p1 = getPosition(edges[i].start);</span><br><span class="line">        <span class="keyword">int</span> p2 = getPosition(edges[i].end);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> m = getEnd(ends,p1);		<span class="comment">//获取p1的终点</span></span><br><span class="line">        <span class="keyword">int</span> n = getEnd(ends,p2);		<span class="comment">//获取p2的终点</span></span><br><span class="line">        <span class="keyword">if</span>(m!=n)&#123;</span><br><span class="line">            ends[m] = n;</span><br><span class="line">            rets[index++] = edges[i];	<span class="comment">//加入这条边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-prim算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1092,90 +1178,6 @@
 
 
   
-    <article id="post-MySQL联表查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">MySQL联表查询</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
-  	<time datetime="2020-05-04T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="MySQL联表查询"><a href="#MySQL联表查询" class="headerlink" title="MySQL联表查询"></a>MySQL联表查询</h2><blockquote>
-<p>JOIN对比</p>
-</blockquote>
-<img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/1588583098062.png" class="" title="a1">
-
-
-
-<ul>
-<li>7种JOIN理论</li>
-</ul>
-<img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/1588583244711.png" class="" title="SQL JOINS">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1375,6 +1377,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">装饰者模式</a>
               </li>
             
             <div class="clearfix"></div>

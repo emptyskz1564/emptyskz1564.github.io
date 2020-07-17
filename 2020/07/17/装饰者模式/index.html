@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2020/5 | Emptyskz的博客</title>
+  <title>装饰者模式 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/page/2/index.html">
+  <meta name="description" content="装饰者模式问题：现在有一家咖啡店推出各种咖啡，以及各种配料，顾客可以点单品咖啡，也可以点单品咖啡+各种配料 方案一：使用传统继承方式     这种方案显然不合适，这样会产生很多的类，导致类爆炸，不利于系统的管理  方案二：使用桥接模式将配料聚合到咖啡中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="装饰者模式">
+<meta property="og:url" content="http://yoursite.com/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="装饰者模式问题：现在有一家咖啡店推出各种咖啡，以及各种配料，顾客可以点单品咖啡，也可以点单品咖啡+各种配料 方案一：使用传统继承方式     这种方案显然不合适，这样会产生很多的类，导致类爆炸，不利于系统的管理  方案二：使用桥接模式将配料聚合到咖啡中">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594800488665.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594798284672.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594803136280.png">
+<meta property="article:published_time" content="2020-07-17T07:21:39.000Z">
+<meta property="article:modified_time" content="2020-07-17T07:28:02.801Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="装饰者模式">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594800488665.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -158,405 +168,230 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-装饰者模式" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      装饰者模式
+    </h1>
+  
+
+        
+        <a href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-17T07:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
+</a>
+        
+      </header>
     
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h1><p><strong>问题：</strong>现在有一家咖啡店推出各种咖啡，以及各种配料，顾客可以点单品咖啡，也可以点单品咖啡+各种配料</p>
+<h2 id="方案一：使用传统继承方式"><a href="#方案一：使用传统继承方式" class="headerlink" title="方案一：使用传统继承方式"></a>方案一：使用传统继承方式</h2><img src="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594800488665.png" class="" title="a">
+
+
+
+<ul>
+<li>这种方案显然不合适，这样会产生很多的类，导致类爆炸，不利于系统的管理</li>
+</ul>
+<h2 id="方案二：使用桥接模式将配料聚合到咖啡中"><a href="#方案二：使用桥接模式将配料聚合到咖啡中" class="headerlink" title="方案二：使用桥接模式将配料聚合到咖啡中"></a>方案二：使用桥接模式将配料聚合到咖啡中</h2><a id="more"></a>
+
+<p>咖啡和配料是两个维度，显然可以将配料的抽象聚合到咖啡的抽象中，因为配料可以有多份，所以使用一个集合聚合到咖啡中。</p>
+<h2 id="方案三：使用装饰者模式"><a href="#方案三：使用装饰者模式" class="headerlink" title="方案三：使用装饰者模式"></a>方案三：使用装饰者模式</h2><blockquote>
+<p>类图</p>
+</blockquote>
+<img src="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594798284672.png" class="" title="b">
+
+
+
+
+
+<p><strong>核心思想：Decorator继承了Drink，并且聚合了一个Drink。这样便能动态的向Drink中添加配料了。此时配料是将Drink包裹的，我们始终使用Drink作为返回对象，以方便加入其它配料(包裹)</strong></p>
+<blockquote>
+<p>代码</p>
+</blockquote>
+<p><code>底层Drink类，它即被Coffee类继承，也被装饰类继承</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Drink</span> </span>&#123;</span><br><span class="line">	<span class="comment">//饮品描述</span></span><br><span class="line">    <span class="keyword">public</span> String des;</span><br><span class="line">    <span class="comment">//饮品价格</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">float</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Drink</span><span class="params">(String des, <span class="keyword">float</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.des = des;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> des;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getPrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">    <span class="comment">//计算总价格的方法，由子类实现</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">float</span> <span class="title">cost</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>Coffee类作为一层缓冲层，方便具体的咖啡类继承。</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Coffee</span> <span class="keyword">extends</span> <span class="title">Drink</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Coffee</span><span class="params">(String des, <span class="keyword">float</span> price)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(des, price);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//单饮品这边cost方法直接返回饮品价格即可</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">cost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getPrice();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>意大利咖啡类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Espresso</span> <span class="keyword">extends</span> <span class="title">Coffee</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Espresso</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"意大利咖啡"</span>, <span class="number">3.0f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>美式咖啡类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LongBlack</span> <span class="keyword">extends</span> <span class="title">Coffee</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LongBlack</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"美式咖啡"</span>, <span class="number">5.0f</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>装饰者类，由具体的配料所继承</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Decorator</span> <span class="keyword">extends</span> <span class="title">Drink</span> </span>&#123;</span><br><span class="line">	<span class="comment">//聚合咖啡</span></span><br><span class="line">    <span class="keyword">private</span> Drink coffee;</span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Decorator</span><span class="params">(String des, <span class="keyword">float</span> price,Drink coffe)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(des, price);</span><br><span class="line">        <span class="keyword">this</span>.coffee = coffe;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//装饰者实现的cost方法不仅计算咖啡的价格还要计算配料自身的价格，这里使用了递归调用，因为咖啡是由多个配料所包裹的。</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">cost</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.getPrice()+coffee.cost();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDes</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//装饰者信息+装饰者价格+被装饰者描述</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.des + <span class="keyword">super</span>.getPrice() + coffee.getDes();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>巧克力类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Chocolate</span> <span class="keyword">extends</span> <span class="title">Decorator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Chocolate</span><span class="params">(Drink coffe)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"巧克力"</span>, <span class="number">3.0f</span>, coffe);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>流奶类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Milk</span> <span class="keyword">extends</span> <span class="title">Decorator</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Milk</span><span class="params">(Drink coffee)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="string">"流奶"</span>, <span class="number">4.0f</span>, coffee);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>客户端</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CoffeeBar</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//一致使用底层接口</span></span><br><span class="line">        Drink longBlack = <span class="keyword">new</span> LongBlack();</span><br><span class="line">        <span class="comment">//添加巧克力</span></span><br><span class="line">        longBlack = <span class="keyword">new</span> Chocolate(longBlack);</span><br><span class="line">        <span class="keyword">float</span> cost = longBlack.cost();</span><br><span class="line">        System.out.println(longBlack.getDes());</span><br><span class="line">		<span class="comment">//添加牛奶</span></span><br><span class="line">        longBlack = <span class="keyword">new</span> Milk(longBlack);</span><br><span class="line">        System.out.println(longBlack.getDes()); </span><br><span class="line">        <span class="comment">//再添加一份巧克力</span></span><br><span class="line">        longBlack = <span class="keyword">new</span> Chocolate(longBlack);</span><br><span class="line">        <span class="keyword">float</span> cost = longBlack.cost();</span><br><span class="line">        System.out.println(longBlack.getDes());</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>很明显装饰者模式下类与类之间是一种嵌套的关系</p>
+</blockquote>
+<p><strong>以下是两份巧克力+牛奶+美式咖啡的一个类关系图</strong></p>
+<img src="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594803136280.png" class="" title="c">
+
+
+
+
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>​        个人认为，在这种情况下使用装饰者模式优于桥接模式的原因除了装饰者在模型上更契合现实关系之外，装饰者更体现出了属性之间的选择性关系，而不是必要关系，就比如配料与咖啡之间，是可有可无的状态，使用装饰者模式的包裹关系，让已产生的类只包含自己所已有的，并能<strong>动态的添加其他属性</strong>；而桥接模式下中的要解决的继承关系是必要性的，如果使用桥接模式来解决这类问题，虽然也解决了类爆炸的问题，但是却让已产生的类中含有多余的成分(一个空的配料集合)，让人有种配料是必要成分的感觉(尽管你可以使它为空)。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/" class="archive-article-date">
-  	<time datetime="2020-05-09T09:48:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">通过Jedis操作Redis</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" class="archive-article-date">
-  	<time datetime="2020-05-08T16:31:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">Cache的设计由来</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">装饰者模式</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-05-07T15:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-07</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">适配器模式</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">Redis入门</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" class="archive-article-date">
-  	<time datetime="2020-05-06T05:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">NoSQL概述</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
-  	<time datetime="2020-05-04T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">MySQL联表查询</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">spring中GET和POST方法获取参数的几种方法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" class="archive-article-date">
-  	<time datetime="2020-05-03T11:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">StringBuffer和StringBuilder</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javase</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-02T05:49:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">虚拟机无法连接网络的一种解决办法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟机 Ubuntu</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/SpringMVC%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  	<time datetime="2020-05-01T16:45:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/SpringMVC%E5%88%9D%E6%AD%A5%E5%AD%A6%E4%B9%A0/">SpringMVC初步学习</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SSM SpringMVC</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-04-30T16:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">MybatisPlus入门</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MybaitsPlus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/05/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2020/05/">1</a><span class="page-number current">2</span>
-    </nav>
   
 
 
@@ -581,8 +416,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
