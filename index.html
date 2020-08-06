@@ -160,6 +160,109 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-两数之和" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">两数之和</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" class="archive-article-date">
+  	<time datetime="2020-08-06T16:06:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h1><p>准备蓝桥杯，先搞点简单的打开思路</p>
+<blockquote>
+<p>题：</p>
+</blockquote>
+<p>给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那 <code>两个</code> 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
+<p>示例:</p>
+<p>给定 nums = [2, 7, 11, 15], target = 9</p>
+<p>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+<blockquote>
+<p>这里给出三种题解，由易到难</p>
+</blockquote>
+<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>思路很简单，双重for循环，遍历每个元素，看两两之和能否满足条件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[j] == target - nums[i]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; i, j &#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度:</strong></p>
+<p>显然时间复杂度为O(n²)，空间复杂度为O(1)</p>
+<h2 id="排序加双指针"><a href="#排序加双指针" class="headerlink" title="排序加双指针"></a>排序加双指针</h2><p>稍加思考，我们就能知道在暴力匹配中，我们可以从无脑的两两匹配的方式中入手，在有序数列中最大与最小的进行两两匹配，使用这种策略将大大提升匹配效率，那我们就先排序，排序后便能排除无脑暴力匹配了，要知道先进行排序后的逐一检索永远比暴力匹配效率更高，然后我们给排好序的数组前后各一个指针，来进行双向遍历。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">        temp=nums;</span><br><span class="line">        <span class="keyword">int</span> n=temp.<span class="built_in">size</span>();</span><br><span class="line">       	sort(temp.<span class="built_in">begin</span>(),temp.<span class="built_in">end</span>());</span><br><span class="line">       	<span class="keyword">int</span> i=<span class="number">0</span>,j=n<span class="number">-1</span>;</span><br><span class="line">       	<span class="keyword">while</span>(i&lt;j)&#123;  </span><br><span class="line">          	<span class="keyword">if</span>(temp[i]+temp[j]&gt;target)j--;</span><br><span class="line">          	<span class="keyword">else</span> <span class="keyword">if</span>(temp[i]+temp[j]&lt;target)i++;</span><br><span class="line">          	<span class="keyword">else</span> <span class="keyword">break</span>; </span><br><span class="line">       	&#125;</span><br><span class="line">       	<span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">      		<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;</span><br><span class="line">          		<span class="keyword">if</span>(i&lt;n&amp;&amp;nums[k]==temp[i])&#123;</span><br><span class="line">              		ans.push_back(k);</span><br><span class="line">              		i=n;</span><br><span class="line">        		&#125;</span><br><span class="line">        		<span class="keyword">else</span> <span class="keyword">if</span>(j&lt;n&amp;&amp;nums[k]==temp[j])&#123;</span><br><span class="line">              		ans.push_back(k);</span><br><span class="line">              		j=n;</span><br><span class="line">        		&#125;</span><br><span class="line">          		<span class="keyword">if</span>(i==n&amp;&amp;j==n)<span class="keyword">return</span> ans;</span><br><span class="line">      		&#125;</span><br><span class="line">      	&#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度:</strong></p>
+<p>时间复杂度：使用一次sort，时间复杂度为O(nlogn)，使用一次遍历O(n)，查找一次对应的下标O(n)，所以时间复杂度为O(nlogn)</p>
+<p>空间复杂度：使用一次temp数组，空间复杂度O(n)</p>
+<p><strong>其实对于当前元素，我们是知道我们的目标元素的，也就是<code>target - nums[i]</code>，这么说，我们的优化可以在搜索<code>target - nums[i]</code>这一步中操作，在排序后就是在有序数值中寻找<code>target - nums[i]</code>，那么我们是不是可以将逐一的两两匹配换为在有序数值中寻找<code>target - nums[i]</code>，而查找的策略就很多了，二分查找，插值查找算法（二分查找的优化）等….</strong></p>
+<h2 id="哈希查找"><a href="#哈希查找" class="headerlink" title="哈希查找"></a>哈希查找</h2><p>对于查询的最优化当然是使用<code>哈希查找</code>了，这样我们只需要将数组交给<code>哈希表</code>来进行托管，建立合适的<code>索引</code>即可将查询的代价降低到<code>O(1)</code>，这里我们直接使用数组中数的本身来创建索引即可，将数在原数组中的索引作为哈希表中的值，因为我们需要知道目标数的索引为多少。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">       <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;hashmap;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)&#123;	<span class="comment">//一边将数组中的数值加入到map中，一遍检索是否有目标数字</span></span><br><span class="line">           <span class="comment">//数作为索引(键)，下标+1作为值</span></span><br><span class="line">           <span class="keyword">if</span>(hashmap[target-nums[i]])&#123;</span><br><span class="line">               ans.push_back(i);</span><br><span class="line">               ans.push_back(hashmap[target-nums[i]]<span class="number">-1</span>);</span><br><span class="line">               <span class="keyword">return</span> ans;</span><br><span class="line">           &#125;</span><br><span class="line">        	hashmap[nums[i]]=i+<span class="number">1</span>;</span><br><span class="line">        	<span class="comment">//将hash表对应下标＋1，防止处理下标为0的情况</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度:</strong></p>
+<p>时间复杂度：哈希查找的复杂度为O(1)，外层一个for循环，所以总共为O(n)</p>
+<p>空间复杂度：使用额外的map存储数组，所以空间复杂度为O(n)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-装饰者模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1200,120 +1303,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Floyd算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/">Floyd算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-22T08:34:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="弗洛伊德-Floyd-算法"><a href="#弗洛伊德-Floyd-算法" class="headerlink" title="弗洛伊德(Floyd)算法"></a>弗洛伊德(Floyd)算法</h1><blockquote>
-<p>多源最短路劲算法</p>
-</blockquote>
-<p><strong>与迪杰斯特拉算法的区别：</strong></p>
-<ul>
-<li>迪杰斯特拉算法是求出某一节点到其他所有节点的最短路劲</li>
-<li>弗洛伊德算法是求出所有节点之间的最短路径</li>
-</ul>
-<h2 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h2><ul>
-<li>设置顶点vi到顶点vk的最短路径已知为Lik，顶点vk到vj的最短路径已知为Lkj，顶点vi到vj的路径为Lij，则vi到vj的最短路径为：min((Lik+Lkj),Lij)，vk的取值为图中所有顶点，则可获得vi到vj 的最短路径</li>
-<li>至于vi到vk的最短路径Lik或者vk到vj的最短路径Lkj，是以同样的方式获得的</li>
-</ul>
-<p><strong>重点递推公式：min((Lik+Lkj),Lij)</strong></p>
-<p>解释：两点之间的最短距离要么为这两点的直连距离，要么为这两点经过其他某个(或者多个，这里的多个意思是Lik、Lkj中可能还经过了其他节点)的距离。</p>
-<h2 id="算法核心部分"><a href="#算法核心部分" class="headerlink" title="算法核心部分"></a>算法核心部分</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//算法中dis为图的邻接矩阵，经过算法后更新为点与点之间的最短距离的数组</span></span><br><span class="line"><span class="comment">//pre为各个点的前驱节点，初始时，每个节点到达另一个节点的前驱节点为自身，循环过程中，如果要经过其他节点则会进行更新</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">floyd</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;	<span class="comment">//用于保存距离</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第一层循环，用于遍历中间节点，k就是中间节点的下标</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; dis.length; k++)&#123;</span><br><span class="line">        <span class="comment">//第二层循环从第i个顶点出发</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; dis.length; i++)&#123;</span><br><span class="line">            <span class="comment">//第三层循环到达第j个顶点出发</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dis.length ; j++)&#123;</span><br><span class="line">                len = dis[i][k] + dis[k][j];	<span class="comment">//从i出发，经过k，到达j的距离</span></span><br><span class="line">                <span class="keyword">if</span>(len &lt; dis[i][j])&#123;	<span class="comment">//小于直连的距离</span></span><br><span class="line">                    dis[i][j] = len;	<span class="comment">//更新距离</span></span><br><span class="line">                    pre[i][j] = pre[k][j]	<span class="comment">//更新前驱顶点</span></span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>算法解释：</strong></p>
-<p>三层for循环是以每个节点为中间节点，然后去一个一个的匹配出发节点和终点节点，比较以这个节点为中间节点时的距离和出发节点到终点节点的直连距离的大小。</p>
-<img src="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/1590136149258.png" class="" title="a">
-
-
-
-<p>比如在示例图中，我们以A为中间节点，就会有以下的情况</p>
-<ul>
-<li>c-&gt;a-&gt;g [9]    ：  对比C-&gt;G    [不通] -&gt; 更新</li>
-<li>c-&gt;a-&gt;b [12]  ：对比C-&gt;B    [不通] -&gt; 更新</li>
-<li>g-&gt;a-&gt;b [7]    :   对比G-&gt;B    [3] -&gt; 不更新</li>
-<li>…..</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Floyd算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/">展开全文 >></a>
         </p>
       
 
