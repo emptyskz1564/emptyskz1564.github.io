@@ -160,6 +160,867 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-通过Jedis操作Redis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">通过Jedis操作Redis</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/" class="archive-article-date">
+  	<time datetime="2020-05-09T09:48:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="通过Jedis操作Redis"><a href="#通过Jedis操作Redis" class="headerlink" title="通过Jedis操作Redis"></a>通过Jedis操作Redis</h2><p>我们要使用java来操作Redis</p>
+<blockquote>
+<p>什么是Jedis 是Redis官方推荐的java连接开发工具！使用java操作Redis中间件！如果你要使用java操作redis，那么一定要对Jedis十分熟悉！</p>
+</blockquote>
+<blockquote>
+<p>测试</p>
+</blockquote>
+<p>1、导入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、编码测试：</p>
+<ul>
+<li>连接数据库</li>
+<li>操作命令</li>
+<li>断开连接！</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liu.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPing</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1、创建Jedis对象</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>,<span class="number">6379</span>);</span><br><span class="line">        <span class="comment">//jedis所有的方法就是我们之前学习的命令</span></span><br><span class="line">        System.out.println(jedis.ping());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之前学过的基本命令都被改写为了Jedis对象中的同名方法，直接使用即可</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Cache的设计由来" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">Cache的设计由来</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" class="archive-article-date">
+  	<time datetime="2020-05-08T16:31:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Cache的设计由来"><a href="#Cache的设计由来" class="headerlink" title="Cache的设计由来"></a>Cache的设计由来</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588770908260.png" class="" title="a">
+
+
+
+
+
+<h3 id="程序访问的局部性"><a href="#程序访问的局部性" class="headerlink" title="程序访问的局部性"></a>程序访问的局部性</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588772623598.png" class="" title="b">
+
+
+
+<p><strong>这里需要注意的有：</strong></p>
+<ul>
+<li>主存与CPU之间只能通过字来进行传输，所以数组中的每一个元素都要进过一次传输</li>
+<li>而主存和Cache之间是可以通过块来进行传输的，所以在1000ns中已经传输了10个元素到Cache中了。</li>
+<li>Cache与CPU之间的传输十分的快，所以利用了Cache的储存结构，比不使用Cache的存储结构会快一个数量级。</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Redis入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">Redis入门</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" class="archive-article-date">
+  	<time datetime="2020-05-07T15:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="NoSQL的四大分类"><a href="#NoSQL的四大分类" class="headerlink" title="NoSQL的四大分类"></a>NoSQL的四大分类</h2><p><strong>KV键值对：</strong></p>
+<ul>
+<li>新浪：Redis</li>
+<li>美团：Redis+Tair</li>
+<li>阿里、百度：Redis+memecache</li>
+</ul>
+<p><strong>文档型数据库（bson格式 和json一样）：</strong></p>
+<ul>
+<li>MongoDB(一般必须掌握)<ul>
+<li>MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！</li>
+<li>MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富，最像关系型数据库的！</li>
+</ul>
+</li>
+<li>ConthDB</li>
+</ul>
+<p><strong>列存储数据库：</strong></p>
+<ul>
+<li>HBASE</li>
+<li>分布式文件系统</li>
+</ul>
+<p><strong>图关系数据库：</strong></p>
+<ul>
+<li>它不是用来存图形的，放的是关系，比如：朋友圈社交网络，广告推荐</li>
+<li>Neo4j，InfoGrid</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-NoSQL概述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">NoSQL概述</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" class="archive-article-date">
+  	<time datetime="2020-05-06T05:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Redis课程安排"><a href="#Redis课程安排" class="headerlink" title="Redis课程安排"></a>Redis课程安排</h2><ul>
+<li>nosql讲解</li>
+<li>阿里巴巴架构演进</li>
+<li>nosql数据模型</li>
+<li>Nosql四大分类</li>
+<li>CAP</li>
+<li>BASE</li>
+<li>Redis入门</li>
+<li>Redis安装(Windows &amp; Linux服务器)</li>
+<li>五大基本数据类型<ul>
+<li>String</li>
+<li>List</li>
+<li>Set</li>
+<li>Hash</li>
+<li>Zset</li>
+</ul>
+</li>
+<li>三种特殊数据类型<ul>
+<li>geo</li>
+<li>hyperloglog</li>
+<li>bitmap</li>
+</ul>
+</li>
+<li>Redis配置详解</li>
+<li>Redis持久化<ul>
+<li>RDB</li>
+<li>AOF</li>
+</ul>
+</li>
+<li>Redis事务操作</li>
+<li>Redis实现订阅发布</li>
+<li>Redis主从复制</li>
+<li>Redis哨兵模式</li>
+<li>缓存穿透及解决方案</li>
+<li>缓存击穿及解决方案</li>
+<li>缓存雪崩及解决方案</li>
+<li>基础API之jedis详解</li>
+<li>SpringBoot集成Redis操作</li>
+<li>Redis的时间分析</li>
+</ul>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MySQL联表查询" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">MySQL联表查询</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
+  	<time datetime="2020-05-04T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MySQL联表查询"><a href="#MySQL联表查询" class="headerlink" title="MySQL联表查询"></a>MySQL联表查询</h2><blockquote>
+<p>JOIN对比</p>
+</blockquote>
+<img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/1588583098062.png" class="" title="a1">
+
+
+
+<ul>
+<li>7种JOIN理论</li>
+</ul>
+<img src="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/1588583244711.png" class="" title="SQL JOINS">
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-spring中GET和POST方法获取参数的几种方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">spring中GET和POST方法获取参数的几种方法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="SpringMVC中POST和GET方法获取参数的几种方式"><a href="#SpringMVC中POST和GET方法获取参数的几种方式" class="headerlink" title="SpringMVC中POST和GET方法获取参数的几种方式"></a>SpringMVC中POST和GET方法获取参数的几种方式</h2><blockquote>
+<p>对于post个get方法最显著的区别就是get方法的请求参数在url后，post方法的请求参数在requestbody中</p>
+</blockquote>
+<h3 id="GET方法参数的获取"><a href="#GET方法参数的获取" class="headerlink" title="GET方法参数的获取"></a>GET方法参数的获取</h3><ul>
+<li>直接在方法体中获取url中对应的参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/sold/&#123;bookId&#125;"</span>,method = RequestMethod.POST)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sold</span><span class="params">(@PathVariable(<span class="string">"bookId"</span>)</span> <span class="keyword">int</span> bookId)</span>&#123;</span><br><span class="line">    bookServiceImpl.sold(bookId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>@PathVariable注解便将url中的bookId和方法参数中的bookId关联了，当然当两者同名式@PathVariable注解中可不加参数。</p>
+<ul>
+<li>直接在方法体中指定参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(Integer id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>请求路径为…./get?id=1</p>
+<ul>
+<li>使用requestParam</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(<span class="string">"/get"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUserById</span><span class="params">(@RequestParam(name = <span class="string">"id"</span>, required = <span class="keyword">true</span>)</span> Integer id) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id.intValue() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list.get(id);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>请求路径同上</p>
+<h3 id="POST方法获取对象"><a href="#POST方法获取对象" class="headerlink" title="POST方法获取对象"></a>POST方法获取对象</h3><ul>
+<li>当我们接受的json数据由对象的实体类时</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">   <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody User user)</span> </span>&#123;</span><br><span class="line">       list.add(user);</span><br><span class="line">       <span class="keyword">return</span> user;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这里传来的json数据将会被自动封装为实体类</strong></p>
+<ul>
+<li>当我们没有对应的实体类来封装时，我们可以使用map来接受json数据</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/save"</span>)</span><br><span class="line">     <span class="function"><span class="keyword">public</span> User <span class="title">saveUser</span><span class="params">(@RequestBody Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">     	Integer id = (Integer) map.get(<span class="string">"id"</span>);</span><br><span class="line">     	String name = (String) map.get(<span class="string">"name"</span>);</span><br><span class="line">     	Integer age = (Integer) map.get(<span class="string">"age"</span>);</span><br><span class="line">     	List&lt;String&gt; hobby=(List&lt;String&gt;) map.get(<span class="string">"hobby"</span>);</span><br><span class="line">    	User user = <span class="keyword">new</span> User(id, name, age, hobby);</span><br><span class="line">     	list.add(user);</span><br><span class="line">     	<span class="keyword">return</span> user;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-StringBuffer和StringBuilder" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">StringBuffer和StringBuilder</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" class="archive-article-date">
+  	<time datetime="2020-05-03T11:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="StringBuffer和StringBuilder"><a href="#StringBuffer和StringBuilder" class="headerlink" title="StringBuffer和StringBuilder"></a>StringBuffer和StringBuilder</h2><ul>
+<li><p>StringBuffer和StringBuilder是可变长的，而String是不可边长的字符串</p>
+<p>先来看看下面的代码</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String str=<span class="string">"abc"</span>;</span><br><span class="line">System.out.println(str);</span><br><span class="line">str=str+<span class="string">"de"</span>;</span><br><span class="line">System.out.println(str);</span><br></pre></td></tr></table></figure>
+
+<p>​        很明显这里会先输出abc，然后再输出adcde，看似是对str进行了修改，实则不然，JVM对这里的处理是，首先创建一个String对象str，并把“abc”赋值给str，然后在第三行中，其实JVM又创建了一个新的对象也名为str，然后再把原来的str的值和“de”加起来再赋值给新的str，而原来的str就会被JVM的垃圾回收机制（当指向这个对象的引用为0时，回收这个对象）给回收掉了，所以，str实际上并没有被更改，也就是前面说的String对象一旦创建之后就不可更改了。 </p>
+<p>​        所以当我们要是用的字符串进行多次更改的时候，使用String效率是非常低的，因为在这个更改的过程中，会有多次的对象创建和对象的回收操作。因此这时我们便要使用SringBuffer和StringBuilder了，这两者创建出的对象都是变量，所有的更改操作都是直接操作的，所以速度会更快</p>
+<ul>
+<li><p>在线程安全上，StringBuilder是线程不安全的，而StringBuffer是线程安全的</p>
+<pre><code>如果一个StringBuffer对象在字符串缓冲区被多个线程使用时，StringBuffer中很多方法可以带有synchronized(方法锁)关键字，所以可以保证线程是安全的，但StringBuilder的方法则没有该关键字，所以不能保证线程安全，有可能会出现一些错误的操作。所以如果要进行的操作是多线程的，那么就要使用StringBuffer，但是在单线程的情况下，还是建议使用速度比较快的StringBuilder。 </code></pre></li>
+<li><p>总结一下就是：</p>
+<ul>
+<li>String类：不可变性final，操作量较少的时候使用</li>
+<li>StringBuffer：可变长，多线程数据量较大的时候使用，效率低，但是线程安全</li>
+<li>StringBuilder：可变长，单线程数据量较大的时候使用，效率高，但是线程不安全</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javase</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-虚拟机无法连接网络的一种解决办法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">虚拟机无法连接网络的一种解决办法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-05-02T05:49:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Ubuntu1910无法连接网路的一种解决办法"><a href="#Ubuntu1910无法连接网路的一种解决办法" class="headerlink" title="Ubuntu1910无法连接网路的一种解决办法"></a>Ubuntu1910无法连接网路的一种解决办法</h2><p>​        自从换了新电脑之后，VM虚拟机安装的各种系统都无法连接上网络，检查虚拟机的网络连接方式也都是以NAT模式，按理来说不应该存在网络无法连接的问题才对。网上的各种解决办法也都大同小异，没有任何作用，于是只好自己摸索。</p>
+<hr>
+<h3 id="记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。"><a href="#记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。" class="headerlink" title="记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。"></a>记录下自己找的的一种结局办法，但是每次开启都需要去重新设置。</h3><ul>
+<li><p>打开本机的网络属性设置</p>
+</li>
+<li><p>打卡更改适配器设置</p>
+</li>
+<li><p>打开本机的WLAN属性的共享设置</p>
+</li>
+<li><p>共享连接都是开的就先关掉</p>
+</li>
+</ul>
+  <img src="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/1588398115559.png" class title="This is an example image">
+
+
+
+<ul>
+<li><p>然后再次开启共享</p>
+<img src="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/1588398157909.png" class title="a1">
+
+
+
+</li>
+</ul>
+<ul>
+<li>再次查看虚拟机便连接成功了</li>
+</ul>
+<hr>
+<h5 id="这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。"><a href="#这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。" class="headerlink" title="这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。"></a>这就非常迷了，而且每次开机都要重新设置，而且每次只能解决一个虚拟机的连接问题，以后做hadoop完全分布式实验，分布式微服务就需要另外寻找办法解决了，现阶段只做简单的java开发，hadoop也只是搭建的伪分布式，凑合着用吧。</h5>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟机 Ubuntu</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-MybatisPlus入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">MybatisPlus入门</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/" class="archive-article-date">
+  	<time datetime="2020-04-30T16:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MybatisPlus快速入门"><a href="#MybatisPlus快速入门" class="headerlink" title="MybatisPlus快速入门"></a>MybatisPlus快速入门</h2><p><strong>步骤：</strong></p>
+<ul>
+<li>pojo</li>
+<li>mapper接口继承BaseMapper&lt;泛型&gt;，加上Mapper注解或Repository代表持久层，这时这个mapper接口就已经实现了所有的CRUD</li>
+<li>使用</li>
+</ul>
+<p><strong>代码示例：</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;user&gt; <span class="title">getAll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       List&lt;user&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    	<span class="comment">//userDao为继承了BaseMapper的接口类，在成员变量中已经自动装配</span></span><br><span class="line">    	<span class="comment">//查询所有的用户</span></span><br><span class="line">    	<span class="comment">//这里参数是一个Wrapper，条件构造器，这里我们先不用</span></span><br><span class="line">       users = userDao.selectList(<span class="keyword">null</span>);</span><br><span class="line">       <span class="keyword">return</span> users;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意点：我们需要在主启动类上去扫描我们的Mapper类 <code>@MapperScan(&quot;com.liu.dao&quot;)</code></li>
+</ul>
+<hr>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MybaitsPlus</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-存储系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -368,167 +1229,6 @@
 
 
   
-    <article id="post-初始SpringBoot" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/">初始SpringBoot</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/" class="archive-article-date">
-  	<time datetime="2020-04-29T03:08:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="微服务阶段"><a href="#微服务阶段" class="headerlink" title="微服务阶段"></a>微服务阶段</h2><p>javase：OOP，面向对象</p>
-<p>mysql：持久化</p>
-<p>html+css+js+jquery+框架：视图</p>
-<p>javaweb：独立开发MVC三层架构的网站：原始</p>
-<p>ssm：框架简化了我们的开发流程，配置也开始较为复杂</p>
-<p>war：tomcat运行</p>
-<p>spring再简化：SpringBoot-jar：内嵌tomcat；微服务框架！</p>
-<p>服务越来越多：springcloud</p>
-<p><strong>何为微服务：</strong>微服务是一种架构思想，就如同MVC三层架构，微服务是将整个应用中的业务进行拆分，然后分别部署在不同的服务器上进行负载均衡，做到了将应用的水平拆分。</p>
-<p><strong>单体架构的缺点：</strong>当我们要修改一个小地方时，我们都需要停掉整个服务，重新打包、部署这个应用war包。特别是对于大型应用，我们不可能把所有的内容都放在一个应用中，我们如何维护如何分工合作都是问题。</p>
-<img src="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/04/29/%E5%88%9D%E5%A7%8BSpringBoot/1588127634032.png" class title="springboot">
-
-
-
-
-
-<h2 id="SpringBoot学习"><a href="#SpringBoot学习" class="headerlink" title="SpringBoot学习"></a>SpringBoot学习</h2><p>​        springboot是基于spring开发，springboot本身并不提供spring框架的核心特型已经扩展功能，只是用于快速、敏捷地开发新一代基于spring框架的应用程序。也就是说，它并不是用来替代spring的解决方案，而是和spring框架紧密结合用于提升spring开发者体验的工具。springboot以约定大于配置的核心思想，默认帮我们进行了很多配置，多数springboot应用只需要很少的spring配置。同时它集成了大量常用的第三方库配置(例如Redis、MongoDB、Jpa、RabbitMQ、Quartz等等)，SpringBoot应用中这些第三方库几乎可以零配置的开箱即用。</p>
-<p>​        简单来说就是springboot其实并不是什么新的框架，他默认配置了很多框架的使用方式，就像maven整合了所有的jar包，springboot整合了所有的框架！</p>
-<p>​        <strong>SpringBoot的主要优点：</strong></p>
-<ul>
-<li>为所有的Spring开发者更快的入门</li>
-<li>开箱即用，提供各种默认配置来简化项目配置</li>
-<li>内嵌式容器简化Web项目</li>
-<li>没有冗余代码生成和XML配置的要求</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/29/%E5%88%9D%E5%A7%8BSpringBoot/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我的第一个博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">我的第一个博客</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-04-28T08:32:35.796Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="我的第一篇博客"><a href="#我的第一篇博客" class="headerlink" title="我的第一篇博客"></a>我的第一篇博客</h2><p>我将在此记录自己的java学习之旅，分享所学所想，望与各位共同进步。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/28/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
@@ -643,10 +1343,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SSM SpringMVC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -656,10 +1352,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -740,6 +1432,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>

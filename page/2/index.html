@@ -160,49 +160,32 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-kmp算法next数组" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-八皇后" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/">kmp算法next数组</a>
+      <a class="article-title" href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/">八皇后</a>
     </h1>
   
 
         
-        <a href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/" class="archive-article-date">
-  	<time datetime="2020-05-28T12:34:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-28</time>
+        <a href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/" class="archive-article-date">
+  	<time datetime="2020-10-01T03:26:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="KMP算法中的next数组"><a href="#KMP算法中的next数组" class="headerlink" title="KMP算法中的next数组"></a>KMP算法中的next数组</h1><p>先贴上代码，只梳理下这个算法最不好理解的地方，已经next数组的优化。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] kmpNext(String dest)&#123;</span><br><span class="line">    <span class="comment">//创意一个和模式串长度一样的数组</span></span><br><span class="line">	<span class="keyword">int</span>[] next = <span class="keyword">new</span> <span class="keyword">int</span>[dest.length()];</span><br><span class="line">    <span class="comment">//初始化next[0] = 0;</span></span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//第一层循环i代表模式串的子串的长度，j则是子串中前后缀相同的大小，我们的目的就是求出这个大小，然后存放在对应的next数组中，子串长度为0时，前后缀相同长度默认为0</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt; dest.length(); i++)&#123;</span><br><span class="line">        <span class="comment">//在循环中处理两种情况，最后将求出的前后缀相同长度j赋值给next[i]</span></span><br><span class="line">        <span class="comment">//第一种当匹配时，这里从最开始说一下，思想有点类似动态规划，子问题逐渐推出终解的感觉，比如当i=1，j=0时，这时的子串为"AA",由于dest.charAt(i) == dest.charAt(j)，所以j=1，然后next[i] = 1；代表"AA"子串中前后缀相同长度为1，若i=2时，子串为"AAA"，这时也满足匹配要求，所以j=2，然后next[i] = 2；所以我们可以这么理解i永远指向新加入子串的字符，j永远指向下一个要匹配的字符，而j-1就是我们已经确定的相等子串的长度。</span></span><br><span class="line">        <span class="keyword">if</span>(dest.charAt(i) == dest.charAt(j))&#123;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//重点来了！！！！！！！</span></span><br><span class="line">        <span class="comment">//当下一个加入子串的字符与已经匹配长度的下一个字符j+1不相等时怎么办呢？我们可能第一反应是：既然这个最大匹配串的下一个字符不匹配，那我们就只能缩小长度了，那应该缩小多少呢，难道再从0开始重新匹配？当然是不需要的，我们已知我们已经匹配出了j-1的相同前后缀的子串大小了，然后我们就要从这j-1的子串中去找答案。先别急，我们再来明确一下，next数组中存放的是对应长度的子串的最大相等前后缀大小，而我们已经有了j-1的匹配长度，我们是不是可以从这个j-1长度的子串中去找一下个最大相等前后缀的大小呢？其中有一点转换关系，可以看看代码下面给出的图，图中的k对应这个代码里面的j，j对应代码中的i。然后我们按图讲一讲这个转换关系，我们已经有的j-1长的已经匹配的长度(图中的A1,A2)，那么next[j-1]就是这个这个已经匹配的子串中的最大相等前后缀长度(图中的B1,B2),又因为A1=A2，所以B2=B3,B3=B1，然后我们在去检测这个j是否与next[j-1]是否相等，最终找出这个长度，同时这个长度也对应于将要匹配的下标，所以我们将next[j-1]赋值给j，直到匹配为止。</span></span><br><span class="line">        <span class="keyword">while</span>(j&gt;<span class="number">0</span> &amp;&amp; dest.charAt(i) != dest.charAt(j))&#123;</span><br><span class="line">            j = next[j-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        next[i] = j;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="八皇后"><a href="#八皇后" class="headerlink" title="八皇后"></a>八皇后</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 这学期终于开设算法课了，之前自学了一段时间，也看过一些蓝桥杯算法题，但终归只是浮于表面，这学期将跟随学习进度，系统学习算法，算法这种东西，三天不练就手生，八皇后问题，我竟然想了好久才写出来，因为相对于传统的使用二维数组的解法，我还思考了些其他解法。虽然这个优化过程很简单，是很常见的优化策略，但是也值得记录。</span></span><br><span class="line"><span class="section">## 这里是要求使用递归求解八皇后。</span></span><br></pre></td></tr></table></figure>
 
-
-
-<img src="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/1590645059875.png" class="" title="a">
-
-<h2 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h2><p><strong>图中是由其他博客[<a href="https://www.cnblogs.com/tangzhengyue/p/4315393.html]截取的,但是这个图中的next数组与我写的next数组是由区别的，图中的next数组表示的是不包含当前位的最大相同前后缀(也就是除去当前i下标的字符，前面的字符的最大相同前后缀)，而我写的是包含当前位的。所以图中的转换直接为next[k]就是下一个要匹配的位置，而我这里要进行减1操作，即next[j-1]，这里也有个小细节就是长度与下标的关系，因为我的next数组是包含当前位的，所以失配时是传入前一位的next[j-1]值，而图中的不包含当前位，就是直接传入当前位的next[k]值，而这个next长度就是刚好对应的下一个要匹配的字符的下标，因为下标是从0开始的，就比如图中的B1的长度为3，那么next[k]的下标就是3。由此可见next数组传入的就是子串的长度(可以看作是一个方法或者函数，返回值为最长前后缀的长度)。" target="_blank" rel="noopener">https://www.cnblogs.com/tangzhengyue/p/4315393.html]截取的,但是这个图中的next数组与我写的next数组是由区别的，图中的next数组表示的是不包含当前位的最大相同前后缀(也就是除去当前i下标的字符，前面的字符的最大相同前后缀)，而我写的是包含当前位的。所以图中的转换直接为next[k]就是下一个要匹配的位置，而我这里要进行减1操作，即next[j-1]，这里也有个小细节就是长度与下标的关系，因为我的next数组是包含当前位的，所以失配时是传入前一位的next[j-1]值，而图中的不包含当前位，就是直接传入当前位的next[k]值，而这个next长度就是刚好对应的下一个要匹配的字符的下标，因为下标是从0开始的，就比如图中的B1的长度为3，那么next[k]的下标就是3。由此可见next数组传入的就是子串的长度(可以看作是一个方法或者函数，返回值为最长前后缀的长度)。</a></strong></p>
-<p>上面的next是未经优化的next数组，而且由于网上已经各种教材的差异，next数组的求法也有些细微的差别，但是整体的思想是相同的。</p>
-<h2 id="next数组的优化"><a href="#next数组的优化" class="headerlink" title="next数组的优化"></a>next数组的优化</h2><p><strong>上面我们已经解决了最核心的一步思想了，接下来我们来看看如何优化next数组</strong></p>
 <blockquote>
-<p>下面我们使用不包含当前位且next[0]=-1的next数组，实际中我们也大多数使用的是这种</p>
+<p>先给出最常见的使用二维数组的解法，递归加回溯</p>
 </blockquote>
-<img src="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/1590666823270.png" class="" title="b">
-
-
-
-<p>如图当b、c失配时，将调用next数组得知需要右移2位，但是b与c还是失配，于是我们再次调用next数组，出现了不必要的步骤。我们可以看出来这里情况有点特殊，特殊在于p[next[j]]与我们正在进行匹配的一位是相同的都是b，所以这时这时失配时，我们要去找next[next[j]]，不需要再中间浪费一步。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//优化过后的next 数组求法  </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">GetNextval</span><span class="params">(<span class="keyword">char</span>* p, <span class="keyword">int</span> next[])</span>  </span></span><br><span class="line"><span class="function"></span>&#123;  </span><br><span class="line">    <span class="keyword">int</span> pLen = <span class="built_in">strlen</span>(p);  </span><br><span class="line">    next[<span class="number">0</span>] = <span class="number">-1</span>;  </span><br><span class="line">    <span class="keyword">int</span> k = <span class="number">-1</span>;  </span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;  </span><br><span class="line">    <span class="keyword">while</span> (j &lt; pLen - <span class="number">1</span>)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="comment">//p[k]表示前缀，p[j]表示后缀    </span></span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">-1</span> || p[j] == p[k])  </span><br><span class="line">        &#123;  </span><br><span class="line">            ++j;  </span><br><span class="line">            ++k;  </span><br><span class="line">            <span class="comment">//较之前next数组求法，改动在下面4行  </span></span><br><span class="line">            <span class="keyword">if</span> (p[j] != p[k])  </span><br><span class="line">                next[j] = k;   <span class="comment">//之前只有这一行  </span></span><br><span class="line">            <span class="keyword">else</span>  </span><br><span class="line">            	<span class="comment">//因为不能出现p[j] = p[ next[j]]，所以当出现时需要继续递归，k = next[k] = next[next[k]]，否则由于p[j] = p[next[j]]，我们在回退后还是比较相同的内容，所以必将失败，重复不必要的操作。</span></span><br><span class="line">                next[j] = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">else</span>  </span><br><span class="line">        &#123;  </span><br><span class="line">            k = next[k];  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="注意：-1"><a href="#注意：-1" class="headerlink" title="注意："></a>注意：</h3><p>这里的next数组由于不包含当前下标的字符，所以当前下标所指的永远是即将要进行比较的一位，所以当第一位匹配之后，进行++操作后便指向下一个要比较的位，然后我们再看p[j] 与 p[k]，即p[j]与p[next[j]]的关系，或者说是失配时要回退的位于当前位的关系，如果相等，则我们继续回退，所以执行递归调用 next[j] = next[k]</p>
-<p><strong>重点：</strong>只要出现了p[next[j]] = p[j]的情况，则把next[j]的值再次递归 。</p>
-
+        
       
 
       
@@ -221,10 +204,6 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
         		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">kmp</a>
-        		</li>
       		
 		</ul>
 	</div>
@@ -233,7 +212,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/">展开全文 >></a>
         </p>
       
 
@@ -263,425 +242,671 @@
 
 
   
-    <article id="post-CPU的功能和结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-策略模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/">CPU的功能和结构</a>
+      <a class="article-title" href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">策略模式</a>
     </h1>
   
 
         
-        <a href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-05-27T07:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
+        <a href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-09-07T04:56:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-07</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="CPU的功能和结构"><a href="#CPU的功能和结构" class="headerlink" title="CPU的功能和结构"></a>CPU的功能和结构</h1><blockquote>
-<p>本章总览</p>
-</blockquote>
-<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590376566304.png" class="" title="a">
-
-
-
-<h2 id="CPU的功能"><a href="#CPU的功能" class="headerlink" title="CPU的功能"></a>CPU的功能</h2><img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590376843518.png" class="" title="b">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-指令系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">指令系统</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-05-24T13:58:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h1><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590148235849.png" class="" title="a">
-
-
-
-<h2 id="指令-又称机器指令"><a href="#指令-又称机器指令" class="headerlink" title="指令(又称机器指令)"></a>指令(又称机器指令)</h2><ul>
-<li>是指示计算机执行某种操作的命令，是计算机运行的最小功能单位。</li>
-<li>一台计算机的所有指令的集合构成该机的指令系统，也称为指令集。</li>
-<li>一台计算机只能执行自己指令系统中的指令，不能执行其他系统的指令。</li>
+        <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><ul>
+<li>策略模式的关键是：分析项目中变化部分和不变部分</li>
+<li>策略模式的核心思想是：多用组合/聚合，少用继承；用行为类组合，而不是行为的继承。更具有弹性</li>
+<li>体现了OOP的开闭原则，客户端增加行为不用修改原有代码，只要添加一种策略(或者行为)即可，避免了使用多重转移语句if…else</li>
+<li>提供了可以替换继承关系的办法：策略模式将算法封装在独立的Strategy类中使得你可以独立于其Context改变它，使它易于切换、易于理解、易于扩展</li>
+<li>需要注意的是：每添加一个策略就要添加一个类，当策略过多时会导致类的数量庞大</li>
+<li>Array.sort中的Compare接口便明显使用了策略模式</li>
 </ul>
-<h2 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h2><ul>
-<li>一条指令就是机器语言的一个语句，它是一组有意义的二进制代码。</li>
-<li>一条指令通常要包括操作码字段和地址码字段两部分：</li>
-</ul>
-<img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590149307217.png" class="" title="b">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Floyd算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/">Floyd算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-22T08:34:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="弗洛伊德-Floyd-算法"><a href="#弗洛伊德-Floyd-算法" class="headerlink" title="弗洛伊德(Floyd)算法"></a>弗洛伊德(Floyd)算法</h1><blockquote>
-<p>多源最短路劲算法</p>
-</blockquote>
-<p><strong>与迪杰斯特拉算法的区别：</strong></p>
-<ul>
-<li>迪杰斯特拉算法是求出某一节点到其他所有节点的最短路劲</li>
-<li>弗洛伊德算法是求出所有节点之间的最短路径</li>
-</ul>
-<h2 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h2><ul>
-<li>设置顶点vi到顶点vk的最短路径已知为Lik，顶点vk到vj的最短路径已知为Lkj，顶点vi到vj的路径为Lij，则vi到vj的最短路径为：min((Lik+Lkj),Lij)，vk的取值为图中所有顶点，则可获得vi到vj 的最短路径</li>
-<li>至于vi到vk的最短路径Lik或者vk到vj的最短路径Lkj，是以同样的方式获得的</li>
-</ul>
-<p><strong>重点递推公式：min((Lik+Lkj),Lij)</strong></p>
-<p>解释：两点之间的最短距离要么为这两点的直连距离，要么为这两点经过其他某个(或者多个，这里的多个意思是Lik、Lkj中可能还经过了其他节点)的距离。</p>
-<h2 id="算法核心部分"><a href="#算法核心部分" class="headerlink" title="算法核心部分"></a>算法核心部分</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//算法中dis为图的邻接矩阵，经过算法后更新为点与点之间的最短距离的数组</span></span><br><span class="line"><span class="comment">//pre为各个点的前驱节点，初始时，每个节点到达另一个节点的前驱节点为自身，循环过程中，如果要经过其他节点则会进行更新</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">floyd</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;	<span class="comment">//用于保存距离</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第一层循环，用于遍历中间节点，k就是中间节点的下标</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; dis.length; k++)&#123;</span><br><span class="line">        <span class="comment">//第二层循环从第i个顶点出发</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; dis.length; i++)&#123;</span><br><span class="line">            <span class="comment">//第三层循环到达第j个顶点出发</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dis.length ; j++)&#123;</span><br><span class="line">                len = dis[i][k] + dis[k][j];	<span class="comment">//从i出发，经过k，到达j的距离</span></span><br><span class="line">                <span class="keyword">if</span>(len &lt; dis[i][j])&#123;	<span class="comment">//小于直连的距离</span></span><br><span class="line">                    dis[i][j] = len;	<span class="comment">//更新距离</span></span><br><span class="line">                    pre[i][j] = pre[k][j]	<span class="comment">//更新前驱顶点</span></span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>算法解释：</strong></p>
-<p>三层for循环是以每个节点为中间节点，然后去一个一个的匹配出发节点和终点节点，比较以这个节点为中间节点时的距离和出发节点到终点节点的直连距离的大小。</p>
-<img src="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/1590136149258.png" class="" title="a">
-
-
-
-<p>比如在示例图中，我们以A为中间节点，就会有以下的情况</p>
-<ul>
-<li>c-&gt;a-&gt;g [9]    ：  对比C-&gt;G    [不通] -&gt; 更新</li>
-<li>c-&gt;a-&gt;b [12]  ：对比C-&gt;B    [不通] -&gt; 更新</li>
-<li>g-&gt;a-&gt;b [7]    :   对比G-&gt;B    [3] -&gt; 不更新</li>
-<li>…..</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Floyd算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Kruskal算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/">Kruskal算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-17T07:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="克鲁斯卡尔-Kruskal-算法"><a href="#克鲁斯卡尔-Kruskal-算法" class="headerlink" title="克鲁斯卡尔(Kruskal)算法"></a>克鲁斯卡尔(Kruskal)算法</h1><ul>
-<li>克鲁斯卡尔算法，是用来求加权连通图的最小生成树的算法。</li>
-<li>基本思想：按照权值从小到大的顺序选择n-1条边，并保证这n-1条边不构成回路</li>
-<li>具体做法：首现构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并是森林中不产生回路，直至森林变成一颗树为止</li>
-</ul>
-<p><strong>由上我们可以知道，我么需要三个核心方法，一个是排序的方法，一个是由顶点获取下标的方法，还一个是传入一个下标，获取这个下标对应顶点的终点。</strong></p>
-<img src="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/1589691859352.png" class="" title="a">
-
-
-
-
-
-
-
-<p><strong>其中排序很好解决，判断是否形成回路，我们需要一些技巧</strong></p>
-<ul>
-<li>处理方式：记录顶点在“最小生成树”中的终点，顶点的终点是在“最小生成树”中与它连通的最大顶点。每次需要将一条边加入到最小生成树时，判断该边的两个顶点的终点是否重合，重合的话则会构成回路。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getEnd</span><span class="params">(<span class="keyword">int</span>[] ends,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(ends[i] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//这个操作就是比如A-&gt;B,返回B，然后再用B去找下一个,B-&gt;C,如果C没有下一个了，便返回C，于是得到了终点</span></span><br><span class="line">        i = ends[i];	</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="核心算法"><a href="#核心算法" class="headerlink" title="核心算法"></a>核心算法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kruskal</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] ends = <span class="keyword">new</span> <span class="keyword">int</span>[edgeNum];	<span class="comment">//用于保存"已有最小生成树"中的每个顶点在最小生成树中的终点</span></span><br><span class="line">    <span class="comment">//创建结果数组，保存最后的最小生成树</span></span><br><span class="line">    EData[] rets = <span class="keyword">new</span> EData[edgeNum];</span><br><span class="line">    <span class="comment">//EData类中有start、end、weight三个属性，分别表示起点终点权值。</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过邻接矩阵获取图中所有边的集合</span></span><br><span class="line">    EData[] edges = getEdges();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按照边的权值大小进行排序</span></span><br><span class="line">    sortEdges(edges);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//遍历edges数组，将边添加到最小生成树中时，判断准备加入的边是否会形成回路，如果没有就加入到rets，否则就不加入</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; endgeNum;i ++)&#123;</span><br><span class="line">        <span class="comment">//获取第i条边的第一个顶点,和第二个顶点的下标 顶点的存储为 ['A','B','C','D'...]</span></span><br><span class="line">        <span class="keyword">int</span> p1 = getPosition(edges[i].start);</span><br><span class="line">        <span class="keyword">int</span> p2 = getPosition(edges[i].end);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> m = getEnd(ends,p1);		<span class="comment">//获取p1的终点</span></span><br><span class="line">        <span class="keyword">int</span> n = getEnd(ends,p2);		<span class="comment">//获取p2的终点</span></span><br><span class="line">        <span class="keyword">if</span>(m!=n)&#123;</span><br><span class="line">            ends[m] = n;</span><br><span class="line">            rets[index++] = edges[i];	<span class="comment">//加入这条边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-prim算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/16/prim%E7%AE%97%E6%B3%95/">prim算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/16/prim%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-16T07:08:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h1><ul>
-<li>普利姆算法求最小生成树，也就是在包含n个顶点的连通图中，找出只有(n-1)条边包含所有n个顶点的连通子图，也就是所谓的极小连通子图</li>
-<li>普利姆算法如下<ul>
-<li>设G=(V,E)是连通图，T=(U,D)是最小生成树，V,U是顶点集合，E，D是边的集合</li>
-<li>若从顶u开始构造最小生成树，则从集合V中取出顶点u放入集合U中，标记顶点v的visited[u]=1</li>
-<li>若集合U中顶点ui与集合V-U中的顶点vj之间存在边，则寻找这些边中权值最小的边，但不能构成回路，将顶点vj加入集合U中，将边(ui，vj)加入集合D中，标记visited[vj]=1</li>
-<li>重复步骤2，直到U与V相等，即所有顶点都被标记访问过，此时D中有n-1条边</li>
+<h2 id="思想："><a href="#思想：" class="headerlink" title="思想："></a>思想：</h2><ul>
+<li>策略模式中定义算法族(策略组)，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户</li>
+<li>设计原则：<ul>
+<li>把变化的代码从不变的代码中分离出来</li>
+<li>针对接口编程而不是具体类(定义了策略接口)</li>
+<li>多用组合/聚合，少用继承</li>
 </ul>
 </li>
 </ul>
-<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><img src="/2020/05/16/prim%E7%AE%97%E6%B3%95/1589608212675.png" class="" title="a">
+<blockquote>
+<p>类图</p>
+</blockquote>
+<img src="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/1595485280792.png" class="" title="a">
 
 
-
-<h3 id="核心代码片段"><a href="#核心代码片段" class="headerlink" title="核心代码片段"></a>核心代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码中graph类中verxs属性表示节点的个数</span></span><br><span class="line"><span class="comment">//graph.weight数组为节点的邻接矩阵，值为权值，用10000代表不通</span></span><br><span class="line"><span class="comment">//graph.data为节点信息或者值</span></span><br><span class="line"><span class="comment">//用visited[]数组记录是否已经访问</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">visited[<span class="number">0</span>] = <span class="number">1</span>;	<span class="comment">//从第一个节点开始，可以自定</span></span><br><span class="line"><span class="comment">//第一层for循环代表我们要产生n-1条边</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; graph.verxs; k++)&#123;</span><br><span class="line">    <span class="comment">//第二层for循环是我们在遍历已经访问过的点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; graph.verxs &amp;&amp; visited[i] == <span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="comment">//第二层for循环是我们通过我们已经访问过的节点，去访问未访问过的节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt; graph.verxs &amp;&amp; visited[j] == <span class="number">0</span>;j++)&#123;</span><br><span class="line">            <span class="comment">// 判断是为了从这些未访问的与访问过的节点所产生的边中选出最短边，用h1、h2记录下来</span></span><br><span class="line">            <span class="keyword">if</span>(graph.weight[i][j] &lt; minWeight)&#123;</span><br><span class="line">                minWeight = graph.weight[i][j];</span><br><span class="line">                h1 = i;</span><br><span class="line">                h2 = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//打印选出的最短边</span></span><br><span class="line">    System.out.println(<span class="string">"边&lt;"</span> + graph.data[h1] + <span class="string">","</span> + graph.data[h2] + <span class="string">"&gt; 权值："</span> + minWeight);</span><br><span class="line">    <span class="comment">//标记这个未访问的节点</span></span><br><span class="line">    visited[h2] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//重置最小权值</span></span><br><span class="line">    minWeight = <span class="number">10000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p>核心思想：贪心算法，每次都是选出局部最优解，最终求出全局最优解。</p>
+<p>代码</p>
 </blockquote>
+<p><code>策略接口</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>策略1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyA</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"平稳飞行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>策略1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyB</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"翻转飞行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>飞机类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Plane</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Strategy strategy;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Plane</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">        strategy.fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>用户类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//客机</span></span><br><span class="line">        Plane CivilAircraft = <span class="keyword">new</span> Plane(<span class="keyword">new</span> StrategyA());</span><br><span class="line">        <span class="comment">//战斗机</span></span><br><span class="line">        Plane fighter = <span class="keyword">new</span> Plane(<span class="keyword">new</span> StrategyB());</span><br><span class="line"></span><br><span class="line">        CivilAircraft.fly();</span><br><span class="line"></span><br><span class="line">        fighter.fly();</span><br><span class="line">		</span><br><span class="line">        <span class="comment">//特技飞机</span></span><br><span class="line">        Plane StuntPlane = <span class="keyword">new</span> Plane(() -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"高难度俯冲"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        StuntPlane.fly();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">策略模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-责任链模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">责任链模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-08-09T10:23:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h1><ul>
+<li><p>将请求和处理分开，实现解耦，提高系统的灵活性</p>
+</li>
+<li><p>简化了对象，是对象不需要知道链的结构</p>
+</li>
+<li><p>性能会受到影响，特别是链比较长的时候，因此需控制链中最大节点数量，一般通过Handler中设置最大节点数，在setNext()方法中判断是否已经超过阀值，超过阀值则不允许建立链，避免出现超长链无意识的破坏系统性能</p>
+</li>
+<li><p>调试不方便，采用类似递归的方式，调试时逻辑可能比较复杂，处理函数中一般有三个参数：request，response，filterChain，先对request进行处理，然后调用filterChain处理下一个filter，然后再是对response的处理，这种递归调用导致处理response的filter是反向的。</p>
+</li>
+<li><p>最佳应用场景：有多个对象可以处理同一个请求时，比如：多级请求、请假/加薪等审批流程、JavaWeb中Tomcat中对Encoding的处理、拦截器</p>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><blockquote>
+<p>定义一个msg类，模拟request</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Msg</span> </span>&#123;</span><br><span class="line">    String msg;</span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Msg</span><span class="params">(String msg,String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Msg&#123;"</span> +</span><br><span class="line">                <span class="string">"msg='"</span> + msg + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>定义一个MyFilter接口</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以下是三个实现类，返回值为boolean以控制是否继续下一个Filter</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HtmlFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">"&lt;"</span>,<span class="string">"["</span>);</span><br><span class="line">        result = result.replace(<span class="string">"&gt;"</span>,<span class="string">"]"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SensitiveFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">"996"</span>,<span class="string">"955"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">if</span>(result.contains(<span class="string">"sb"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SignFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">":)"</span>,<span class="string">"^v^"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>FilterChain类也实现了Filter接口，以实现链与链之间的拼接</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterChain</span> <span class="keyword">implements</span> <span class="title">MyFilter</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MyFilter&gt; Filters = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回this对象，实现链式编程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> FilterChain <span class="title">add</span><span class="params">(MyFilter filter)</span></span>&#123;</span><br><span class="line">        Filters.add(filter);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (MyFilter f: Filters) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!f.doMyFilter(msg))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>客户类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String msg = <span class="string">"大家好:)，我是emptyskz，&lt;scrpy&gt;欢迎访问emptyskz.io，大家都是996"</span>;</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        Msg msg1 = <span class="keyword">new</span> Msg(msg, <span class="string">"empty"</span>);</span><br><span class="line"></span><br><span class="line">        FilterChain filterChain = <span class="keyword">new</span> FilterChain();</span><br><span class="line">        filterChain.add(<span class="keyword">new</span> HtmlFilter()).add(<span class="keyword">new</span> SensitiveFilter());</span><br><span class="line">        FilterChain filterChain1 = <span class="keyword">new</span> FilterChain();</span><br><span class="line">        filterChain1.add(<span class="keyword">new</span> SignFilter());</span><br><span class="line">        filterChain.add(filterChain1);</span><br><span class="line"></span><br><span class="line">        filterChain.doMyFilter(msg1);</span><br><span class="line">        System.out.println(msg1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">责任链模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-两数之和" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">两数之和</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" class="archive-article-date">
+  	<time datetime="2020-08-06T16:06:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h1><p>准备蓝桥杯，先搞点简单的打开思路</p>
+<blockquote>
+<p>题：</p>
+</blockquote>
+<p>给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那 <code>两个</code> 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
+<p>示例:</p>
+<p>给定 nums = [2, 7, 11, 15], target = 9</p>
+<p>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+<blockquote>
+<p>这里给出三种题解，由易到难</p>
+</blockquote>
+<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>思路很简单，双重for循环，遍历每个元素，看两两之和能否满足条件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[j] == target - nums[i]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; i, j &#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度:</strong></p>
+<p>显然时间复杂度为O(n²)，空间复杂度为O(1)</p>
+<h2 id="排序加双指针"><a href="#排序加双指针" class="headerlink" title="排序加双指针"></a>排序加双指针</h2><p>稍加思考，我们就能知道在暴力匹配中，我们可以从无脑的两两匹配的方式中入手，在有序数列中最大与最小的进行两两匹配，使用这种策略将大大提升匹配效率，那我们就先排序，排序后便能排除无脑暴力匹配了，要知道先进行排序后的逐一检索永远比暴力匹配效率更高，然后我们给排好序的数组前后各一个指针，来进行双向遍历。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">        temp=nums;</span><br><span class="line">        <span class="keyword">int</span> n=temp.<span class="built_in">size</span>();</span><br><span class="line">       	sort(temp.<span class="built_in">begin</span>(),temp.<span class="built_in">end</span>());</span><br><span class="line">       	<span class="keyword">int</span> i=<span class="number">0</span>,j=n<span class="number">-1</span>;</span><br><span class="line">       	<span class="keyword">while</span>(i&lt;j)&#123;  </span><br><span class="line">          	<span class="keyword">if</span>(temp[i]+temp[j]&gt;target)j--;</span><br><span class="line">          	<span class="keyword">else</span> <span class="keyword">if</span>(temp[i]+temp[j]&lt;target)i++;</span><br><span class="line">          	<span class="keyword">else</span> <span class="keyword">break</span>; </span><br><span class="line">       	&#125;</span><br><span class="line">       	<span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">      		<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;</span><br><span class="line">          		<span class="keyword">if</span>(i&lt;n&amp;&amp;nums[k]==temp[i])&#123;</span><br><span class="line">              		ans.push_back(k);</span><br><span class="line">              		i=n;</span><br><span class="line">        		&#125;</span><br><span class="line">        		<span class="keyword">else</span> <span class="keyword">if</span>(j&lt;n&amp;&amp;nums[k]==temp[j])&#123;</span><br><span class="line">              		ans.push_back(k);</span><br><span class="line">              		j=n;</span><br><span class="line">        		&#125;</span><br><span class="line">          		<span class="keyword">if</span>(i==n&amp;&amp;j==n)<span class="keyword">return</span> ans;</span><br><span class="line">      		&#125;</span><br><span class="line">      	&#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度:</strong></p>
+<p>时间复杂度：使用一次sort，时间复杂度为O(nlogn)，使用一次遍历O(n)，查找一次对应的下标O(n)，所以时间复杂度为O(nlogn)</p>
+<p>空间复杂度：使用一次temp数组，空间复杂度O(n)</p>
+<p><strong>其实对于当前元素，我们是知道我们的目标元素的，也就是<code>target - nums[i]</code>，这么说，我们的优化可以在搜索<code>target - nums[i]</code>这一步中操作，在排序后就是在有序数值中寻找<code>target - nums[i]</code>，那么我们是不是可以将逐一的两两匹配换为在有序数值中寻找<code>target - nums[i]</code>，而查找的策略就很多了，二分查找，插值查找算法（二分查找的优化）等….</strong></p>
+<h2 id="哈希查找"><a href="#哈希查找" class="headerlink" title="哈希查找"></a>哈希查找</h2><p>对于查询的最优化当然是使用<code>哈希查找</code>了，这样我们只需要将数组交给<code>哈希表</code>来进行托管，建立合适的<code>索引</code>即可将查询的代价降低到<code>O(1)</code>，这里我们直接使用数组中数的本身来创建索引即可，将数在原数组中的索引作为哈希表中的值，因为我们需要知道目标数的索引为多少。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">       <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;hashmap;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)&#123;	<span class="comment">//一边将数组中的数值加入到map中，一遍检索是否有目标数字</span></span><br><span class="line">           <span class="comment">//数作为索引(键)，下标+1作为值</span></span><br><span class="line">           <span class="keyword">if</span>(hashmap[target-nums[i]])&#123;</span><br><span class="line">               ans.push_back(i);</span><br><span class="line">               ans.push_back(hashmap[target-nums[i]]<span class="number">-1</span>);</span><br><span class="line">               <span class="keyword">return</span> ans;</span><br><span class="line">           &#125;</span><br><span class="line">        	hashmap[nums[i]]=i+<span class="number">1</span>;</span><br><span class="line">        	<span class="comment">//将hash表对应下标＋1，防止处理下标为0的情况</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>复杂度:</strong></p>
+<p>时间复杂度：哈希查找的复杂度为O(1)，外层一个for循环，所以总共为O(n)</p>
+<p>空间复杂度：使用额外的map存储数组，所以空间复杂度为O(n)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-装饰者模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">装饰者模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-17T07:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h1><p><strong>问题：</strong>现在有一家咖啡店推出各种咖啡，以及各种配料，顾客可以点单品咖啡，也可以点单品咖啡+各种配料</p>
+<h2 id="方案一：使用传统继承方式"><a href="#方案一：使用传统继承方式" class="headerlink" title="方案一：使用传统继承方式"></a>方案一：使用传统继承方式</h2><img src="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594800488665.png" class="" title="a">
+
+
+
+<ul>
+<li>这种方案显然不合适，这样会产生很多的类，导致类爆炸，不利于系统的管理</li>
+</ul>
+<h2 id="方案二：使用桥接模式将配料聚合到咖啡中"><a href="#方案二：使用桥接模式将配料聚合到咖啡中" class="headerlink" title="方案二：使用桥接模式将配料聚合到咖啡中"></a>方案二：使用桥接模式将配料聚合到咖啡中</h2>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">装饰者模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-适配器模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">适配器模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-12T13:24:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h1><blockquote>
+<p>基本介绍</p>
+</blockquote>
+<ul>
+<li>Adapter将某个类的接口转换成客户端期望的另一种接口表示，主要的目的是兼容性，让原本因接口不匹配不能一起工作的两个类可以协同工作。起别名为包装器</li>
+<li>适配器模式属于结构性模式</li>
+<li>主要分为三类：类适配器模式、对象适配器模式、接口适配器模式</li>
+</ul>
+<blockquote>
+<p>工作原理</p>
+</blockquote>
+<ul>
+<li><p>适配器模式：将一个类的接口转换成另一种接口，让原本接口不兼容的类可以兼容</p>
+</li>
+<li><p>从用户的角度看不到被适配者，是解耦的</p>
+</li>
+<li><p>用户调用适配器转化出来的目标接口方法，适配器再调用配适配者的相关接口方法</p>
+</li>
+<li><p>用户受到反馈结果，感觉只是和目标接口交互。</p>
+</li>
+</ul>
+<h2 id="类适配器"><a href="#类适配器" class="headerlink" title="类适配器"></a>类适配器</h2><p><strong>思想：使用继承</strong></p>
+<p>使用一个手机充电的例子</p>
+<p><code>一般的220V电压</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际拥有的方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Voltage220V</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> src = <span class="number">220</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">output220V</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"输出电压"</span>+src+<span class="string">"伏"</span>);</span><br><span class="line">        <span class="keyword">return</span> src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>手机需要的5V电压</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我们所需要的接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Volatage5V</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">output</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>适配器类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">Voltage220V</span> <span class="keyword">implements</span> <span class="title">Volatage5V</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">output</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> src = <span class="keyword">super</span>.output220V();</span><br><span class="line">        System.out.println(<span class="string">"转换为5V电压！"</span>);</span><br><span class="line">        <span class="keyword">return</span> src/<span class="number">44</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>手机类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Phone</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> input;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Phone</span><span class="params">(Volatage5V input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.input = input.output();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">charming</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(input == <span class="number">5</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"使用5V电压充电！"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"请使用正确的电压充电！！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>用户类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Phone phone = <span class="keyword">new</span> Phone(<span class="keyword">new</span> Adapter());</span><br><span class="line">        phone.charming();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="对象适配器"><a href="#对象适配器" class="headerlink" title="对象适配器"></a>对象适配器</h2><p><strong>思想：使用组合</strong></p>
+<p>对于被适配的对象，我们正在适配器中采用组合的方法而不是继承，这样使得成本更低更灵活，也符合我们JAVA编程思想中的优先使用组合而不是继承的思想，代码较为简单，只选要对类适配器的代码稍做修改即可。</p>
+<h2 id="接口适配器"><a href="#接口适配器" class="headerlink" title="接口适配器"></a>接口适配器</h2><p><strong>使用：继承抽象类，抽象类中继承接口并以空方法实现所有的方法，这样继承抽象类的子类可以任意只实现接口中的任意个方法。</strong></p>
+<ul>
+<li>一些书籍称为：缺省适配器模式</li>
+<li>当不需要全部实现接口提供的方法时，可以设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可以有选择的覆盖父类中的某些方法来实现需求</li>
+<li>使用一个接口不需要使用其他方法的情况</li>
+</ul>
+<p><strong>当然我们也可以考虑将接口拆为多个接口。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">适配器模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-建造者模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">建造者模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-07T06:00:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><h2 id="传统模式"><a href="#传统模式" class="headerlink" title="传统模式"></a>传统模式</h2><p><strong>比如我们现在有个建房子的任务，先来看看传统模式下的代码如何实现</strong></p>
+<ul>
+<li>一个建造的抽象类，具体实现交给子类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">builder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span></span>;   <span class="comment">//打地基</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span></span>;  <span class="comment">//建围墙</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span></span>;   <span class="comment">//封顶</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        buildBase();</span><br><span class="line">        buildWalls();</span><br><span class="line">        buildRoof();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>子类实现建造方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonHouse</span> <span class="keyword">extends</span> <span class="title">builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 地基建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 围墙建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 屋顶建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>用户调用建造方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CommonHouse commonHouse = <span class="keyword">new</span> CommonHouse();</span><br><span class="line">        commonHouse.buildAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>分析：</strong></p>
+<ul>
+<li>优点是比较好理解，简单易操作</li>
+<li>设计的程序结构，过于简单，没有设计缓存层对象，程序的扩展和维护不好，也就是说，这种设计方案把产品(房子)和建造产品的过程(buildAll方法)封装在了一起，耦合性增强了。</li>
+<li>解决方案：将产品和产品的建造过程解耦，这便是建造者模式</li>
+</ul>
+<h2 id="建造者模式-1"><a href="#建造者模式-1" class="headerlink" title="建造者模式"></a>建造者模式</h2><p>又叫生成器模式，它可以将复杂对象的建造过程抽象出来，使得这个抽象过程的不同实现方法可以构造出不同的对象，它是一步一步创建复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。</p>
+<p><strong>建造者模式的四个角色：</strong></p>
+<ul>
+<li>Product(产品角色)：一个具体的产品对象。</li>
+<li>Builder(抽象创建者)：创建一个Product对象的各个部件指定的接口/抽象类，它只需要指定建造的流程，建造的具体细节是不管的。</li>
+<li>ConcreteBuilder(具体建造者)：实现接口，构建和装配各个部件。</li>
+<li>Director(指挥者)：构建一个使用Builder接口的对象。它主要是用于创建一个复杂的对象。它主要有两个作用，一是：隔离客户与对象的生产过程，二是：负责控制产品对象的生产过程。</li>
+</ul>
+<img src="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/1594021954431.png" class="" title="a">
+
+
+
+<blockquote>
+<p><strong>上代码</strong></p>
+</blockquote>
+<blockquote>
+<p>产品类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对应我们的产品</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">House</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String Base;</span><br><span class="line">    <span class="keyword">private</span> String Wall;</span><br><span class="line">    <span class="keyword">private</span> String Roof;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">House</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">House</span><span class="params">(String base, String wall, String roof)</span> </span>&#123;</span><br><span class="line">        Base = base;</span><br><span class="line">        Wall = wall;</span><br><span class="line">        Roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getWall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Wall;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBase</span><span class="params">(String base)</span> </span>&#123;</span><br><span class="line">        Base = base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWall</span><span class="params">(String wall)</span> </span>&#123;</span><br><span class="line">        Wall = wall;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoof</span><span class="params">(String roof)</span> </span>&#123;</span><br><span class="line">        Roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>抽象建造者类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//建造者，指定建造有哪些步骤</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseBuilder</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> House house = <span class="keyword">new</span> House();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWall</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> House <span class="title">buildHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> house;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>建造者实现类</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;具体建造对象，实现其中的建造步骤的细节</span><br><span class="line">public class CommonBuilder extends HouseBuilder &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void buildWall() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子建墙&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buildBase() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子打地基&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buildRoof() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子盖房顶&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>指挥者类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指挥者，规定建造的流程</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Directer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> HouseBuilder houseBuilder ;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Directer</span><span class="params">(HouseBuilder houseBuilder)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.houseBuilder = houseBuilder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHouseBuilder</span><span class="params">(HouseBuilder houseBuilder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.houseBuilder = houseBuilder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> House <span class="title">buildHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        houseBuilder.buildBase();</span><br><span class="line">        houseBuilder.buildWall();</span><br><span class="line">        houseBuilder.buildRoof();</span><br><span class="line">        House house = houseBuilder.buildHouse();</span><br><span class="line">        <span class="keyword">return</span> house;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>用户类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CommonBuilder commonBuilder = <span class="keyword">new</span> CommonBuilder();</span><br><span class="line">        Directer directer = <span class="keyword">new</span> Directer(commonBuilder);</span><br><span class="line">        House house = directer.buildHouse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <hr>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
-<li><p>优化后只有两层循环，时间复杂度降为O(n²)</p>
+<h3 id="两种方法的对比"><a href="#两种方法的对比" class="headerlink" title="两种方法的对比"></a>两种方法的对比</h3><p>​        对比上面两种实现方法，建造者模式将生产对象、生产过程、生产流程解耦，分离出来，让代码的扩展性更好，以后我们需要新增产品便只需要设计不同的Builder即可，符合了OOP的开闭原则。其实我们应该先明确我们的生产对象其实都是同一类的东西，这些东西有着不同的属性，将这些属性的赋值、初始化交给builder而不是让用户去做，便是这种设计模式的核心思想。其中对于建造者的抽象，与衍生出的建造者之间我们也要明确是is-a的关系，不同的产品对应于不同的建造者，而我们将建造者抽象出来的目的就是实现代码的扩展性。</p>
+<h2 id="建造者模式的注意事项和细节"><a href="#建造者模式的注意事项和细节" class="headerlink" title="建造者模式的注意事项和细节"></a>建造者模式的注意事项和细节</h2><ul>
+<li><p>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使的相同的创建过程可以创建不同的产品对象</p>
 </li>
-<li><p>优化点：</p>
-<p>可以这么理解，上面的方法是遍历顶点，所以在既要遍历出发顶点又要遍历终点，所以会出现三重循环，而优化后，我们引进了一个dist数组，用来存放侯选边，所以是对边进行遍历从而只有两层循环</p>
+<li><p>每一个具体创建者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的建造者，用户使用不同的具体建造者即可得到不同的产品对象</p>
 </li>
-<li><p>侯选边dist数组的解释：我们不关心出发点具体是哪一个(但是是从已经访问过的顶点出发的)，只关心终点，数组中存放的是到达这个终点的最短距离，而被选取的对象是从我们已经访问过的顶点出发的边。所以初始化时，将出发点的所有邻接点的距离都存入dist，而更新时，我们只需要比较最新访问的顶点的所有邻接点的距离和原dist数组的距离进行比较，存入短边即可。</p>
+<li><p>可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更加方便使用程序来控制创建过程</p>
+</li>
+<li><p>增加新的具体建造者无需修改原有的类库，指挥者类针对抽象建造者类编程，系统扩展方便，符合开闭原则。</p>
+</li>
+<li><p>建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。</p>
+</li>
+<li><p>如果产品的内部变化复杂，可能会导致需要定义很多具体的建造者类来实现这种变化，导致系统变得很庞大，因此这种情况下就要考虑是否需要使用建造者模式</p>
+</li>
+<li><p><strong>抽象工厂模式VS建造者模式</strong></p>
+<p>抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。而建造者模式则是要求按照指定的蓝图建造产品，他的主要目的是通过组装零配件而产生一个新产品</p>
 </li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 10000</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">bool</span> visit[N];</span><br><span class="line"><span class="keyword">int</span> dist[N] = &#123; <span class="number">0</span>, &#125;;</span><br><span class="line"><span class="keyword">int</span> graph[N][N] = &#123; &#123;INF,<span class="number">7</span>,<span class="number">4</span>,INF,INF,INF&#125;,  <span class="comment">//INF代表两点之间不可达</span></span><br><span class="line">                    &#123;<span class="number">7</span>,INF,<span class="number">6</span>,<span class="number">2</span>,INF,<span class="number">4</span>&#125;,</span><br><span class="line">                    &#123;<span class="number">4</span>,<span class="number">6</span>,INF,INF,<span class="number">9</span>,<span class="number">8</span>&#125;,</span><br><span class="line">                    &#123;INF,<span class="number">2</span>,INF,INF,INF,<span class="number">7</span>&#125;,</span><br><span class="line">                    &#123;INF,INF,<span class="number">9</span>,INF,INF,<span class="number">1</span>&#125;,</span><br><span class="line">                    &#123;INF,<span class="number">4</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">1</span>,INF&#125;</span><br><span class="line">                  &#125;;</span><br><span class="line">intprim(<span class="keyword">int</span> cur)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> index = cur;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">memset</span>(visit,<span class="literal">false</span>, <span class="keyword">sizeof</span>(visit));</span><br><span class="line">    visit[cur] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">        dist[i] = graph[cur][i];<span class="comment">//初始化，每个与a邻接的点的距离存入dist</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; N; i++)		<span class="comment">//生成n-1条边</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> minor = INF;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[j] &amp;&amp; dist[j] &lt; minor)          <span class="comment">//找到未访问的点中，距离当前最小生成树距离最小的点</span></span><br><span class="line">            &#123;</span><br><span class="line">                minor = dist[j];</span><br><span class="line">                index = j;				<span class="comment">//由新加入的顶点去更新dist数组，因为dist中的终点可能可以由新的顶点产生更小的路径，而这个更小的路径我们就需要更新到dist中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        visit[index] = <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        sum += minor;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[j] &amp;&amp; dist[j]&gt;graph[index][j])    <span class="comment">//dist数组中只存放到达j顶点的最短边，更新后的dist数组会经过下一次循环获取到新的最短边</span></span><br><span class="line">            &#123;</span><br><span class="line">                dist[j] = graph[index][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> sum;               <span class="comment">//返回最小生成树的总路径值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; prim(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//从顶点a开始</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
       
 
@@ -695,19 +920,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">prim算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">建造者模式</a>
         		</li>
       		
 		</ul>
@@ -717,7 +934,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/16/prim%E7%AE%97%E6%B3%95/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -747,300 +964,118 @@
 
 
   
-    <article id="post-虚拟存储器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-工厂模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">虚拟存储器</a>
+      <a class="article-title" href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
     </h1>
   
 
         
-        <a href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-05-14T14:30:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
+        <a href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-04T17:11:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><blockquote>
-<p>虚拟存储器是一个逻辑模型</p>
+        <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>OOP七大原则：</p>
+<ul>
+<li>开闭原则：一个软件的实体应当对拓展开放，对修改关闭</li>
+<li>依赖倒转原则：要针对接口编程，不要针对实现编程</li>
+<li>迪米特法则：只与你直接的朋友通信，而避免和陌生人通信</li>
+</ul>
+<h3 id="工厂模式核心本质："><a href="#工厂模式核心本质：" class="headerlink" title="工厂模式核心本质："></a>工厂模式核心本质：</h3><ul>
+<li>实例化对象不使用new，用工厂方法代替</li>
+<li>将选择实现类，创建对象 统一管理和控制，从而将调用者跟我们的实现类解耦。</li>
+</ul>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><blockquote>
+<p>用来生产同一等级结构中的任意产品(对于增加新的产品，需要扩展已有代码)</p>
 </blockquote>
-<h2 id="功能："><a href="#功能：" class="headerlink" title="功能："></a>功能：</h2><p>用户给出一个地址，叫做虚地址或逻辑地址，虚拟存储器要给出该地址对应的数据。</p>
-<h2 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h2><p>由辅助硬件将虚地址映射到主存当中的某个单元，主存单元地址称为实地址或物理地址</p>
-<h2 id="虚拟空间与主存空间的映射方式"><a href="#虚拟空间与主存空间的映射方式" class="headerlink" title="虚拟空间与主存空间的映射方式"></a>虚拟空间与主存空间的映射方式</h2><h3 id="方式一：页式虚拟存储器"><a href="#方式一：页式虚拟存储器" class="headerlink" title="方式一：页式虚拟存储器"></a>方式一：页式虚拟存储器</h3><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589437188055.png" class="" title="a">
-
-
-
-<ul>
-<li>页表实际在主存中</li>
-<li>页表拼接页表起始地址指向主存地址所在的页表地址，然后取出实际地址</li>
-<li>再去Cache-主存中去寻找数据</li>
-</ul>
-<h3 id="方式二：段式虚拟存储器"><a href="#方式二：段式虚拟存储器" class="headerlink" title="方式二：段式虚拟存储器"></a>方式二：段式虚拟存储器</h3><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589437869744.png" class="" title="b">
-
-
-
-<h3 id="方式三：段页虚拟存储器"><a href="#方式三：段页虚拟存储器" class="headerlink" title="方式三：段页虚拟存储器"></a>方式三：段页虚拟存储器</h3><p>把程序按逻辑结构分段，每段再划分为固定大小的页，主存空间也划分为大小相等的页，程序对主存的调入、调出仍以页为基本传送单位。每个程序对应一个段表，每段对应一个页表。</p>
-<p>虚拟地址：段号+段内页号+页内地址</p>
-<img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589458019204.png" class="" title="c">
-
-
-
-<h1 id="一个例题"><a href="#一个例题" class="headerlink" title="一个例题"></a>一个例题</h1><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589459336971.png" class="" title="d">
-
-
-
-<ul>
-<li>虚拟地址的高5位03FFF对应实页号的4位，表中为0153，然后替换掉虚拟地址，得到主存实地址</li>
-<li>第二个的FF180对应的实页地址位为0002，但是我们发现有效位为0，因为这是个快表，所以是在Cache中，有效位为0代表没有命中，所以为TLB缺失。</li>
-</ul>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589459765986.png" class="" title="e">
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟存储器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-BFS和DFS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/12/BFS%E5%92%8CDFS/">BFS和DFS</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/12/BFS%E5%92%8CDFS/" class="archive-article-date">
-  	<time datetime="2020-05-12T12:21:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="DFS和BFS"><a href="#DFS和BFS" class="headerlink" title="DFS和BFS"></a>DFS和BFS</h1><h2 id="预备知识："><a href="#预备知识：" class="headerlink" title="预备知识："></a>预备知识：</h2><p>对于图的存储，除了直接使用Map来进行存储之外，我们还可以使用邻接矩阵和邻接表来进行存储图结构</p>
-<ul>
-<li>邻接矩阵：</li>
-</ul>
-<img src="/2020/05/12/BFS%E5%92%8CDFS/1589285445907.png" class="" title="a">
-
-
-
-<ul>
-<li>邻接表</li>
-</ul>
-<img src="/2020/05/12/BFS%E5%92%8CDFS/1589285494864.png" class="" title="b">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">BFS DFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/12/BFS%E5%92%8CDFS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-平衡二叉树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" class="archive-article-date">
-  	<time datetime="2020-05-11T10:21:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="平衡二叉树-AVL树"><a href="#平衡二叉树-AVL树" class="headerlink" title="平衡二叉树(AVL树)"></a>平衡二叉树(AVL树)</h1><blockquote>
-<p>左子树与右子树的高度差不大于1的二叉树叫做平衡二叉树(AVL树)</p>
-</blockquote>
-<h3 id="树的高度"><a href="#树的高度" class="headerlink" title="树的高度"></a>树的高度</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">leftHight</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left.Hight();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rightHight</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(right == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right.Hight();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Hight</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Math.max(left == <span class="keyword">null</span> ? <span class="number">0</span>:left.Hight(),right == <span class="keyword">null</span> ? <span class="number">0</span> : right.Hight())+<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="左旋转"><a href="#左旋转" class="headerlink" title="左旋转"></a>左旋转</h3><ul>
-<li>1、创建一个新节点，值为当前根节点的值，新节点的左子树设置为根节点的左子树</li>
-<li>2、新节点的右子树设置为根节点的右子树的左子树。</li>
-<li>3、将根节点的值设为根节点右子节点的值</li>
-<li>4、将根节点的右子树设为根节点的右子树的右子树(此时没有引用指向原来的右子树，根据jvm的资源回收原则，原来的右子节点将会被回收)</li>
-<li>5、将根节点的左子树设为上面创建的新节点</li>
-</ul>
-
-
-
-
-
-
-
-
-<h3 id="右旋转"><a href="#右旋转" class="headerlink" title="右旋转"></a>右旋转</h3><ul>
-<li>1、创建一个新节点，以根节点为值，新节点的右子树为当前根节点的右子树</li>
-<li>2、新节点的左子树设为根节点的左子树的右子树</li>
-<li>3、将根节点的值换为左子节点的值</li>
-<li>4、将根节点的左子树设为左子节点的左子树(原左子节点被回收)</li>
-<li>5、将根节点的右子树设为上述得到新节点</li>
-</ul>
-
-
-
-
-
-
-
-
-<h3 id="双旋转"><a href="#双旋转" class="headerlink" title="双旋转"></a>双旋转</h3><blockquote>
-<p>当要进行右旋转时，如果他的左子树的右子树高度大于他的左子树的左子树的高度，便要进行双旋转</p>
-</blockquote>
-
-
-
-
-
-
-<p>因为我们进行右旋转时，是将左子树的右子树，挂在了根节点的右子树的左子树上，由于右旋转导致左子树高度失去了左子树的右子树部分的高度(而且是导致不平衡的一部分),所以右旋转之后还是不平衡的。</p>
-<ul>
-<li>先对根节点的左节点进行左旋</li>
-<li>再对根节点进行右旋</li>
-</ul>
-
+<p>比如我们现在有一家汽车生产商</p>
+<p>那么按照简单工厂模式，我们就可以写出这样的结构</p>
+<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850704336.png" class="" title="a">
 
 
 
 <blockquote>
-<p>同理当要进行左旋转时，如果根节点的右子树的左子树(被移动的部分)的高度大于它的右子树的右子树的高度</p>
+<p>产品实现car接口，车工厂统一管理所有的对象生产</p>
 </blockquote>
-<ul>
-<li>先对右子树进行右旋转</li>
-<li>再对根节点进行左旋</li>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//方法一：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getCar</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name==<span class="string">"Tesla"</span>)&#123;</span><br><span class="line">            Tesla tesla = <span class="keyword">new</span> Tesla();</span><br><span class="line">            <span class="keyword">return</span> tesla;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(name==<span class="string">"WuLin"</span>)&#123;</span><br><span class="line">            WuLin wuLin = <span class="keyword">new</span> WuLin();</span><br><span class="line">            <span class="keyword">return</span> wuLin;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//方法二：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getTesla</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getWuLin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        Tesla tesla = new Tesla();</span></span><br><span class="line"><span class="comment">//        WuLin wuLin = new WuLin();</span></span><br><span class="line"><span class="comment">//        tesla.name();</span></span><br><span class="line"><span class="comment">//        wuLin.name();</span></span><br><span class="line">        <span class="comment">//在不使用工厂模式下，我们对对象的操作都是基于new的</span></span><br><span class="line">        <span class="comment">//在使用工厂模式后，用户不在需要处理对象的初始化，而是直接调用工程的静态方法即可获取到对象</span></span><br><span class="line"></span><br><span class="line">        Car wuLin = CarFactory.getCar(<span class="string">"WuLin"</span>);</span><br><span class="line">        wuLin.name();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>显然</strong>我们可以看出，这个简单工厂模式其实并不满足OOP的开闭原则，因为一旦我们需要添加产品，按我们就必须去修改原来的工厂类，这对后期扩展会造成很大的麻烦，但是简单工厂的结构简单，代码量相对较少。</p>
+<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>同样的生产模式，我们用工厂方法模式实现的结构如下</p>
+<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850785721.png" class="" title="b">
+
+
+
+<blockquote>
+<p>产品实现car接口，工厂实现carFactory接口，每个工厂生产固定的产品</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//我们将工厂换为接口，相当于在产品与工厂又加了一层</span></span><br><span class="line">    <span class="comment">//而不同的产品我们有不同的工厂方法</span></span><br><span class="line">    <span class="function">Car <span class="title">getCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeslaFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLinFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>显然</strong>工厂方法模式满足OOP闭合原则，有着不错的扩展性，我们不在需要修改原有的工厂类，只需要增加新的产品和对应的接口即可，但是代码量大，结构复杂</p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><ul>
+<li>定义：抽象工厂模式提供了一个创建一系列相关或者相互依赖对象的接口，无需指定他们具体的类</li>
+<li>适用场景：<ul>
+<li>客户端(应用层)不依赖产品类实例如何被创建，实现等细节</li>
+<li>强调一系列相关的产品对象(属于同一产品族)一起使用创建对象需要大量的重复代码</li>
+<li>提供一个产品类的库，所有的产品以同样的接口出现，从而使得客户端不依赖于具体的实现</li>
 </ul>
+</li>
+<li>优点：<ul>
+<li>具体产品在应用层的代码隔离，无需关心创建的细节</li>
+<li>将一个系列的产品统一到一起创建</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>规定了所有可能被创建的产品集合，产品族中扩展新的产品困难；</li>
+<li>增加了系统的抽象性和理解难度</li>
+</ul>
+</li>
+</ul>
+<p><strong>抽象工厂就是工厂的工厂，是一层更加抽象的内容，类似于一个什么都能造的工厂，然后根据不同的品牌创建出不同品牌的工厂。所以抽象工厂中有比较复杂的系统逻辑，类与类之间也有相互依赖，所以其扩展性非常差，只适合在设计好，不会有频繁更新的产品集合之间使用</strong></p>
 
       
 
@@ -1054,11 +1089,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">工厂模式</a>
         		</li>
       		
 		</ul>
@@ -1068,7 +1103,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
         </p>
       
 
@@ -1098,27 +1133,84 @@
 
 
   
-    <article id="post-母亲节快乐" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-单例模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/">母亲节快乐</a>
+      <a class="article-title" href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
     </h1>
   
 
         
-        <a href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/" class="archive-article-date">
-  	<time datetime="2020-05-10T14:16:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-10</time>
+        <a href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-07-04T04:49:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="祝妈妈母亲节快乐"><a href="#祝妈妈母亲节快乐" class="headerlink" title="祝妈妈母亲节快乐"></a>祝妈妈母亲节快乐</h1><img src="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/webp.webp.png" class title="a">
+        <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a>饿汉式单例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hungry</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//单例模式的核心：构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Hungry</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//饿汉式特点：程序开始就加载所有的对象</span></span><br><span class="line">    <span class="comment">//缺点：浪费内存空间</span></span><br><span class="line">    <span class="comment">//添加static final 修饰保证静态唯一，防止被修改</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Hungry hungry = <span class="keyword">new</span> Hungry();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Hungry <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hungry;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//懒汉式：核心，当我们需要时在创建对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lazyMan!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        	<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不要试图使用反射破坏单例!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">"\t初始化成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这个简单的懒汉模式在单线程下没问题，但是显然在多线程中会出现严重的多线程不安全问题</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//多线程破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="comment">//此处的Thread是常规的函数式接口，使用lambda来简写</span></span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                LazyMan.getInstance2();</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//显然执行结果有多条，破坏了单例模式</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p> 策略1：加锁,双重检测锁模式，使用synchronized将这个类资源锁住，也叫作DCL懒汉式，但是也还有缺陷</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance2</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(lazyMan==<span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">synchronized</span> (LazyMan<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">               <span class="keyword">if</span>(lazyMan==<span class="keyword">null</span>)&#123;</span><br><span class="line">                   lazyMan=<span class="keyword">new</span> LazyMan();</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> lazyMan;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面我们实现了一个简单的dcl懒汉式，但是我们要知道  lazyMan=new LazyMan();  这一行操作并不具有原子性，如果他进行了指令重排，那就可能出现空指针异常 </p>
+<p>首现我们知道，new LazyMan(); </p>
+<p>有三步  </p>
+<ul>
+<li><p>1：分配内存空间  </p>
+</li>
+<li><p>2：执行构造方法，初始化对象  </p>
+</li>
+<li><p>3：把这个对象指向这个空间   </p>
+<p>如果执行指令重排 1 3 2 ，当这个线程执行完3之后  </p>
+<p>然后因为多线程，执行另一个线程 </p>
+<p>if(lazyMan==null) 执行判断，而此时的已经分配了内存空间，这时lazyMan便会直接执行return语句了，这样便造成了空指针异常  </p>
+<p>所以我们在lazyMan对象上加上volatile便能防止指令重排 </p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br></pre></td></tr></table></figure>
+
+<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用静态内部类来实现单例模式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Holder</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 静态内部类的优点是：外部类加载时并不需要立即加载内部类，</span></span><br><span class="line"><span class="comment">     * 内部类不被加载则不去初始化INSTANCE，故而不占内存。</span></span><br><span class="line"><span class="comment">     * 即当Holder第一次被加载时，并不需要去加载holder，</span></span><br><span class="line"><span class="comment">     * 只有当getInstance()方法第一次被调用时，才会去初始化holder,</span></span><br><span class="line"><span class="comment">     * 第一次调用getInstance()方法会导致虚拟机加载InnerClass类，</span></span><br><span class="line"><span class="comment">     * 这种方法不仅能确保线程安全，也能保证单例的唯一性，同时也延迟了单例的实例化。</span></span><br><span class="line"><span class="comment">     * 为什么能够保证线程安全属于jvm类加载机制的知识，现在有点难以理解，先埋个坑，以后再填</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Holder <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//调用静态内部类的静态方法初始化单例</span></span><br><span class="line">        <span class="keyword">return</span> InnerClass.holder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义静态内部类，使用静态内部类来初始化实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Holder holder = <span class="keyword">new</span> Holder();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>上面三种实现单例模式的方法都能被反射所破坏</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//上面说到静态内部类也是不错的解决单列模式多线程不安全的一种方法</span></span><br><span class="line">    <span class="comment">//但是他们还是都不安全的，因为反射技术可以破坏他们的单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        LazyMan lazyMan = LazyMan.getInstance2();</span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan<span class="class">.<span class="keyword">class</span>.<span class="title">getDeclaredConstructor</span>(<span class="title">null</span>)</span>;</span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);    <span class="comment">//破坏构造器私有</span></span><br><span class="line">        <span class="comment">//下面只会调用原有的私有构造函数，而不会去走getInstance方法.</span></span><br><span class="line">        LazyMan lazyMan1 = declaredConstructor.newInstance();</span><br><span class="line">        <span class="comment">//这是我们可以在构造函数中也加上锁并判断，并抛出异常</span></span><br><span class="line">        <span class="comment">//但是如果我们一开始就破坏私有构造函数，那lazyMan将永远不会去走getInstance方法，所以这个lazyMan永远都是null</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 这时我们可以在我们的类中加上一个判断静态变量empty，再进行第一次初始化后便改变值</span></span><br><span class="line"><span class="comment">         * 但是这个变量通过反编译任然可以得到这个变量，通过反射更改其值</span></span><br><span class="line"><span class="comment">         * 但是我们使用枚举类型就可以完美的避免反射、线程所带来的不安全问题</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="枚举类实现单例"><a href="#枚举类实现单例" class="headerlink" title="枚举类实现单例"></a>枚举类实现单例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> EnumSingle &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> EnumSingle <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>枚举类实现单例本身便是线程安全并且防反射破坏的</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        EnumSingle instance1 = EnumSingle.getInstance();</span><br><span class="line">        Constructor&lt;EnumSingle&gt; declaredConstructor = EnumSingle<span class="class">.<span class="keyword">class</span>.<span class="title">getDeclaredConstructor</span>(<span class="title">null</span>)</span>;</span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        EnumSingle instance2 = declaredConstructor.newInstance();</span><br><span class="line">        System.out.println(instance1==instance2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们尝试使用反射破坏单例，发现枚举类并没有无参够着，然后我们通过查看枚举类源码可知，枚举类只有一个有参构造，参数为Sting和int型，我们再次使用反射攻击发现报错，不能通过反射破坏枚举的单例，我们查看反射的源码可知，在对枚举使用newInstance时是有一个判断的。所以枚举类天生便防反射破坏。</p>
+<img src="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/1593830776008.png" class="" title="a">
+
+
+
+
+
+
+
+
+
+
+
+
       
 
       
@@ -1131,7 +1223,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">母亲节</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">单例模式</a>
         		</li>
       		
 		</ul>
@@ -1141,7 +1237,122 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-堆排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/06/%E5%A0%86%E6%8E%92%E5%BA%8F/">堆排序</a>
+    </h1>
+  
+
+        
+        <a href="/2020/06/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
+  	<time datetime="2020-06-06T10:44:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-06</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="大顶堆和小顶堆"><a href="#大顶堆和小顶堆" class="headerlink" title="大顶堆和小顶堆"></a>大顶堆和小顶堆</h2><ul>
+<li>堆是一个具有以下性质的完全二叉树<ul>
+<li>每个节点的值都大于等于其左右孩子节点的值，称为大顶堆</li>
+<li>每个节点的值都小于等于其左右孩子节点的值，称为小顶对</li>
+</ul>
+</li>
+</ul>
+<p><strong>反应在数值中</strong></p>
+<ul>
+<li><p>大顶堆：arr[i]&gt;=arr[2 * i + 1]&amp;&amp;arr[i]&gt;=arr[2 * i+2]。</p>
+</li>
+<li><p>小顶堆：arr[i]&lt;=arr[2 * i + 1]&amp;&amp;arr[i]&lt;=arr[2 * i+2]。</p>
+</li>
+</ul>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
+<li><p>算法时间复杂度O(nlogn)，空间复杂度O(1)</p>
+</li>
+<li><p>是不稳定排序</p>
+</li>
+<li><p>首现将当前节点构造成一个大顶堆(从左到右，从下到上)，即所有的父节点总是大于等于其子节点</p>
+</li>
+<li><p>然后按照数的非叶子节点的个数循环调用，将整个数组都构造成大顶堆</p>
+</li>
+<li><p>再将堆顶元素于末尾元素进行交换，将最大的数沉到数组的最后</p>
+</li>
+<li><p>此时由于只有堆顶被改了，而末尾元素是已经确定的最大元素，已经不再需要进行改动，所以我们现在只需要再对堆顶元素调用adjustHeap(arr,0,length)方法即可，将此方法循环length-1次即可。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将以i为根节点的数组调整为大顶堆</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">adjustHeap</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> i ,<span class="keyword">int</span> length)</span></span>&#123;		</span><br><span class="line">    <span class="keyword">int</span> temp = arr[i];	<span class="comment">//取出根节点，保存在临时变量</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = i*<span class="number">2</span>+<span class="number">1</span>;k&lt;length;k = k*<span class="number">2</span> +<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[k]&lt;arr[k+<span class="number">1</span>]&amp;&amp;k+<span class="number">1</span>&lt;length)&#123;</span><br><span class="line">            k++;		<span class="comment">//获得左右子节点中的最大值</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(temp&lt;arr[k])&#123;</span><br><span class="line">            arr[i]=arr[k];<span class="comment">//将较大值往上提，但是不对k进行复制，有点类似插入排序的操作。</span></span><br><span class="line">            i = k;	<span class="comment">//由于进行了根节点与子节点的交换，所以子树中的大小关系可能被破坏了，所以需要继续循环比较，找出temp适合的位置</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;		<span class="comment">//如果不需要交换则可以退出循环了，因为我们的大顶堆是从下往上进行构建的</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//for循环结束后便找出了temp的合适的位置</span></span><br><span class="line">        arr[i]=temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//堆排序</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span> arr[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = arr.length/<span class="number">2</span>-<span class="number">1</span>;i&gt;=<span class="number">0</span> ;i++)&#123;	<span class="comment">//非叶子的个数为arr.length/2-1</span></span><br><span class="line">        adjustHeap(arr,i,arr.length);</span><br><span class="line">    &#125;<span class="comment">//完成大顶堆的构建</span></span><br><span class="line">    <span class="comment">//将最大的元素后沉到数组末尾</span></span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = arr.length-<span class="number">1</span>;j&gt;<span class="number">0</span>;j--)&#123;</span><br><span class="line">        temp = arr[j];</span><br><span class="line">        arr[j] = arr[<span class="number">0</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = temp;</span><br><span class="line">        adjustHeap(arr,<span class="number">0</span>,arr.length-<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>对于adjustHeap(arr,0,arr.length-1)的新的理解</p>
+</blockquote>
+<p>在代码中当对子节点与父节点进行比较时，我提出有点像插入排序的操作，在完成了所有代码之后，其实整个的算法我们都可以看做为一种基于二叉树的插入排序，对当前根节点进行操作(使用temp保存)，找到这个节点的合适的位置(其中就包含将大的数往上提的操作，对应于插入排序将有序段后移的过程)，最后将这个根节点放到合适的位置(对应插入操作)，由于最后我们将树根的元素与末尾元素交换了位置，这时意味着在整个数组中只有这个根节点时位置不对的，所以我们调用上诉的函数，便再次将这个值插入到了正确的位置，从而再次构建出了大顶堆。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">堆排序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/06/06/%E5%A0%86%E6%8E%92%E5%BA%8F/">展开全文 >></a>
         </p>
       
 
@@ -1285,10 +1496,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SSM SpringMVC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1298,10 +1505,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1382,6 +1585,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>

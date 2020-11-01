@@ -160,32 +160,48 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-八皇后" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-数据链路层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/">八皇后</a>
+      <a class="article-title" href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">数据链路层</a>
     </h1>
   
 
         
-        <a href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/" class="archive-article-date">
-  	<time datetime="2020-10-01T03:26:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-01</time>
+        <a href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:19:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="八皇后"><a href="#八皇后" class="headerlink" title="八皇后"></a>八皇后</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 这学期终于开设算法课了，之前自学了一段时间，也看过一些蓝桥杯算法题，但终归只是浮于表面，这学期将跟随学习进度，系统学习算法，算法这种东西，三天不练就手生，八皇后问题，我竟然想了好久才写出来，因为相对于传统的使用二维数组的解法，我还思考了些其他解法。虽然这个优化过程很简单，是很常见的优化策略，但是也值得记录。</span></span><br><span class="line"><span class="section">## 这里是要求使用递归求解八皇后。</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>先给出最常见的使用二维数组的解法，递归加回溯</p>
+        <h1 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><blockquote>
+<p>数据链路层负责通过一条链路从一个结点向另一个物理链路直接相连的相邻结点传送数据报。</p>
 </blockquote>
-        
+<ul>
+<li>结点：主机、路由器</li>
+<li>链路：网络中两个结点之间的<strong>物理通道</strong>，链路的传输介质主要有双绞线、光纤和微波。分为有线链路、无线链路。</li>
+<li>数据链路：网络中两个结点之间的<strong>逻辑通道</strong>，把实现控制数据传输协议的硬件和软件加到链路上就构成数据链路。</li>
+<li>帧：链路层的协议数据单元，封装网络层数据报。</li>
+</ul>
+<h2 id="功能概述"><a href="#功能概述" class="headerlink" title="功能概述"></a>功能概述</h2><p>数据链路层在物理层提供服务的基础上<strong>向网络层提供服务</strong>，其最基本的服务是将源自网络层来的数据可靠地传输到相邻结点的目标机网络层。其主要作用是<strong>加强物理层传输原始比特流的功能</strong>，将物理层提供的可能出错的物理连接改造成为<strong>逻辑上无差错的数据链路</strong>，使之对网络层表现为一条无差错的链路。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 注意点</span></span><br><span class="line"></span><br><span class="line"><span class="code">	计网的分层控制与公司中的分层管理、web中的三层框架都有着类似的思想，方便了管理保证了功能，却复杂的系统。</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>底层向上层提供服务</span><br><span class="line"><span class="bullet">- </span>数据链路层保证网络层的数据可靠传送(向上提供服务)</span><br><span class="line"><span class="bullet">- </span>数据链路层控制物理层出现的差错(使用下层服务并加强功能)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>功能一：为网络层提供服务。无确认无连接服务，有确认无连接服务，有确认面向连接服务。<code>有连接一定有确认！</code></li>
+<li>功能二：链路管理，即连接的建立、维持。释放(用于面向连接的服务)。</li>
+<li>功能三：组帧。</li>
+<li>功能四：流量控制。限制发送方</li>
+<li>功能五：差错控制(帧错/位错)</li>
+</ul>
+
       
 
       
@@ -198,11 +214,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -212,7 +224,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">展开全文 >></a>
         </p>
       
 
@@ -242,68 +254,47 @@
 
 
   
-    <article id="post-策略模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-物理层设备" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">策略模式</a>
+      <a class="article-title" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/">物理层设备</a>
     </h1>
   
 
         
-        <a href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-09-07T04:56:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-07</time>
+        <a href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:19:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><ul>
-<li>策略模式的关键是：分析项目中变化部分和不变部分</li>
-<li>策略模式的核心思想是：多用组合/聚合，少用继承；用行为类组合，而不是行为的继承。更具有弹性</li>
-<li>体现了OOP的开闭原则，客户端增加行为不用修改原有代码，只要添加一种策略(或者行为)即可，避免了使用多重转移语句if…else</li>
-<li>提供了可以替换继承关系的办法：策略模式将算法封装在独立的Strategy类中使得你可以独立于其Context改变它，使它易于切换、易于理解、易于扩展</li>
-<li>需要注意的是：每添加一个策略就要添加一个类，当策略过多时会导致类的数量庞大</li>
-<li>Array.sort中的Compare接口便明显使用了策略模式</li>
-</ul>
-<h2 id="思想："><a href="#思想：" class="headerlink" title="思想："></a>思想：</h2><ul>
-<li>策略模式中定义算法族(策略组)，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户</li>
-<li>设计原则：<ul>
-<li>把变化的代码从不变的代码中分离出来</li>
-<li>针对接口编程而不是具体类(定义了策略接口)</li>
-<li>多用组合/聚合，少用继承</li>
-</ul>
+        <h1 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h1><h2 id="中继器"><a href="#中继器" class="headerlink" title="中继器"></a>中继器</h2><ul>
+<li><p><strong>诞生原因：</strong>由于存在损耗，在线路上传输的信号功率会逐渐衰减，衰减到一定程度时将造成信号失真，因此会导致接受错误。</p>
+</li>
+<li><p><strong>中继器的功能：</strong>对信号进行<strong>再生</strong>和<strong>还原</strong>，对衰减的信号进行放大，保持与原数据相同，以增加信号传输的距离，延长网络的长度。</p>
+</li>
+<li><p><strong>中继器的两端：</strong>两端的网络部分是网段，而不是子网，适用于完全相同的两类网络的互连，且两个网段速率要相同。中继器只将任何电缆段上的数据发送到另一段电缆上，他仅作用于信号的电气部分，并不管数据中是否有错误数据或不适于网段的数据。</p>
+<p>两端可连相同媒体，也可连不同媒体。</p>
+<p>中继器两端的网段一定要是同一协议。(中继器不会存储转发)</p>
+</li>
+<li><p><strong>5-4-3规则：</strong>网络标准中都对信号的延迟范围作了具体的规定，因而中继器只能在规定的范围内进行，否则会故障</p>
+<img src="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/1604230544858.png" class="" title="c">
+
+
+
 </li>
 </ul>
-<blockquote>
-<p>类图</p>
-</blockquote>
-<img src="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/1595485280792.png" class="" title="a">
-
-
-
-<blockquote>
-<p>代码</p>
-</blockquote>
-<p><code>策略接口</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>策略1</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyA</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"平稳飞行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>策略1</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyB</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"翻转飞行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>飞机类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Plane</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Strategy strategy;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Plane</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">        strategy.fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>用户类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//客机</span></span><br><span class="line">        Plane CivilAircraft = <span class="keyword">new</span> Plane(<span class="keyword">new</span> StrategyA());</span><br><span class="line">        <span class="comment">//战斗机</span></span><br><span class="line">        Plane fighter = <span class="keyword">new</span> Plane(<span class="keyword">new</span> StrategyB());</span><br><span class="line"></span><br><span class="line">        CivilAircraft.fly();</span><br><span class="line"></span><br><span class="line">        fighter.fly();</span><br><span class="line">		</span><br><span class="line">        <span class="comment">//特技飞机</span></span><br><span class="line">        Plane StuntPlane = <span class="keyword">new</span> Plane(() -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"高难度俯冲"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        StuntPlane.fly();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>  5个网段，4个中继器，3个主机</p>
+<h2 id="集线器-多口中继器"><a href="#集线器-多口中继器" class="headerlink" title="集线器(多口中继器)"></a>集线器(多口中继器)</h2><p><strong>集线器的功能：</strong>对信号进行再生放大转发，对衰减的信号进行放大，接着转发到其他所有(除输入端口处)处于工作状态的端口上，以增加信号传输的距离，延长网络的长度，不具备信号的定向传送能力，只能进行广播，是一个共享设备。</p>
+<ul>
+<li>容易产生碰撞：当多台设备同时发送信号时就会产生碰撞，其他设备会等待第一台设备发送完信号，然后再一个随机事件发送。</li>
+</ul>
 
       
 
@@ -317,11 +308,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">策略模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -331,7 +318,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/">展开全文 >></a>
         </p>
       
 
@@ -361,68 +348,75 @@
 
 
   
-    <article id="post-责任链模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-奈氏准则与香农定理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">责任链模式</a>
+      <a class="article-title" href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/">奈氏准则与香农定理</a>
     </h1>
   
 
         
-        <a href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-08-09T10:23:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-09</time>
+        <a href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:18:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h1><ul>
-<li><p>将请求和处理分开，实现解耦，提高系统的灵活性</p>
-</li>
-<li><p>简化了对象，是对象不需要知道链的结构</p>
-</li>
-<li><p>性能会受到影响，特别是链比较长的时候，因此需控制链中最大节点数量，一般通过Handler中设置最大节点数，在setNext()方法中判断是否已经超过阀值，超过阀值则不允许建立链，避免出现超长链无意识的破坏系统性能</p>
-</li>
-<li><p>调试不方便，采用类似递归的方式，调试时逻辑可能比较复杂，处理函数中一般有三个参数：request，response，filterChain，先对request进行处理，然后调用filterChain处理下一个filter，然后再是对response的处理，这种递归调用导致处理response的filter是反向的。</p>
-</li>
-<li><p>最佳应用场景：有多个对象可以处理同一个请求时，比如：多级请求、请假/加薪等审批流程、JavaWeb中Tomcat中对Encoding的处理、拦截器</p>
-</li>
+        <h1 id="奈氏准则与香农定理"><a href="#奈氏准则与香农定理" class="headerlink" title="奈氏准则与香农定理"></a>奈氏准则与香农定理</h1><h2 id="失真"><a href="#失真" class="headerlink" title="失真"></a>失真</h2><img src="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/1603962136172.png" class="" title="a">
+
+
+
+<p><strong>信道带宽：</strong>是信道能通过的最高频率和最低频率之差。</p>
+<h2 id="柰氏准则"><a href="#柰氏准则" class="headerlink" title="柰氏准则"></a>柰氏准则</h2><blockquote>
+<p>在理想低通(无噪声，带宽受限)条件下，为了避免码间串扰(频率过高而无法分辨码元)，极限码元传输速率为2 W Baud，W是信道带宽，单位是Hz（一般为bit/s）。</p>
+</blockquote>
+<p><strong>极限数据率：</strong>理想低通信道下的极限数据传输率 = 2 W log V(b/s)</p>
+<p>W : 带宽（Hz）</p>
+<p>V：几种码元/码元的离散电平数目</p>
+<ul>
+<li>1.在任何信道中，码元传输的速率是有上限的，若传输速率超过此上限，就会出现严重的码间串扰问题，使接收端对码元的完全正确识别成为不可能。</li>
+<li>2.信道的频带越宽(即能通过的信号高频分量越多)，就可以用更高的速率进行码元的有效传输</li>
+<li>3.奈氏准则给出了码元传输速率的限制，但没有对信息传输速率给出限制。</li>
+<li>4.由于码元的传输速率受柰氏准则的制约，所以要提高数据的传输速率，就必须设法是每个码元能携带更多的比特的信息量，这就需要采用多元制的调制方法。</li>
 </ul>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><blockquote>
-<p>定义一个msg类，模拟request</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题：</span></span><br><span class="line"><span class="code">	在无噪声的情况下，若某通信链路的带宽为3kHz，采用4个相位，每个相位具有4种振幅的QAM调制技术，则该通信链路的最大数据传输率是多少。</span></span><br><span class="line"><span class="code">	</span></span><br><span class="line">信号有4 * 4 = 16种变化，</span><br><span class="line">最大码元传输速率 = 2W = 6000 Baud</span><br><span class="line">最大数据传输率 = 2 <span class="emphasis">* 3k *</span> 4 = 24 kb/s</span><br></pre></td></tr></table></figure>
+
+<h2 id="香农定理"><a href="#香农定理" class="headerlink" title="香农定理"></a>香农定理</h2><blockquote>
+<p>噪声存在于所有的电子设备和通信信道中。由于噪声随机产生，他的瞬时值有时会很大，因此噪声会使接收端对码元的判决产生错误。但是噪声的影响是相对的，若信号较强，那么噪声影响相对较小。因此，信噪比就很重要。</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Msg</span> </span>&#123;</span><br><span class="line">    String msg;</span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Msg</span><span class="params">(String msg,String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Msg&#123;"</span> +</span><br><span class="line">                <span class="string">"msg='"</span> + msg + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>信噪比 = 信号的平均功率/噪声的平均功率，常记为S/N，并用分贝（dB）作为度量单位，即<strong>信噪比（dB） = 10 log<sub>10</sub> （S/N）</strong></p>
+<ul>
+<li>以dB为单位的信噪比，和S/N的信噪比只是单位不同而已。</li>
+</ul>
+<p><strong>香农定理：在带宽受限且有噪声的信道中，为了不产生误差，信息的数据传输速率有上限。</strong></p>
+<p><strong>信道的极限数据传输速率 = W log<sub>2</sub>(1+S/N)    (b/s)</strong></p>
+<ul>
+<li>1.信道的带宽或信道中的信噪比越大，则信息的极限传输速率就越高。</li>
+<li>2.对一定的传输带宽和一定的信噪比，信息传输速率上限就确定了。</li>
+<li>3.只要信息的传输速率小于信道的极限传输速率，就一定能找到某种方法实现无差错的传输。</li>
+<li>4.香农定理得出的为极限信息传输速率，实际信道能到达的传输速率要比它低不少。</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题</span></span><br><span class="line"><span class="code">	电话系统的典型参数是信道带宽为3000Hz，信噪比为30dB，则该系统最大的数据传输速率为多少？</span></span><br><span class="line"><span class="code">	</span></span><br><span class="line"><span class="bullet">- </span>30dB = 10log<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>10<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(S/N)</span><br><span class="line"><span class="bullet">- </span>S/N = 1000</span><br><span class="line"><span class="bullet">- </span>信道的极限数据传输速率 = W log<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>2<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(1 + S/N) = 3000 * 1og<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>2<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(1 + 1000)</span><br></pre></td></tr></table></figure>
 
 
 
-<blockquote>
-<p>定义一个MyFilter接口</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>以下是三个实现类，返回值为boolean以控制是否继续下一个Filter</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HtmlFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">"&lt;"</span>,<span class="string">"["</span>);</span><br><span class="line">        result = result.replace(<span class="string">"&gt;"</span>,<span class="string">"]"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SensitiveFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">"996"</span>,<span class="string">"955"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">if</span>(result.contains(<span class="string">"sb"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SignFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">":)"</span>,<span class="string">"^v^"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>FilterChain类也实现了Filter接口，以实现链与链之间的拼接</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterChain</span> <span class="keyword">implements</span> <span class="title">MyFilter</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MyFilter&gt; Filters = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回this对象，实现链式编程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> FilterChain <span class="title">add</span><span class="params">(MyFilter filter)</span></span>&#123;</span><br><span class="line">        Filters.add(filter);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (MyFilter f: Filters) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!f.doMyFilter(msg))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>客户类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String msg = <span class="string">"大家好:)，我是emptyskz，&lt;scrpy&gt;欢迎访问emptyskz.io，大家都是996"</span>;</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        Msg msg1 = <span class="keyword">new</span> Msg(msg, <span class="string">"empty"</span>);</span><br><span class="line"></span><br><span class="line">        FilterChain filterChain = <span class="keyword">new</span> FilterChain();</span><br><span class="line">        filterChain.add(<span class="keyword">new</span> HtmlFilter()).add(<span class="keyword">new</span> SensitiveFilter());</span><br><span class="line">        FilterChain filterChain1 = <span class="keyword">new</span> FilterChain();</span><br><span class="line">        filterChain1.add(<span class="keyword">new</span> SignFilter());</span><br><span class="line">        filterChain.add(filterChain1);</span><br><span class="line"></span><br><span class="line">        filterChain.doMyFilter(msg1);</span><br><span class="line">        System.out.println(msg1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="“Nice”和”香浓”"><a href="#“Nice”和”香浓”" class="headerlink" title="“Nice”和”香浓”"></a>“Nice”和”香浓”</h2><p>奈氏准则<code>内忧</code></p>
+<ul>
+<li>受自身带宽限制</li>
+<li>想要提高数据率，就要提高带宽/采用更多进制的码元</li>
+</ul>
+<p>香农定理<code>外患</code></p>
+<ul>
+<li>受带宽和噪声的限制</li>
+<li>想要提高数据率，就要提高带宽和信噪比</li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题</span></span><br><span class="line"><span class="code">	二进制信号在信噪比为127:1的4KHz信道上传输，最大的数据率可达到多少？</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>Nice：2 <span class="emphasis">* 4000 *</span> log2 = 8000b/s</span><br><span class="line"><span class="bullet">- </span>香浓：4000 * log(1+127) = 28000b/s</span><br><span class="line"><span class="bullet">- </span>取最小值得最大的数据速率为8000b/s</span><br></pre></td></tr></table></figure>
 
 
       
@@ -437,11 +431,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">责任链模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -451,7 +441,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/">展开全文 >></a>
         </p>
       
 
@@ -481,56 +471,52 @@
 
 
   
-    <article id="post-两数之和" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-码元、波特、速率、带宽" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">两数之和</a>
+      <a class="article-title" href="/2020/11/01/%E7%A0%81%E5%85%83%E3%80%81%E6%B3%A2%E7%89%B9%E3%80%81%E9%80%9F%E7%8E%87%E3%80%81%E5%B8%A6%E5%AE%BD/">码元、波特、速率、带宽</a>
     </h1>
   
 
         
-        <a href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/" class="archive-article-date">
-  	<time datetime="2020-08-06T16:06:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-07</time>
+        <a href="/2020/11/01/%E7%A0%81%E5%85%83%E3%80%81%E6%B3%A2%E7%89%B9%E3%80%81%E9%80%9F%E7%8E%87%E3%80%81%E5%B8%A6%E5%AE%BD/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:17:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="两数之和"><a href="#两数之和" class="headerlink" title="两数之和"></a>两数之和</h1><p>准备蓝桥杯，先搞点简单的打开思路</p>
-<blockquote>
-<p>题：</p>
+        <h1 id="码元、波特、速率、带宽"><a href="#码元、波特、速率、带宽" class="headerlink" title="码元、波特、速率、带宽"></a>码元、波特、速率、带宽</h1><h2 id="码元"><a href="#码元" class="headerlink" title="码元"></a>码元</h2><p>码元是指用一个<strong>固定时长</strong>的<strong>信号波形</strong>(数字脉冲)，代表不同离散数值的基本波形，是数字通信中数字信号的计量单位，这个时长内的信号称为K进制码元，而该时长称为码元宽度。当码元的离散状态有M个时，此码元为M进制码元。</p>
+<h2 id="速率、波特、带宽"><a href="#速率、波特、带宽" class="headerlink" title="速率、波特、带宽"></a>速率、波特、带宽</h2><blockquote>
+<p>速率也叫数据率，是指数据的传输速率，表示单位时间内传输的数据量。可以用<strong>码元传输速率</strong>和<strong>信息传输速率</strong>表示。</p>
 </blockquote>
-<p>给定一个整数数组 <code>nums</code> 和一个目标值 <code>target</code>，请你在该数组中找出和为目标值的那 <code>两个</code> 整数，并返回他们的数组下标。</p>
-<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
-<p>示例:</p>
-<p>给定 nums = [2, 7, 11, 15], target = 9</p>
-<p>因为 nums[0] + nums[1] = 2 + 7 = 9<br>所以返回 [0, 1]</p>
+<ul>
+<li>1、<strong>码元传输速率：</strong>别名码元速率，表示单位时间内数字通信系统所传输的码元个数（也可以称为脉冲个数或信号变化的次数），单位是<strong>波特</strong>（baud）。1波特表示数字通信系统每秒传输一个码元。这里的码元可以是多进制码元，但码元速率与进制无关。<code>一秒传输多少个码元</code></li>
+<li>2、<strong>信息传输速率：</strong>别名比特率，表示单位时间内数字通信系统传输的二进制码元个数（即比特数）。<code>一秒传输多少个比特</code></li>
+</ul>
 <blockquote>
-<p>这里给出三种题解，由易到难</p>
+<p>关系：若一个码元携带n bit的信息量，则M Baud的码元传输速率所对应的信息传输速率为M * n bit/s</p>
 </blockquote>
-<h2 id="暴力匹配"><a href="#暴力匹配" class="headerlink" title="暴力匹配"></a>暴力匹配</h2><p>思路很简单，双重for循环，遍历每个元素，看两两之和能否满足条件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (nums[j] == target - nums[i]) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[] &#123; i, j &#125;;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比如，现在有个四进制码元用 00 01 10 11 表示四种信号量，所以一个码元携带2 bit 的信息量，5 Baud的码元传输速率对应的比特率为 2 * 5 = 10b/s</p>
+<ul>
+<li>带宽：表示单位时间内从网络的某一点到另一点所能通过的“最高数据率”，常用来表示网络的通信线路所能传输数据的能力。单位是b/s</li>
+</ul>
+<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 某一数字通信系统传输的是四进制码元，4s传输了8000个码元，求系统的码元传输速率是多少？信息传输速率是多少？若另一通信系统传输的是十六进码元，6s传输了7200个码元，求他的码元传输速率，信息传输速率是多少，并指出哪个系统传输速率快？</span></span><br></pre></td></tr></table></figure>
 
-<p><strong>复杂度:</strong></p>
-<p>显然时间复杂度为O(n²)，空间复杂度为O(1)</p>
-<h2 id="排序加双指针"><a href="#排序加双指针" class="headerlink" title="排序加双指针"></a>排序加双指针</h2><p>稍加思考，我们就能知道在暴力匹配中，我们可以从无脑的两两匹配的方式中入手，在有序数列中最大与最小的进行两两匹配，使用这种策略将大大提升匹配效率，那我们就先排序，排序后便能排除无脑暴力匹配了，要知道先进行排序后的逐一检索永远比暴力匹配效率更高，然后我们给排好序的数组前后各一个指针，来进行双向遍历。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; temp;</span><br><span class="line">        temp=nums;</span><br><span class="line">        <span class="keyword">int</span> n=temp.<span class="built_in">size</span>();</span><br><span class="line">       	sort(temp.<span class="built_in">begin</span>(),temp.<span class="built_in">end</span>());</span><br><span class="line">       	<span class="keyword">int</span> i=<span class="number">0</span>,j=n<span class="number">-1</span>;</span><br><span class="line">       	<span class="keyword">while</span>(i&lt;j)&#123;  </span><br><span class="line">          	<span class="keyword">if</span>(temp[i]+temp[j]&gt;target)j--;</span><br><span class="line">          	<span class="keyword">else</span> <span class="keyword">if</span>(temp[i]+temp[j]&lt;target)i++;</span><br><span class="line">          	<span class="keyword">else</span> <span class="keyword">break</span>; </span><br><span class="line">       	&#125;</span><br><span class="line">       	<span class="keyword">if</span>(i&lt;j)&#123;</span><br><span class="line">      		<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>;k&lt;n;k++)&#123;</span><br><span class="line">          		<span class="keyword">if</span>(i&lt;n&amp;&amp;nums[k]==temp[i])&#123;</span><br><span class="line">              		ans.push_back(k);</span><br><span class="line">              		i=n;</span><br><span class="line">        		&#125;</span><br><span class="line">        		<span class="keyword">else</span> <span class="keyword">if</span>(j&lt;n&amp;&amp;nums[k]==temp[j])&#123;</span><br><span class="line">              		ans.push_back(k);</span><br><span class="line">              		j=n;</span><br><span class="line">        		&#125;</span><br><span class="line">          		<span class="keyword">if</span>(i==n&amp;&amp;j==n)<span class="keyword">return</span> ans;</span><br><span class="line">      		&#125;</span><br><span class="line">      	&#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p><strong>复杂度:</strong></p>
-<p>时间复杂度：使用一次sort，时间复杂度为O(nlogn)，使用一次遍历O(n)，查找一次对应的下标O(n)，所以时间复杂度为O(nlogn)</p>
-<p>空间复杂度：使用一次temp数组，空间复杂度O(n)</p>
-<p><strong>其实对于当前元素，我们是知道我们的目标元素的，也就是<code>target - nums[i]</code>，这么说，我们的优化可以在搜索<code>target - nums[i]</code>这一步中操作，在排序后就是在有序数值中寻找<code>target - nums[i]</code>，那么我们是不是可以将逐一的两两匹配换为在有序数值中寻找<code>target - nums[i]</code>，而查找的策略就很多了，二分查找，插值查找算法（二分查找的优化）等….</strong></p>
-<h2 id="哈希查找"><a href="#哈希查找" class="headerlink" title="哈希查找"></a>哈希查找</h2><p>对于查询的最优化当然是使用<code>哈希查找</code>了，这样我们只需要将数组交给<code>哈希表</code>来进行托管，建立合适的<code>索引</code>即可将查询的代价降低到<code>O(1)</code>，这里我们直接使用数组中数的本身来创建索引即可，将数在原数组中的索引作为哈希表中的值，因为我们需要知道目标数的索引为多少。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans;</span><br><span class="line">       <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;hashmap;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;nums.<span class="built_in">size</span>();i++)&#123;	<span class="comment">//一边将数组中的数值加入到map中，一遍检索是否有目标数字</span></span><br><span class="line">           <span class="comment">//数作为索引(键)，下标+1作为值</span></span><br><span class="line">           <span class="keyword">if</span>(hashmap[target-nums[i]])&#123;</span><br><span class="line">               ans.push_back(i);</span><br><span class="line">               ans.push_back(hashmap[target-nums[i]]<span class="number">-1</span>);</span><br><span class="line">               <span class="keyword">return</span> ans;</span><br><span class="line">           &#125;</span><br><span class="line">        	hashmap[nums[i]]=i+<span class="number">1</span>;</span><br><span class="line">        	<span class="comment">//将hash表对应下标＋1，防止处理下标为0的情况</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p><strong>复杂度:</strong></p>
-<p>时间复杂度：哈希查找的复杂度为O(1)，外层一个for循环，所以总共为O(n)</p>
-<p>空间复杂度：使用额外的map存储数组，所以空间复杂度为O(n)</p>
+<p>由四进制码元可知，一个码元携带2 b的数据</p>
+<p>码元的传输速率：8000/4 = 2000 Baud</p>
+<p>信息传输速率：2000*2 = 4000 b/s</p>
+<p>由十六进制码元可知，一个码元携带4 b的数据</p>
+<p>码元传输速率：7200/6 = 1200 Baud</p>
+<p>信息传输速率：1200 * 4 = 4800 b/s</p>
+<p>十六进制的系统更快</p>
 
       
 
@@ -544,7 +530,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -554,7 +540,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/07/%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E7%A0%81%E5%85%83%E3%80%81%E6%B3%A2%E7%89%B9%E3%80%81%E9%80%9F%E7%8E%87%E3%80%81%E5%B8%A6%E5%AE%BD/">展开全文 >></a>
         </p>
       
 
@@ -584,36 +570,37 @@
 
 
   
-    <article id="post-装饰者模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-物理层基本概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">装饰者模式</a>
+      <a class="article-title" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">物理层基本概念</a>
     </h1>
   
 
         
-        <a href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-17T07:21:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-17</time>
+        <a href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:17:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h1><p><strong>问题：</strong>现在有一家咖啡店推出各种咖啡，以及各种配料，顾客可以点单品咖啡，也可以点单品咖啡+各种配料</p>
-<h2 id="方案一：使用传统继承方式"><a href="#方案一：使用传统继承方式" class="headerlink" title="方案一：使用传统继承方式"></a>方案一：使用传统继承方式</h2><img src="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/1594800488665.png" class="" title="a">
-
-
-
+        <h1 id="物理层基本概念"><a href="#物理层基本概念" class="headerlink" title="物理层基本概念"></a>物理层基本概念</h1><blockquote>
+<p>物理层解决如何在连接各种计算机的传输媒体上<strong>传输数据比特流</strong>，而不是指具体的传输媒体。</p>
+</blockquote>
+<p><strong>物理层主要任务：</strong>确定与传输媒体<strong>接口</strong>有关的一些特性—–&gt;定义标准</p>
 <ul>
-<li>这种方案显然不合适，这样会产生很多的类，导致类爆炸，不利于系统的管理</li>
+<li>1.机械特性：定义物理连接的特性，规定物理连接时所采用的规格、接口形状、引线数目、引脚数目和排列情况</li>
+<li>2.电气特性：规定传输二进制位时，线路上信号的<strong>电压范围</strong>、阻抗匹配、传输<strong>速率</strong>和<strong>距离</strong>限制等。</li>
+<li>3.功能特性：指明某条线上出现的某一<strong>电平表示何种意义</strong>，接口部件的信号线的用途。</li>
+<li>4.规程特性：(过程特性)定义各条物理线路的工作<strong>规程和时序</strong>关系。</li>
 </ul>
-<h2 id="方案二：使用桥接模式将配料聚合到咖啡中"><a href="#方案二：使用桥接模式将配料聚合到咖啡中" class="headerlink" title="方案二：使用桥接模式将配料聚合到咖啡中"></a>方案二：使用桥接模式将配料聚合到咖啡中</h2>
-        
+
       
 
       
@@ -626,11 +613,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">装饰者模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -640,7 +623,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">展开全文 >></a>
         </p>
       
 
@@ -670,77 +653,89 @@
 
 
   
-    <article id="post-适配器模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-TCP-IP参考模型及5层参考模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">适配器模式</a>
+      <a class="article-title" href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/">TCP/IP参考模型及5层参考模型</a>
     </h1>
   
 
         
-        <a href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-12T13:24:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
+        <a href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:17:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h1><blockquote>
-<p>基本介绍</p>
+        <h1 id="TCP-IP参考模型和5层参考模型"><a href="#TCP-IP参考模型和5层参考模型" class="headerlink" title="TCP/IP参考模型和5层参考模型"></a>TCP/IP参考模型和5层参考模型</h1><h2 id="OSI参考模型与TCP-IP参考模型"><a href="#OSI参考模型与TCP-IP参考模型" class="headerlink" title="OSI参考模型与TCP/IP参考模型"></a>OSI参考模型与TCP/IP参考模型</h2>
+
+
+
+<blockquote>
+<p>相同点：</p>
 </blockquote>
 <ul>
-<li>Adapter将某个类的接口转换成客户端期望的另一种接口表示，主要的目的是兼容性，让原本因接口不匹配不能一起工作的两个类可以协同工作。起别名为包装器</li>
-<li>适配器模式属于结构性模式</li>
-<li>主要分为三类：类适配器模式、对象适配器模式、接口适配器模式</li>
+<li>1.都分层</li>
+<li>2.基于独立的协议栈的概率</li>
+<li>3.可以实现异构网络互联</li>
 </ul>
 <blockquote>
-<p>工作原理</p>
+<p>不同点：</p>
 </blockquote>
 <ul>
-<li><p>适配器模式：将一个类的接口转换成另一种接口，让原本接口不兼容的类可以兼容</p>
+<li><p>1.OSI定义三点：服务、协议、接口</p>
 </li>
-<li><p>从用户的角度看不到被适配者，是解耦的</p>
+<li><p>2.OSI先出现，参考模型先于协议发明，不偏向特定协议</p>
 </li>
-<li><p>用户调用适配器转化出来的目标接口方法，适配器再调用配适配者的相关接口方法</p>
+<li><p>3.TCP/IP设计之初就考虑到异构网互联的问题，将IP作为重要层次</p>
 </li>
-<li><p>用户受到反馈结果，感觉只是和目标接口交互。</p>
-</li>
-</ul>
-<h2 id="类适配器"><a href="#类适配器" class="headerlink" title="类适配器"></a>类适配器</h2><p><strong>思想：使用继承</strong></p>
-<p>使用一个手机充电的例子</p>
-<p><code>一般的220V电压</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际拥有的方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Voltage220V</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> src = <span class="number">220</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">output220V</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"输出电压"</span>+src+<span class="string">"伏"</span>);</span><br><span class="line">        <span class="keyword">return</span> src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>手机需要的5V电压</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我们所需要的接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Volatage5V</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">output</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>适配器类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">Voltage220V</span> <span class="keyword">implements</span> <span class="title">Volatage5V</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">output</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> src = <span class="keyword">super</span>.output220V();</span><br><span class="line">        System.out.println(<span class="string">"转换为5V电压！"</span>);</span><br><span class="line">        <span class="keyword">return</span> src/<span class="number">44</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>手机类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Phone</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> input;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Phone</span><span class="params">(Volatage5V input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.input = input.output();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">charming</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(input == <span class="number">5</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"使用5V电压充电！"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"请使用正确的电压充电！！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>用户类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Phone phone = <span class="keyword">new</span> Phone(<span class="keyword">new</span> Adapter());</span><br><span class="line">        phone.charming();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="对象适配器"><a href="#对象适配器" class="headerlink" title="对象适配器"></a>对象适配器</h2><p><strong>思想：使用组合</strong></p>
-<p>对于被适配的对象，我们正在适配器中采用组合的方法而不是继承，这样使得成本更低更灵活，也符合我们JAVA编程思想中的优先使用组合而不是继承的思想，代码较为简单，只选要对类适配器的代码稍做修改即可。</p>
-<h2 id="接口适配器"><a href="#接口适配器" class="headerlink" title="接口适配器"></a>接口适配器</h2><p><strong>使用：继承抽象类，抽象类中继承接口并以空方法实现所有的方法，这样继承抽象类的子类可以任意只实现接口中的任意个方法。</strong></p>
+<li><p>4.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ISO/OSI参考慢模型</th>
+<th>TCP/IP模型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网络层</td>
+<td>无连接+面向连接</td>
+<td>无连接</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>面向连接</td>
+<td>无连接+面向连接</td>
+</tr>
+</tbody></table>
 <ul>
-<li>一些书籍称为：缺省适配器模式</li>
-<li>当不需要全部实现接口提供的方法时，可以设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可以有选择的覆盖父类中的某些方法来实现需求</li>
-<li>使用一个接口不需要使用其他方法的情况</li>
+<li>面向连接：分为三个阶段，第一个是建立连接，在此阶段，发出一个建立连接的请求。只要在连接成功建立之后，才能开始数据传输，这是第二阶段。接着，当数据传输完毕，必须释放连接。</li>
+<li>无连接：没有那么多阶段，它直接进行数据传输。</li>
 </ul>
-<p><strong>当然我们也可以考虑将接口拆为多个接口。</strong></p>
+</li>
+</ul>
+<h2 id="五层参考模型"><a href="#五层参考模型" class="headerlink" title="五层参考模型"></a>五层参考模型</h2><blockquote>
+<p>综合了OSI和TCP/IP的优点</p>
+</blockquote>
+<ul>
+<li>应用层：支持各种网络应用 FTP、SMTP、HTTP</li>
+<li>传输层：进程-进程的数据传输 TCP、UDP</li>
+<li>网络层：源主机到目的主机的数据分组路由与转发 IP、ICMP、OSPF等</li>
+<li>数据链路层：把网络层传下来的数据报组装成帧 Ethernet、PPP</li>
+<li>物理层：比特传输</li>
+</ul>
+<h2 id="五层参考模型的数据封装与解封装"><a href="#五层参考模型的数据封装与解封装" class="headerlink" title="五层参考模型的数据封装与解封装"></a>五层参考模型的数据封装与解封装</h2>
+
+
+
+<p>A发送端从应用层开始逐层开始封装，每次封装都会加上相应层的控制信息，最后在物理层转化为比特，通过链路传送到B端，然后逐层解封装。</p>
 
       
 
@@ -754,11 +749,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">适配器模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -768,7 +759,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
         </p>
       
 
@@ -798,114 +789,63 @@
 
 
   
-    <article id="post-建造者模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-分层结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">建造者模式</a>
+      <a class="article-title" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">分层结构</a>
     </h1>
   
 
         
-        <a href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-07T06:00:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
+        <a href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><h2 id="传统模式"><a href="#传统模式" class="headerlink" title="传统模式"></a>传统模式</h2><p><strong>比如我们现在有个建房子的任务，先来看看传统模式下的代码如何实现</strong></p>
+        <h1 id="分层结构"><a href="#分层结构" class="headerlink" title="分层结构"></a>分层结构</h1><h2 id="怎么分层"><a href="#怎么分层" class="headerlink" title="怎么分层"></a>怎么分层</h2><blockquote>
+<p>分层的基本原则</p>
+</blockquote>
 <ul>
-<li>一个建造的抽象类，具体实现交给子类</li>
+<li>1.各层之间相互<strong>独立</strong>，每层只实现一种相对独立的功能。</li>
+<li>2.各层之间<strong>界面自然清新</strong>，易于理解，相互交流尽可能少。</li>
+<li>3.结构上可分割 开。每层都采用<strong>最合适的技术</strong>来实现。</li>
+<li>4.保持<strong>下层</strong>对<strong>上层</strong>的独立性，<strong>上层单向使用下层提供的服务</strong>。</li>
+<li>5.整个分层结构应该能促进标准化工作。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">builder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span></span>;   <span class="comment">//打地基</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span></span>;  <span class="comment">//建围墙</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span></span>;   <span class="comment">//封顶</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        buildBase();</span><br><span class="line">        buildWalls();</span><br><span class="line">        buildRoof();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p><strong>通常各层所要完成的功能主要有以下一些</strong></p>
 <ul>
-<li>子类实现建造方法</li>
+<li>1.差错控制：使相应层次对等实体的通信更加可靠</li>
+<li>2.流量控制：发送端的发送速率必须使接收端来的及接受，不要太快</li>
+<li>3.分段和重装：发送端将要发送的数据块划分为更小的单位，在接受端将其还原。</li>
+<li>4.复用和分用：发送端几个高层会话复用一条低层的连接，在接收端再进行分用。</li>
+<li>5.连接建立和释放：交换数据前先建立一条逻辑连接，数据传送结束后释放连接。</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonHouse</span> <span class="keyword">extends</span> <span class="title">builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 地基建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 围墙建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 屋顶建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>用户调用建造方法</li>
+<h2 id="正式认识分层结构"><a href="#正式认识分层结构" class="headerlink" title="正式认识分层结构"></a>正式认识分层结构</h2><ul>
+<li><strong>1.实体：</strong>第n层中的活动元素称为<strong>n层实体</strong>。同一层的实体叫<strong>对等实体</strong>。</li>
+<li><strong>2.协议：</strong>为进行网络中的<strong>对等实体</strong>数据交换而建立的规则、标准或约定称为网络协议。【水平】<ul>
+<li>语法：规定传输数据的格式</li>
+<li>语义：规定所要完成的功能</li>
+<li>同步：规定各种操作的顺序</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CommonHouse commonHouse = <span class="keyword">new</span> CommonHouse();</span><br><span class="line">        commonHouse.buildAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>分析：</strong></p>
-<ul>
-<li>优点是比较好理解，简单易操作</li>
-<li>设计的程序结构，过于简单，没有设计缓存层对象，程序的扩展和维护不好，也就是说，这种设计方案把产品(房子)和建造产品的过程(buildAll方法)封装在了一起，耦合性增强了。</li>
-<li>解决方案：将产品和产品的建造过程解耦，这便是建造者模式</li>
+</li>
+<li><strong>3.接口（访问服务点SAP）：</strong>上层使用下层服务的入口。</li>
+<li><strong>4.服务：</strong>下层为相邻上层提供的功能调用。【垂直】</li>
 </ul>
-<h2 id="建造者模式-1"><a href="#建造者模式-1" class="headerlink" title="建造者模式"></a>建造者模式</h2><p>又叫生成器模式，它可以将复杂对象的建造过程抽象出来，使得这个抽象过程的不同实现方法可以构造出不同的对象，它是一步一步创建复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。</p>
-<p><strong>建造者模式的四个角色：</strong></p>
-<ul>
-<li>Product(产品角色)：一个具体的产品对象。</li>
-<li>Builder(抽象创建者)：创建一个Product对象的各个部件指定的接口/抽象类，它只需要指定建造的流程，建造的具体细节是不管的。</li>
-<li>ConcreteBuilder(具体建造者)：实现接口，构建和装配各个部件。</li>
-<li>Director(指挥者)：构建一个使用Builder接口的对象。它主要是用于创建一个复杂的对象。它主要有两个作用，一是：隔离客户与对象的生产过程，二是：负责控制产品对象的生产过程。</li>
-</ul>
-<img src="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/1594021954431.png" class="" title="a">
-
-
-
-<blockquote>
-<p><strong>上代码</strong></p>
-</blockquote>
-<blockquote>
-<p>产品类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对应我们的产品</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">House</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String Base;</span><br><span class="line">    <span class="keyword">private</span> String Wall;</span><br><span class="line">    <span class="keyword">private</span> String Roof;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">House</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">House</span><span class="params">(String base, String wall, String roof)</span> </span>&#123;</span><br><span class="line">        Base = base;</span><br><span class="line">        Wall = wall;</span><br><span class="line">        Roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getWall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Wall;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBase</span><span class="params">(String base)</span> </span>&#123;</span><br><span class="line">        Base = base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWall</span><span class="params">(String wall)</span> </span>&#123;</span><br><span class="line">        Wall = wall;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoof</span><span class="params">(String roof)</span> </span>&#123;</span><br><span class="line">        Roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>抽象建造者类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//建造者，指定建造有哪些步骤</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseBuilder</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> House house = <span class="keyword">new</span> House();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWall</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> House <span class="title">buildHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> house;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>建造者实现类</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;具体建造对象，实现其中的建造步骤的细节</span><br><span class="line">public class CommonBuilder extends HouseBuilder &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void buildWall() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子建墙&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buildBase() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子打地基&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buildRoof() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子盖房顶&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>指挥者类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指挥者，规定建造的流程</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Directer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> HouseBuilder houseBuilder ;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Directer</span><span class="params">(HouseBuilder houseBuilder)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.houseBuilder = houseBuilder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHouseBuilder</span><span class="params">(HouseBuilder houseBuilder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.houseBuilder = houseBuilder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> House <span class="title">buildHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        houseBuilder.buildBase();</span><br><span class="line">        houseBuilder.buildWall();</span><br><span class="line">        houseBuilder.buildRoof();</span><br><span class="line">        House house = houseBuilder.buildHouse();</span><br><span class="line">        <span class="keyword">return</span> house;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>用户类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CommonBuilder commonBuilder = <span class="keyword">new</span> CommonBuilder();</span><br><span class="line">        Directer directer = <span class="keyword">new</span> Directer(commonBuilder);</span><br><span class="line">        House house = directer.buildHouse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="两种方法的对比"><a href="#两种方法的对比" class="headerlink" title="两种方法的对比"></a>两种方法的对比</h3><p>​        对比上面两种实现方法，建造者模式将生产对象、生产过程、生产流程解耦，分离出来，让代码的扩展性更好，以后我们需要新增产品便只需要设计不同的Builder即可，符合了OOP的开闭原则。其实我们应该先明确我们的生产对象其实都是同一类的东西，这些东西有着不同的属性，将这些属性的赋值、初始化交给builder而不是让用户去做，便是这种设计模式的核心思想。其中对于建造者的抽象，与衍生出的建造者之间我们也要明确是is-a的关系，不同的产品对应于不同的建造者，而我们将建造者抽象出来的目的就是实现代码的扩展性。</p>
-<h2 id="建造者模式的注意事项和细节"><a href="#建造者模式的注意事项和细节" class="headerlink" title="建造者模式的注意事项和细节"></a>建造者模式的注意事项和细节</h2><ul>
-<li><p>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使的相同的创建过程可以创建不同的产品对象</p>
-</li>
-<li><p>每一个具体创建者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的建造者，用户使用不同的具体建造者即可得到不同的产品对象</p>
-</li>
-<li><p>可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更加方便使用程序来控制创建过程</p>
-</li>
-<li><p>增加新的具体建造者无需修改原有的类库，指挥者类针对抽象建造者类编程，系统扩展方便，符合开闭原则。</p>
-</li>
-<li><p>建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。</p>
-</li>
-<li><p>如果产品的内部变化复杂，可能会导致需要定义很多具体的建造者类来实现这种变化，导致系统变得很庞大，因此这种情况下就要考虑是否需要使用建造者模式</p>
-</li>
-<li><p><strong>抽象工厂模式VS建造者模式</strong></p>
-<p>抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。而建造者模式则是要求按照指定的蓝图建造产品，他的主要目的是通过组装零配件而产生一个新产品</p>
-</li>
+<h2 id="概念总结"><a href="#概念总结" class="headerlink" title="概念总结"></a>概念总结</h2><ul>
+<li>网络体系结构是从功能上来描述计算机网络结构</li>
+<li>计算机网络体系结构简称网络体系结构是分层结构</li>
+<li>每层遵循某个/些网络协议以完成本层功能 。</li>
+<li>计算机网络体系结构是计算机网络的各层及其协议的集合。</li>
+<li>第n层在向n+1层提供服务时，此服务不仅包含第n层本身的功能，还包含由下层服务提供的功能。</li>
+<li>仅仅在相邻层间有接口，且所提供服务的具体实现细节对上一层完全屏蔽。</li>
+<li>体系结构是抽象的，而实现是指能运行的一些软件和硬件。</li>
 </ul>
 
       
@@ -920,11 +860,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">建造者模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -934,7 +870,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">展开全文 >></a>
         </p>
       
 
@@ -964,118 +900,79 @@
 
 
   
-    <article id="post-工厂模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-性能指标" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
+      <a class="article-title" href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">性能指标</a>
     </h1>
   
 
         
-        <a href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-04T17:11:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-05</time>
+        <a href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:16:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>OOP七大原则：</p>
+        <h1 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h1><h2 id="速率"><a href="#速率" class="headerlink" title="速率"></a>速率</h2><blockquote>
+<p>速率即<strong>数据率</strong>或称<strong>数据传输率</strong>或<strong>比特率</strong>。</p>
+</blockquote>
+<p>连接在计算机网络上的主机在数字信道上传送数据<strong>位数的速率</strong>。</p>
+<p>在通信领域中：<strong>速率</strong>单位是b/s,kb/s,Mb/s,Gb/s,Tb/s，单位跨度为10³</p>
+<p>在<strong>存储容量</strong>中：1Byte = 8bit</p>
+<p>1KB=2^10B=1024B=1024*8b</p>
+<p>1MB = 2^10KB = 1024KB    …….</p>
+<h2 id="带宽"><a href="#带宽" class="headerlink" title="带宽"></a>带宽</h2><ul>
+<li><p>“<strong>带宽</strong>”原本指某个信号具有的频带宽度，即最高频率与最低频率之差，单位是赫兹（Hz）。</p>
+</li>
+<li><p>计算机网络中，<strong>带宽</strong>用来表示网络的通信线路传送数据的能力，通常是指单位时间从网络中的某一点到另一点所能通过的“<strong>最高数据率</strong>”。单位是“比特每秒”，b/s，kb/s，Mb/s，Gb/s。</p>
+<p><strong>直观来说就是网络设备所支持的最高速度。</strong></p>
+<img src="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/1603117868643.png" class="" title="a">
+
+</li>
+</ul>
+<p>​    传输速度是不变的，变得是传送出的数据量。手枪与机枪的区别。</p>
+<h2 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h2><blockquote>
+<p>表示在<strong>单位时间</strong>内通过<strong>某个网络（或信道、接口）</strong>的数据量。</p>
+</blockquote>
+<p>吞吐量受网络的带宽或网络的额定速率的限制。</p>
+<p>吞吐量是<strong>实时的</strong>，是现实状态中的数据传输率，而带宽是<strong>理想状态</strong>中的。</p>
+<h2 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h2><blockquote>
+<p>指数据（报文/分组/比特流）从网络（或链路）的一端传送到另一端所需要的的时间，也叫延迟、迟延。单位是s。</p>
+</blockquote>
+<p>一次数据的发送的时延可由以下产生</p>
 <ul>
-<li>开闭原则：一个软件的实体应当对拓展开放，对修改关闭</li>
-<li>依赖倒转原则：要针对接口编程，不要针对实现编程</li>
-<li>迪米特法则：只与你直接的朋友通信，而避免和陌生人通信</li>
+<li>发送时延 = 数据长度/信道带宽(发送速率)</li>
+<li>传播时延 = 信道长度/电磁波在信道上的传播速率</li>
+<li>排队时延 ：数据发送到交换机等待处理</li>
+<li>处理时延 ：检错、找出口</li>
 </ul>
-<h3 id="工厂模式核心本质："><a href="#工厂模式核心本质：" class="headerlink" title="工厂模式核心本质："></a>工厂模式核心本质：</h3><ul>
-<li>实例化对象不使用new，用工厂方法代替</li>
-<li>将选择实现类，创建对象 统一管理和控制，从而将调用者跟我们的实现类解耦。</li>
-</ul>
-<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><blockquote>
-<p>用来生产同一等级结构中的任意产品(对于增加新的产品，需要扩展已有代码)</p>
+<h2 id="时延带宽积"><a href="#时延带宽积" class="headerlink" title="时延带宽积"></a>时延带宽积</h2><p><strong>时延带宽积(bit) = 传播时延(s) * 带宽(b/s)</strong></p>
+<p>时延带宽积又称以<strong>比特为单位的链路长度</strong>。即<strong>某段链路现在有多少比特</strong>。</p>
+<img src="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/1603123253213.png" class="" title="b">
+
+
+
+<h2 id="往返时延RTT"><a href="#往返时延RTT" class="headerlink" title="往返时延RTT"></a>往返时延RTT</h2><blockquote>
+<p>从发送方发送数据开始，到发送方收到接收方的确定（接收方收到数据后立即发送确认），总共经历的时延。</p>
 </blockquote>
-<p>比如我们现在有一家汽车生产商</p>
-<p>那么按照简单工厂模式，我们就可以写出这样的结构</p>
-<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850704336.png" class="" title="a">
-
-
-
-<blockquote>
-<p>产品实现car接口，车工厂统一管理所有的对象生产</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//方法一：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getCar</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name==<span class="string">"Tesla"</span>)&#123;</span><br><span class="line">            Tesla tesla = <span class="keyword">new</span> Tesla();</span><br><span class="line">            <span class="keyword">return</span> tesla;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(name==<span class="string">"WuLin"</span>)&#123;</span><br><span class="line">            WuLin wuLin = <span class="keyword">new</span> WuLin();</span><br><span class="line">            <span class="keyword">return</span> wuLin;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//方法二：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getTesla</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getWuLin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        Tesla tesla = new Tesla();</span></span><br><span class="line"><span class="comment">//        WuLin wuLin = new WuLin();</span></span><br><span class="line"><span class="comment">//        tesla.name();</span></span><br><span class="line"><span class="comment">//        wuLin.name();</span></span><br><span class="line">        <span class="comment">//在不使用工厂模式下，我们对对象的操作都是基于new的</span></span><br><span class="line">        <span class="comment">//在使用工厂模式后，用户不在需要处理对象的初始化，而是直接调用工程的静态方法即可获取到对象</span></span><br><span class="line"></span><br><span class="line">        Car wuLin = CarFactory.getCar(<span class="string">"WuLin"</span>);</span><br><span class="line">        wuLin.name();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>显然</strong>我们可以看出，这个简单工厂模式其实并不满足OOP的开闭原则，因为一旦我们需要添加产品，按我们就必须去修改原来的工厂类，这对后期扩展会造成很大的麻烦，但是简单工厂的结构简单，代码量相对较少。</p>
-<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>同样的生产模式，我们用工厂方法模式实现的结构如下</p>
-<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850785721.png" class="" title="b">
-
-
-
-<blockquote>
-<p>产品实现car接口，工厂实现carFactory接口，每个工厂生产固定的产品</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//我们将工厂换为接口，相当于在产品与工厂又加了一层</span></span><br><span class="line">    <span class="comment">//而不同的产品我们有不同的工厂方法</span></span><br><span class="line">    <span class="function">Car <span class="title">getCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeslaFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLinFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>显然</strong>工厂方法模式满足OOP闭合原则，有着不错的扩展性，我们不在需要修改原有的工厂类，只需要增加新的产品和对应的接口即可，但是代码量大，结构复杂</p>
-<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><ul>
-<li>定义：抽象工厂模式提供了一个创建一系列相关或者相互依赖对象的接口，无需指定他们具体的类</li>
-<li>适用场景：<ul>
-<li>客户端(应用层)不依赖产品类实例如何被创建，实现等细节</li>
-<li>强调一系列相关的产品对象(属于同一产品族)一起使用创建对象需要大量的重复代码</li>
-<li>提供一个产品类的库，所有的产品以同样的接口出现，从而使得客户端不依赖于具体的实现</li>
+<p>RTT越大，在收到确认之前，可以发送的数据越多。</p>
+<p>RTT包括</p>
+<ul>
+<li>往返传播时延 = 传播时延 * 2（主要）</li>
+<li>末端处理时间（一般忽略）</li>
 </ul>
-</li>
-<li>优点：<ul>
-<li>具体产品在应用层的代码隔离，无需关心创建的细节</li>
-<li>将一个系列的产品统一到一起创建</li>
+<h2 id="利用率"><a href="#利用率" class="headerlink" title="利用率"></a>利用率</h2><ul>
+<li>信通利用率 = 有数据通过时间 / (有+无)数据通过时间</li>
+<li>网络利用率 = 信通利用率加权平均值</li>
 </ul>
-</li>
-<li>缺点：<ul>
-<li>规定了所有可能被创建的产品集合，产品族中扩展新的产品困难；</li>
-<li>增加了系统的抽象性和理解难度</li>
-</ul>
-</li>
-</ul>
-<p><strong>抽象工厂就是工厂的工厂，是一层更加抽象的内容，类似于一个什么都能造的工厂，然后根据不同的品牌创建出不同品牌的工厂。所以抽象工厂中有比较复杂的系统逻辑，类与类之间也有相互依赖，所以其扩展性非常差，只适合在设计好，不会有频繁更新的产品集合之间使用</strong></p>
+<p><strong>注意：</strong>利用率越高，时延也会越大。</p>
 
       
 
@@ -1089,11 +986,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">工厂模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -1103,7 +996,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">展开全文 >></a>
         </p>
       
 
@@ -1133,83 +1026,48 @@
 
 
   
-    <article id="post-单例模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-标准化工作及相关组织" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">单例模式</a>
+      <a class="article-title" href="/2020/11/01/%E6%A0%87%E5%87%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87/">标准化工作及相关组织</a>
     </h1>
   
 
         
-        <a href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-04T04:49:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-04</time>
+        <a href="/2020/11/01/%E6%A0%87%E5%87%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:15:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><h2 id="饿汉式单例"><a href="#饿汉式单例" class="headerlink" title="饿汉式单例"></a>饿汉式单例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hungry</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//单例模式的核心：构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Hungry</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//饿汉式特点：程序开始就加载所有的对象</span></span><br><span class="line">    <span class="comment">//缺点：浪费内存空间</span></span><br><span class="line">    <span class="comment">//添加static final 修饰保证静态唯一，防止被修改</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Hungry hungry = <span class="keyword">new</span> Hungry();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Hungry <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hungry;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="懒汉式"><a href="#懒汉式" class="headerlink" title="懒汉式"></a>懒汉式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//懒汉式：核心，当我们需要时在创建对象</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazyMan</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//构造器私有</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">LazyMan</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (lazyMan!=<span class="keyword">null</span>)&#123;</span><br><span class="line">        	<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"不要试图使用反射破坏单例!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">"\t初始化成功"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这个简单的懒汉模式在单线程下没问题，但是显然在多线程中会出现严重的多线程不安全问题</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(lazyMan == <span class="keyword">null</span>)&#123;</span><br><span class="line">            lazyMan = <span class="keyword">new</span> LazyMan();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> lazyMan;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//多线程破坏单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            <span class="comment">//此处的Thread是常规的函数式接口，使用lambda来简写</span></span><br><span class="line">            <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">                LazyMan.getInstance2();</span><br><span class="line">            &#125;).start();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//显然执行结果有多条，破坏了单例模式</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p> 策略1：加锁,双重检测锁模式，使用synchronized将这个类资源锁住，也叫作DCL懒汉式，但是也还有缺陷</p>
+        <h1 id="标准化工作及相关组织"><a href="#标准化工作及相关组织" class="headerlink" title="标准化工作及相关组织"></a>标准化工作及相关组织</h1><blockquote>
+<p>要实现不同厂商的硬、软件之间相互连通，必须遵从统一的标准</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyMan <span class="title">getInstance2</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(lazyMan==<span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">synchronized</span> (LazyMan<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">               <span class="keyword">if</span>(lazyMan==<span class="keyword">null</span>)&#123;</span><br><span class="line">                   lazyMan=<span class="keyword">new</span> LazyMan();</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> lazyMan;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面我们实现了一个简单的dcl懒汉式，但是我们要知道  lazyMan=new LazyMan();  这一行操作并不具有原子性，如果他进行了指令重排，那就可能出现空指针异常 </p>
-<p>首现我们知道，new LazyMan(); </p>
-<p>有三步  </p>
-<ul>
-<li><p>1：分配内存空间  </p>
-</li>
-<li><p>2：执行构造方法，初始化对象  </p>
-</li>
-<li><p>3：把这个对象指向这个空间   </p>
-<p>如果执行指令重排 1 3 2 ，当这个线程执行完3之后  </p>
-<p>然后因为多线程，执行另一个线程 </p>
-<p>if(lazyMan==null) 执行判断，而此时的已经分配了内存空间，这时lazyMan便会直接执行return语句了，这样便造成了空指针异常  </p>
-<p>所以我们在lazyMan对象上加上volatile便能防止指令重排 </p>
-</li>
+<h2 id="标准的分类"><a href="#标准的分类" class="headerlink" title="标准的分类"></a>标准的分类</h2><ul>
+<li>法定标准：由权威机构制定的正式的、合法的标准 OSI</li>
+<li>事实标准：某些公司的产品在竞争中占据了主流，时间长了，这些产品中的协议和技术就成了标准 TCP/IP</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> LazyMan lazyMan;</span><br></pre></td></tr></table></figure>
-
-<h2 id="静态内部类"><a href="#静态内部类" class="headerlink" title="静态内部类"></a>静态内部类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用静态内部类来实现单例模式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Holder</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 静态内部类的优点是：外部类加载时并不需要立即加载内部类，</span></span><br><span class="line"><span class="comment">     * 内部类不被加载则不去初始化INSTANCE，故而不占内存。</span></span><br><span class="line"><span class="comment">     * 即当Holder第一次被加载时，并不需要去加载holder，</span></span><br><span class="line"><span class="comment">     * 只有当getInstance()方法第一次被调用时，才会去初始化holder,</span></span><br><span class="line"><span class="comment">     * 第一次调用getInstance()方法会导致虚拟机加载InnerClass类，</span></span><br><span class="line"><span class="comment">     * 这种方法不仅能确保线程安全，也能保证单例的唯一性，同时也延迟了单例的实例化。</span></span><br><span class="line"><span class="comment">     * 为什么能够保证线程安全属于jvm类加载机制的知识，现在有点难以理解，先埋个坑，以后再填</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Holder <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//调用静态内部类的静态方法初始化单例</span></span><br><span class="line">        <span class="keyword">return</span> InnerClass.holder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义静态内部类，使用静态内部类来初始化实例</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span></span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Holder holder = <span class="keyword">new</span> Holder();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p><strong>上面三种实现单例模式的方法都能被反射所破坏</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//上面说到静态内部类也是不错的解决单列模式多线程不安全的一种方法</span></span><br><span class="line">    <span class="comment">//但是他们还是都不安全的，因为反射技术可以破坏他们的单例模式</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        LazyMan lazyMan = LazyMan.getInstance2();</span><br><span class="line">        Constructor&lt;LazyMan&gt; declaredConstructor = LazyMan<span class="class">.<span class="keyword">class</span>.<span class="title">getDeclaredConstructor</span>(<span class="title">null</span>)</span>;</span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);    <span class="comment">//破坏构造器私有</span></span><br><span class="line">        <span class="comment">//下面只会调用原有的私有构造函数，而不会去走getInstance方法.</span></span><br><span class="line">        LazyMan lazyMan1 = declaredConstructor.newInstance();</span><br><span class="line">        <span class="comment">//这是我们可以在构造函数中也加上锁并判断，并抛出异常</span></span><br><span class="line">        <span class="comment">//但是如果我们一开始就破坏私有构造函数，那lazyMan将永远不会去走getInstance方法，所以这个lazyMan永远都是null</span></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 这时我们可以在我们的类中加上一个判断静态变量empty，再进行第一次初始化后便改变值</span></span><br><span class="line"><span class="comment">         * 但是这个变量通过反编译任然可以得到这个变量，通过反射更改其值</span></span><br><span class="line"><span class="comment">         * 但是我们使用枚举类型就可以完美的避免反射、线程所带来的不安全问题</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="枚举类实现单例"><a href="#枚举类实现单例" class="headerlink" title="枚举类实现单例"></a>枚举类实现单例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> EnumSingle &#123;</span><br><span class="line">    INSTANCE;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> EnumSingle <span class="title">getInstance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>枚举类实现单例本身便是线程安全并且防反射破坏的</p>
+<h2 id="标准化工作"><a href="#标准化工作" class="headerlink" title="标准化工作"></a>标准化工作</h2><blockquote>
+<p><strong>RFC</strong> —— 因特网标准的形式</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        EnumSingle instance1 = EnumSingle.getInstance();</span><br><span class="line">        Constructor&lt;EnumSingle&gt; declaredConstructor = EnumSingle<span class="class">.<span class="keyword">class</span>.<span class="title">getDeclaredConstructor</span>(<span class="title">null</span>)</span>;</span><br><span class="line">        declaredConstructor.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        EnumSingle instance2 = declaredConstructor.newInstance();</span><br><span class="line">        System.out.println(instance1==instance2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们尝试使用反射破坏单例，发现枚举类并没有无参够着，然后我们通过查看枚举类源码可知，枚举类只有一个有参构造，参数为Sting和int型，我们再次使用反射攻击发现报错，不能通过反射破坏枚举的单例，我们查看反射的源码可知，在对枚举使用newInstance时是有一个判断的。所以枚举类天生便防反射破坏。</p>
-<img src="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/1593830776008.png" class="" title="a">
-
-
-
-
-
-
-
-
-
-
-
+<p>RFC上升为因特网正式标准的四个阶段</p>
+<ul>
+<li>1、互联网草案：还不能算是RFC</li>
+<li>2、建议标准：成为RFC</li>
+<li>3、互联网标准</li>
+</ul>
+<h2 id="标准化工作的相关组织"><a href="#标准化工作的相关组织" class="headerlink" title="标准化工作的相关组织"></a>标准化工作的相关组织</h2><ul>
+<li><strong>国际标准化组织ISO</strong>：建立OSI参考模型、HDLC协议</li>
+<li><strong>国际电信联盟ITU</strong>：制定通信规则</li>
+<li><strong>国际电气工程师协会IEEE</strong>：学术机构、IEEE802系列标准、5G</li>
+<li><strong>Internet工程任务组IETF</strong>：负责因特网相关标准的制定 RFC XXXX</li>
+</ul>
 
       
 
@@ -1223,11 +1081,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">单例模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -1237,7 +1091,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/04/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E6%A0%87%E5%87%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87/">展开全文 >></a>
         </p>
       
 
@@ -1267,60 +1121,89 @@
 
 
   
-    <article id="post-堆排序" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-计算机网络的概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/06/06/%E5%A0%86%E6%8E%92%E5%BA%8F/">堆排序</a>
+      <a class="article-title" href="/2020/11/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5/">计算机网络的概念</a>
     </h1>
   
 
         
-        <a href="/2020/06/06/%E5%A0%86%E6%8E%92%E5%BA%8F/" class="archive-article-date">
-  	<time datetime="2020-06-06T10:44:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-06</time>
+        <a href="/2020/11/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:15:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="大顶堆和小顶堆"><a href="#大顶堆和小顶堆" class="headerlink" title="大顶堆和小顶堆"></a>大顶堆和小顶堆</h2><ul>
-<li>堆是一个具有以下性质的完全二叉树<ul>
-<li>每个节点的值都大于等于其左右孩子节点的值，称为大顶堆</li>
-<li>每个节点的值都小于等于其左右孩子节点的值，称为小顶对</li>
-</ul>
-</li>
-</ul>
-<p><strong>反应在数值中</strong></p>
+        <h1 id="计算机网络的概念"><a href="#计算机网络的概念" class="headerlink" title="计算机网络的概念"></a>计算机网络的概念</h1><p>计算机网络：是一个将分散的、具有独立功能的<strong>计算机系统</strong>，通过<strong>通信设备</strong>与<strong>线路</strong>连接起来，由功能完善的<strong>软件</strong>实现<strong>资源共享</strong>和<strong>信息传递</strong>的系统。</p>
+<p>计算机网络是互联的、自治的计算机集合。</p>
 <ul>
-<li><p>大顶堆：arr[i]&gt;=arr[2 * i + 1]&amp;&amp;arr[i]&gt;=arr[2 * i+2]。</p>
+<li>互联-互通互联，通信链路</li>
+<li>自治-无主从关系</li>
+</ul>
+<h1 id="计算机网络的功能"><a href="#计算机网络的功能" class="headerlink" title="计算机网络的功能"></a>计算机网络的功能</h1><ul>
+<li><strong>1.数据通信</strong>(连通性)</li>
+<li><strong>2.资源共享</strong>(共享性)</li>
+<li>3.分布式处理</li>
+<li>4.提高可靠性</li>
+<li>5.负载均衡</li>
+</ul>
+<h1 id="计算机网络的组成"><a href="#计算机网络的组成" class="headerlink" title="计算机网络的组成"></a>计算机网络的组成</h1><ul>
+<li>1.组成部分：硬件、软件、协议</li>
+<li>2.工作方式（互联网的拓扑结构）<ul>
+<li>边缘部分：由所有连接在互联网上的主机组成，用户直接使用<ul>
+<li>C/S方式</li>
+<li>P2P方式</li>
+</ul>
 </li>
-<li><p>小顶堆：arr[i]&lt;=arr[2 * i + 1]&amp;&amp;arr[i]&lt;=arr[2 * i+2]。</p>
+<li>核心部分：由大量网络和连接这些网络的路由器组成，为边缘部分服务</li>
+</ul>
+</li>
+<li>功能组成<ul>
+<li>通信子网：实现<strong>数据通信</strong></li>
+<li>资源子网：实现<strong>资源共享</strong>/数据处理</li>
+</ul>
 </li>
 </ul>
-<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
-<li><p>算法时间复杂度O(nlogn)，空间复杂度O(1)</p>
-</li>
-<li><p>是不稳定排序</p>
-</li>
-<li><p>首现将当前节点构造成一个大顶堆(从左到右，从下到上)，即所有的父节点总是大于等于其子节点</p>
-</li>
-<li><p>然后按照数的非叶子节点的个数循环调用，将整个数组都构造成大顶堆</p>
-</li>
-<li><p>再将堆顶元素于末尾元素进行交换，将最大的数沉到数组的最后</p>
-</li>
-<li><p>此时由于只有堆顶被改了，而末尾元素是已经确定的最大元素，已经不再需要进行改动，所以我们现在只需要再对堆顶元素调用adjustHeap(arr,0,length)方法即可，将此方法循环length-1次即可。</p>
-</li>
+<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1601993965821.png" alt="1601993965821"></p>
+<h1 id="计算机网络的分类"><a href="#计算机网络的分类" class="headerlink" title="计算机网络的分类"></a>计算机网络的分类</h1><ol>
+<li>按分布范围分类<ul>
+<li>广域网WAN：交换技术</li>
+<li>城域网MAN</li>
+<li>局域网WAN：广播技术</li>
+<li>个人区域网PAN</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将以i为根节点的数组调整为大顶堆</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">adjustHeap</span><span class="params">(<span class="keyword">int</span> arr[],<span class="keyword">int</span> i ,<span class="keyword">int</span> length)</span></span>&#123;		</span><br><span class="line">    <span class="keyword">int</span> temp = arr[i];	<span class="comment">//取出根节点，保存在临时变量</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = i*<span class="number">2</span>+<span class="number">1</span>;k&lt;length;k = k*<span class="number">2</span> +<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(arr[k]&lt;arr[k+<span class="number">1</span>]&amp;&amp;k+<span class="number">1</span>&lt;length)&#123;</span><br><span class="line">            k++;		<span class="comment">//获得左右子节点中的最大值</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(temp&lt;arr[k])&#123;</span><br><span class="line">            arr[i]=arr[k];<span class="comment">//将较大值往上提，但是不对k进行复制，有点类似插入排序的操作。</span></span><br><span class="line">            i = k;	<span class="comment">//由于进行了根节点与子节点的交换，所以子树中的大小关系可能被破坏了，所以需要继续循环比较，找出temp适合的位置</span></span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">break</span>;		<span class="comment">//如果不需要交换则可以退出循环了，因为我们的大顶堆是从下往上进行构建的</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//for循环结束后便找出了temp的合适的位置</span></span><br><span class="line">        arr[i]=temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//堆排序</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span> arr[])</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = arr.length/<span class="number">2</span>-<span class="number">1</span>;i&gt;=<span class="number">0</span> ;i++)&#123;	<span class="comment">//非叶子的个数为arr.length/2-1</span></span><br><span class="line">        adjustHeap(arr,i,arr.length);</span><br><span class="line">    &#125;<span class="comment">//完成大顶堆的构建</span></span><br><span class="line">    <span class="comment">//将最大的元素后沉到数组末尾</span></span><br><span class="line">    <span class="keyword">int</span> temp;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = arr.length-<span class="number">1</span>;j&gt;<span class="number">0</span>;j--)&#123;</span><br><span class="line">        temp = arr[j];</span><br><span class="line">        arr[j] = arr[<span class="number">0</span>];</span><br><span class="line">        arr[<span class="number">0</span>] = temp;</span><br><span class="line">        adjustHeap(arr,<span class="number">0</span>,arr.length-<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>对于adjustHeap(arr,0,arr.length-1)的新的理解</p>
-</blockquote>
-<p>在代码中当对子节点与父节点进行比较时，我提出有点像插入排序的操作，在完成了所有代码之后，其实整个的算法我们都可以看做为一种基于二叉树的插入排序，对当前根节点进行操作(使用temp保存)，找到这个节点的合适的位置(其中就包含将大的数往上提的操作，对应于插入排序将有序段后移的过程)，最后将这个根节点放到合适的位置(对应插入操作)，由于最后我们将树根的元素与末尾元素交换了位置，这时意味着在整个数组中只有这个根节点时位置不对的，所以我们调用上诉的函数，便再次将这个值插入到了正确的位置，从而再次构建出了大顶堆。</p>
+</li>
+<li>按使用者分<ul>
+<li>公用网：中国电信</li>
+<li>专用网：政府、军队</li>
+</ul>
+</li>
+<li>按交换技术分<ul>
+<li>电路交换</li>
+<li>报文交换</li>
+<li>分组交换</li>
+</ul>
+</li>
+<li>按拓扑结构分<ul>
+<li>总线型</li>
+<li>星型</li>
+<li>环型</li>
+<li>网状型</li>
+</ul>
+</li>
+<li>按传输技术分<ul>
+<li>广播式网络：共享公共通信信道</li>
+<li>点对点网络：使用<strong>分组存储转发</strong>和<strong>路由选择</strong>机制</li>
+</ul>
+</li>
+</ol>
 
       
 
@@ -1334,15 +1217,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">堆排序</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
         		</li>
       		
 		</ul>
@@ -1352,7 +1227,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/06/06/%E5%A0%86%E6%8E%92%E5%BA%8F/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/11/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5/">展开全文 >></a>
         </p>
       
 
@@ -1496,10 +1371,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">SSM SpringMVC</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
@@ -1509,10 +1380,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1593,6 +1460,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
               </li>
             
             <div class="clearfix"></div>
