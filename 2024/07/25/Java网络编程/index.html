@@ -6,21 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Kruskal算法 | Emptyskz的博客</title>
+  <title>Java网络编程 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="克鲁斯卡尔(Kruskal)算法 克鲁斯卡尔算法，是用来求加权连通图的最小生成树的算法。 基本思想：按照权值从小到大的顺序选择n-1条边，并保证这n-1条边不构成回路 具体做法：首现构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并是森林中不产生回路，直至森林变成一颗树为止  由上我们可以知道，我么需要三个核心方法，一个是排序的方法，一个是由顶点获取下标的方法，还一个是">
+  <meta name="description" content="网络编程把分布在不同地理区域的计算机与专门的外部设备用通信线路互连成一个规模大、功能强的网络系统，从而使众多的计算机可以方便地相互传递信息、共享硬件、软件、数据信息等资源。 设备之间在网络中进行数据的传输，发送、接受数据、 TCP&#x2F;IP协议、ISO&#x2F;OSI参考模型 TCP协议：可靠的建立连接：三次握手 释放连接：四次挥手 UDP协议：不可靠的InetAddress&#x2F;InetSocketAddres">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Kruskal算法">
-<meta property="og:url" content="http://yoursite.com/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:title" content="Java网络编程">
+<meta property="og:url" content="http://yoursite.com/2024/07/25/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
-<meta property="og:description" content="克鲁斯卡尔(Kruskal)算法 克鲁斯卡尔算法，是用来求加权连通图的最小生成树的算法。 基本思想：按照权值从小到大的顺序选择n-1条边，并保证这n-1条边不构成回路 具体做法：首现构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并是森林中不产生回路，直至森林变成一颗树为止  由上我们可以知道，我么需要三个核心方法，一个是排序的方法，一个是由顶点获取下标的方法，还一个是">
+<meta property="og:description" content="网络编程把分布在不同地理区域的计算机与专门的外部设备用通信线路互连成一个规模大、功能强的网络系统，从而使众多的计算机可以方便地相互传递信息、共享硬件、软件、数据信息等资源。 设备之间在网络中进行数据的传输，发送、接受数据、 TCP&#x2F;IP协议、ISO&#x2F;OSI参考模型 TCP协议：可靠的建立连接：三次握手 释放连接：四次挥手 UDP协议：不可靠的InetAddress&#x2F;InetSocketAddres">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/1589691859352.png">
-<meta property="article:published_time" content="2020-05-17T07:52:06.000Z">
-<meta property="article:modified_time" content="2020-05-18T15:18:22.269Z">
+<meta property="og:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1721644473409.png">
+<meta property="og:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1721646713092.png">
+<meta property="article:published_time" content="2024-07-25T12:52:06.000Z">
+<meta property="article:modified_time" content="2024-07-25T12:53:26.765Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="网络编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/1589691859352.png">
+<meta name="twitter:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1721644473409.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -158,49 +160,107 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Kruskal算法" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Java网络编程" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Kruskal算法
+      Java网络编程
     </h1>
   
 
         
-        <a href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-17T07:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+        <a href="/2024/07/25/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2024-07-25T12:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-25</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="克鲁斯卡尔-Kruskal-算法"><a href="#克鲁斯卡尔-Kruskal-算法" class="headerlink" title="克鲁斯卡尔(Kruskal)算法"></a>克鲁斯卡尔(Kruskal)算法</h1><ul>
-<li>克鲁斯卡尔算法，是用来求加权连通图的最小生成树的算法。</li>
-<li>基本思想：按照权值从小到大的顺序选择n-1条边，并保证这n-1条边不构成回路</li>
-<li>具体做法：首现构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并是森林中不产生回路，直至森林变成一颗树为止</li>
+        <h1 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h1><p>把分布在不同地理区域的计算机与专门的外部设备用通信线路互连成一个规模大、功能强的网络系统，从而使众多的计算机可以方便地相互传递信息、共享硬件、软件、数据信息等资源。</p>
+<p>设备之间在网络中进行数据的传输，发送、接受数据、</p>
+<h2 id="TCP-IP协议、ISO-OSI参考模型"><a href="#TCP-IP协议、ISO-OSI参考模型" class="headerlink" title="TCP/IP协议、ISO/OSI参考模型"></a>TCP/IP协议、ISO/OSI参考模型</h2><p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1721644473409.png" alt="1721644473409"></p>
+<h4 id="TCP协议：可靠的"><a href="#TCP协议：可靠的" class="headerlink" title="TCP协议：可靠的"></a>TCP协议：可靠的</h4><p><strong>建立连接：三次握手</strong></p>
+<p><strong>释放连接：四次挥手</strong></p>
+<h4 id="UDP协议：不可靠的"><a href="#UDP协议：不可靠的" class="headerlink" title="UDP协议：不可靠的"></a>UDP协议：不可靠的</h4><h4 id="InetAddress-InetSocketAddress"><a href="#InetAddress-InetSocketAddress" class="headerlink" title="InetAddress/InetSocketAddress"></a><code>InetAddress/InetSocketAddress</code></h4><ul>
+<li><code>InetAddress</code>：封装了IP</li>
+<li><code>InetSocketAddress</code>：封装了IP和端口号</li>
 </ul>
-<p><strong>由上我们可以知道，我么需要三个核心方法，一个是排序的方法，一个是由顶点获取下标的方法，还一个是传入一个下标，获取这个下标对应顶点的终点。</strong></p>
-<img src="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/1589691859352.png" class="" title="a">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//InetAddress ia = new  InerAddress(); 不能直接创建对象，因为InetAddress被default修饰，只能在它自己的函数内部使用</span></span><br><span class="line">InetAddress ia = InetAddress.getByName(<span class="string">"localhost"</span>);</span><br><span class="line">ia.getHostName();	<span class="comment">//	获取域名</span></span><br><span class="line">ia.getHostAddress();	<span class="comment">//获取IP地址</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//封装IP和端口号</span></span><br><span class="line">InetSocketAddress isa = <span class="keyword">new</span> InetSocketAddress(<span class="string">"localhost"</span>,<span class="number">8080</span>);</span><br><span class="line">isa.getPort();	<span class="comment">//获取端口号</span></span><br><span class="line">InetAddress ia = isa.getAddress();</span><br></pre></td></tr></table></figure>
 
 
 
+<h4 id="套接字"><a href="#套接字" class="headerlink" title="套接字"></a>套接字</h4><p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1721646713092.png" alt="1721646713092"></p>
+<h2 id="TCP通信"><a href="#TCP通信" class="headerlink" title="TCP通信"></a>TCP通信</h2><h4 id="单向通信"><a href="#单向通信" class="headerlink" title="单向通信"></a>单向通信</h4><p><strong>客户端代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建套接字，指定服务器的ip与端口号</span></span><br><span class="line">Scoket s = <span class="keyword">new</span> Scoket(<span class="string">"localhost"</span>,<span class="number">8888</span>);</span><br><span class="line"><span class="comment">//获取输出流</span></span><br><span class="line">OutputStream os = s.getOutputStream();</span><br><span class="line"><span class="comment">//利用OutputStream就可以向外发送数据了，但是没有直接发送String的方法，所以在外层套一个处理流</span></span><br><span class="line">DataOutputStream dos = <span class="keyword">new</span> DataOutputStream(os);</span><br><span class="line">dos.writeUTF(<span class="string">"你好"</span>);</span><br><span class="line"></span><br><span class="line">dos.close();</span><br><span class="line">os.close();</span><br><span class="line">s.close();</span><br></pre></td></tr></table></figure>
 
 
 
+<p><strong>服务器端代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建套接字，指定服务器的端口号</span></span><br><span class="line">ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line"><span class="comment">//等待客户端发来信息，阻塞方法，返回的是接受到的客户端的Socket</span></span><br><span class="line">Socket s = ss.accept();</span><br><span class="line">InputStream is = s.getInputStream();</span><br><span class="line">DataInputStream dis = <span class="keyword">new</span> DataInputStream(is);</span><br><span class="line"></span><br><span class="line">String str = dis.readUTF();</span><br><span class="line">dis.close();</span><br><span class="line">is.close();</span><br><span class="line">ss.close();</span><br></pre></td></tr></table></figure>
 
-<p><strong>其中排序很好解决，判断是否形成回路，我们需要一些技巧</strong></p>
+<h4 id="双向通信"><a href="#双向通信" class="headerlink" title="双向通信"></a>双向通信</h4><p><strong>服务器端</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建套接字，指定服务器的端口号</span></span><br><span class="line">ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line"><span class="comment">//等待客户端发来信息，阻塞方法，返回的是接受到的客户端的Socket</span></span><br><span class="line">Socket s = ss.accept();</span><br><span class="line">InputStream is = s.getInputStream();</span><br><span class="line">DataInputStream dis = <span class="keyword">new</span> DataInputStream(is);</span><br><span class="line"></span><br><span class="line">String str = dis.readUTF();</span><br><span class="line"></span><br><span class="line"><span class="comment">//想客户端发送</span></span><br><span class="line">OutputStream os = s.getOutputStream();</span><br><span class="line">DataOutputStream dos = <span class="keyword">new</span> DataOutputStream(os);</span><br><span class="line">dos.writeUTF(<span class="string">"我很好"</span>);</span><br><span class="line"></span><br><span class="line">dos.close();</span><br><span class="line">os.close();</span><br><span class="line">dis.close();</span><br><span class="line">is.close();</span><br><span class="line">ss.close();</span><br></pre></td></tr></table></figure>
+
+<p><strong>客户端</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建套接字，指定服务器的ip与端口号</span></span><br><span class="line">Scoket s = <span class="keyword">new</span> Scoket(<span class="string">"localhost"</span>,<span class="number">8888</span>);</span><br><span class="line"><span class="comment">//获取输出流</span></span><br><span class="line">OutputStream os = s.getOutputStream();</span><br><span class="line"><span class="comment">//利用OutputStream就可以向外发送数据了，但是没有直接发送String的方法，所以在外层套一个处理流</span></span><br><span class="line">DataOutputStream dos = <span class="keyword">new</span> DataOutputStream(os);</span><br><span class="line">dos.writeUTF(<span class="string">"你好"</span>);</span><br><span class="line"></span><br><span class="line">InputStream is = s.getInputStream();</span><br><span class="line">DataInputStream dis = <span class="keyword">new</span> DataInputStream(is);</span><br><span class="line">String str = dis.readUTF();</span><br><span class="line"></span><br><span class="line">dis.close();</span><br><span class="line">is.close();</span><br><span class="line">dos.close();</span><br><span class="line">os.close();</span><br><span class="line">s.close();</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="对象流传送"><a href="#对象流传送" class="headerlink" title="对象流传送"></a>对象流传送</h4><p><strong>客户端</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Socket s = <span class="keyword">new</span> Socket(<span class="string">"localhost"</span>,<span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//录入账号与密码</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">String name = sc.next();</span><br><span class="line">String password = sc.next();</span><br><span class="line"></span><br><span class="line">User user = <span class="keyword">new</span> user(name,password);	<span class="comment">//user需要序列化</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//获取字节流</span></span><br><span class="line">OutputStream os = s.getOutputStream();</span><br><span class="line"><span class="comment">//使用转换流</span></span><br><span class="line">ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(os);</span><br><span class="line">oos.writeObject(user);</span><br><span class="line">oos.close();</span><br><span class="line">os.close();</span><br><span class="line">s.close();</span><br></pre></td></tr></table></figure>
+
+<p><strong>服务器端</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建套接字，指定服务器的端口号</span></span><br><span class="line">ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line"><span class="comment">//等待客户端发来信息，阻塞方法，返回的是接受到的客户端的Socket</span></span><br><span class="line">Socket s = ss.accept();</span><br><span class="line">InputStream is = s.getInputStream();</span><br><span class="line">ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(is);</span><br><span class="line"></span><br><span class="line">User user = (User)(ois.readObject());</span><br><span class="line"><span class="comment">//验证user信息逻辑。。。。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//想客户端发送</span></span><br><span class="line">OutputStream os = s.getOutputStream();</span><br><span class="line">DataOutputStream dos = <span class="keyword">new</span> DataOutputStream(os);</span><br><span class="line">dos.writeUTF(<span class="string">"验证结果"</span>);</span><br><span class="line"></span><br><span class="line">dos.close();</span><br><span class="line">os.close();</span><br><span class="line">ois.close();</span><br><span class="line">is.close();</span><br><span class="line">ss.close();</span><br></pre></td></tr></table></figure>
+
+<h4 id="加入完整的异常处理"><a href="#加入完整的异常处理" class="headerlink" title="加入完整的异常处理"></a>加入完整的异常处理</h4><ul>
+<li>流要在try-catch外声明</li>
+<li>关闭流放在final</li>
+<li>关闭流要判空</li>
+</ul>
+<h4 id="多线程接受用户请求"><a href="#多线程接受用户请求" class="headerlink" title="多线程接受用户请求"></a>多线程接受用户请求</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="comment">//在成员变量中声明各种流以及套接字</span></span><br><span class="line">    Socket s = <span class="keyword">null</span>;</span><br><span class="line">    </span><br><span class="line">    ServerThread(Socket s)&#123;</span><br><span class="line">        <span class="keyword">this</span>.s = s;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//处理逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sout(<span class="string">"服务器启动"</span>);</span><br><span class="line">ServerSocket ss = <span class="keyword">null</span>;</span><br><span class="line">Socket s = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    ss = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">        s = ss.accept();</span><br><span class="line">        <span class="keyword">new</span> ServerThread(s).start();	<span class="comment">//每次的请求都用一个新的线程来处理</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="UDP通信"><a href="#UDP通信" class="headerlink" title="UDP通信"></a>UDP通信</h2><p>TCP：客户端与服务器端地位不平等，因为服务器端要等待客户端的访问</p>
 <ul>
-<li>处理方式：记录顶点在“最小生成树”中的终点，顶点的终点是在“最小生成树”中与它连通的最大顶点。每次需要将一条边加入到最小生成树时，判断该边的两个顶点的终点是否重合，重合的话则会构成回路。</li>
+<li>客户端：Socket        程序感受到的是使用输出流</li>
+<li>服务器端：ServerSocket—-&gt;Socket     程序感受到的是使用输入流</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getEnd</span><span class="params">(<span class="keyword">int</span>[] ends,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(ends[i] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//这个操作就是比如A-&gt;B,返回B，然后再用B去找下一个,B-&gt;C,如果C没有下一个了，便返回C，于是得到了终点</span></span><br><span class="line">        i = ends[i];	</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>UDP：发送方与接收方的平等的，谁都可以先发</p>
+<ul>
+<li>发送方：DatagramSocket   发送数据包 DatagramPcacket </li>
+<li>接收方：DatagramSocket   接受数据包 DatagramPcacket </li>
+</ul>
+<blockquote>
+<p>案例：完成聊天功能</p>
+</blockquote>
+<h4 id="单向通信-1"><a href="#单向通信-1" class="headerlink" title="单向通信"></a>单向通信</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//发送方端口号</span></span><br><span class="line">DatagramSocket ds = <span class="keyword">new</span> DatagramSocket(<span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">String str = <span class="string">"你好"</span>;</span><br><span class="line"><span class="keyword">byte</span>[] bytes = str.getBytes();	<span class="comment">//数据包以字节来发送</span></span><br><span class="line"><span class="comment">//指定发送内容、长度、接受方IP，接受方端口号</span></span><br><span class="line">DatagramPcacket dp = <span class="keyword">new</span> DatagramPcacket (bytes,bytes.length,InetAddress.getByName(<span class="string">"localhost"</span>),<span class="number">9999</span>);</span><br><span class="line">ds.send(dp);</span><br><span class="line">ds.close();</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接受方端口号</span></span><br><span class="line">DatagramSocket ds = <span class="keyword">new</span> DatagramSocket(<span class="number">9999</span>);</span><br><span class="line"><span class="comment">//创建一个空的数据包用来接受传送过来的数据包</span></span><br><span class="line"><span class="keyword">byte</span>[] b = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">DatagramPcacket dp = <span class="keyword">new</span> DatagramPcacket(b,b.length);</span><br><span class="line"><span class="comment">//使用dp接受</span></span><br><span class="line">ds.receive(dp);</span><br><span class="line"><span class="comment">//取出数据</span></span><br><span class="line"><span class="keyword">byte</span>[] data = dp.getData();</span><br><span class="line"><span class="comment">//只转换有效长度</span></span><br><span class="line">String str = <span class="keyword">new</span> String(data,<span class="number">0</span>,dp.length);</span><br><span class="line">ds.close();</span><br></pre></td></tr></table></figure>
 
+<h4 id="双向通信-1"><a href="#双向通信-1" class="headerlink" title="双向通信"></a>双向通信</h4><p>发送接受都是一样的，无非是<code>ds.send(数据包)</code>和<code>ds.receive(数据包)</code>，至于加入异常处理也是一贯的套路。</p>
+<h4 id="单播、组播、广播"><a href="#单播、组播、广播" class="headerlink" title="单播、组播、广播"></a>单播、组播、广播</h4><ul>
+<li><p>单播：一对一通信</p>
+</li>
+<li><p>组播： </p>
+<p>组播地址：224.0.0.0 ~ 239.255.255.255</p>
+<p>其中224.0.0.0 ~ 224.0.0.255 为预留的组播地址</p>
+</li>
+<li><p>广播</p>
+<p>广播地址：255.255.255.255，一旦发送，则局域网上的所有电脑都将接受到信息</p>
+</li>
+</ul>
+<p>==发送端==</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组播所使用的对象</span></span><br><span class="line">MulticastSocket ms = <span class="keyword">new</span> MulticastScoket();</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建数据包</span></span><br><span class="line">String s = <span class="string">"nihao"</span>;</span><br><span class="line"><span class="keyword">byte</span>[] bytes = s.getBytes();</span><br><span class="line">InetAddress address = InetAddress.getByName(<span class="string">"224.0.0.1"</span>);</span><br><span class="line"><span class="keyword">int</span> port = <span class="number">10000</span>;</span><br><span class="line">DatagramPacket datagramPacket = <span class="keyword">new</span> DatagramPacket(bytes,bytes.length,address,port);</span><br><span class="line"></span><br><span class="line">ms.send(datagramPacket);</span><br><span class="line"></span><br><span class="line">ms.close();</span><br></pre></td></tr></table></figure>
 
-<h3 id="核心算法"><a href="#核心算法" class="headerlink" title="核心算法"></a>核心算法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kruskal</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] ends = <span class="keyword">new</span> <span class="keyword">int</span>[edgeNum];	<span class="comment">//用于保存"已有最小生成树"中的每个顶点在最小生成树中的终点</span></span><br><span class="line">    <span class="comment">//创建结果数组，保存最后的最小生成树</span></span><br><span class="line">    EData[] rets = <span class="keyword">new</span> EData[edgeNum];</span><br><span class="line">    <span class="comment">//EData类中有start、end、weight三个属性，分别表示起点终点权值。</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过邻接矩阵获取图中所有边的集合</span></span><br><span class="line">    EData[] edges = getEdges();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按照边的权值大小进行排序</span></span><br><span class="line">    sortEdges(edges);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//遍历edges数组，将边添加到最小生成树中时，判断准备加入的边是否会形成回路，如果没有就加入到rets，否则就不加入</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; endgeNum;i ++)&#123;</span><br><span class="line">        <span class="comment">//获取第i条边的第一个顶点,和第二个顶点的下标 顶点的存储为 ['A','B','C','D'...]</span></span><br><span class="line">        <span class="keyword">int</span> p1 = getPosition(edges[i].start);</span><br><span class="line">        <span class="keyword">int</span> p2 = getPosition(edges[i].end);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> m = getEnd(ends,p1);		<span class="comment">//获取p1的终点</span></span><br><span class="line">        <span class="keyword">int</span> n = getEnd(ends,p2);		<span class="comment">//获取p2的终点</span></span><br><span class="line">        <span class="keyword">if</span>(m!=n)&#123;</span><br><span class="line">            ends[m] = n;</span><br><span class="line">            rets[index++] = edges[i];	<span class="comment">//加入这条边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>==接受端(多个)==</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//接受对象</span></span><br><span class="line">MulticastSocket ms = <span class="keyword">new</span> MulticastScoket(<span class="number">10000</span>);</span><br><span class="line"></span><br><span class="line">InetAddress address = InetAddress.getByName(<span class="string">"224.0.0.1"</span>);</span><br><span class="line">ms.joinGroup(address);	<span class="comment">//将当前本机添加到224.0.0.1组中</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">DatagramPacket datagramPacket = <span class="keyword">new</span> DatagramPacket(bytes,bytes.length);</span><br><span class="line"></span><br><span class="line">ms.recevie(datagramPacket);</span><br><span class="line"></span><br><span class="line"><span class="keyword">byte</span>[] data = datagramPacket.getData();</span><br><span class="line"><span class="keyword">int</span> len = datagramPacket.getLength();</span><br><span class="line"></span><br><span class="line">String ip = datagramPacket.getAddress().getHostAddress();</span><br><span class="line">String name = datagramPacket.getAddress().getHostName();</span><br><span class="line"></span><br><span class="line">sout(<span class="string">"ip为"</span>+ip+<span class="string">"主机名为"</span>+name+<span class="string">"的人发送了数据:"</span>+<span class="keyword">new</span> String(data,<span class="number">0</span>,length));</span><br><span class="line"></span><br><span class="line">ms.close();</span><br></pre></td></tr></table></figure>
 
 
       
@@ -231,6 +291,17 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络编程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -281,7 +352,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2024/07/25/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -295,18 +366,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Floyd算法
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/16/prim%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">prim算法</div>
+    <a href="/2024/07/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java多线程学习</div>
       <i class="icon-circle-right"></i>
     </a>
   
