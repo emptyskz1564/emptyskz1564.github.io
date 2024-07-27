@@ -154,6 +154,132 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-性能指标" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">性能指标</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:16:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h1><h2 id="速率"><a href="#速率" class="headerlink" title="速率"></a>速率</h2><blockquote>
+<p>速率即<strong>数据率</strong>或称<strong>数据传输率</strong>或<strong>比特率</strong>。</p>
+</blockquote>
+<p>连接在计算机网络上的主机在数字信道上传送数据<strong>位数的速率</strong>。</p>
+<p>在通信领域中：<strong>速率</strong>单位是b/s,kb/s,Mb/s,Gb/s,Tb/s，单位跨度为10³</p>
+<p>在<strong>存储容量</strong>中：1Byte = 8bit</p>
+<p>1KB=2^10B=1024B=1024*8b</p>
+<p>1MB = 2^10KB = 1024KB    …….</p>
+<h2 id="带宽"><a href="#带宽" class="headerlink" title="带宽"></a>带宽</h2><ul>
+<li><p>“<strong>带宽</strong>”原本指某个信号具有的频带宽度，即最高频率与最低频率之差，单位是赫兹（Hz）。</p>
+</li>
+<li><p>计算机网络中，<strong>带宽</strong>用来表示网络的通信线路传送数据的能力，通常是指单位时间从网络中的某一点到另一点所能通过的“<strong>最高数据率</strong>”。单位是“比特每秒”，b/s，kb/s，Mb/s，Gb/s。</p>
+<p><strong>直观来说就是网络设备所支持的最高速度。</strong></p>
+<img src="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/1603117868643.png" class="" title="a">
+
+</li>
+</ul>
+<p>​    传输速度是不变的，变得是传送出的数据量。手枪与机枪的区别。</p>
+<h2 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h2><blockquote>
+<p>表示在<strong>单位时间</strong>内通过<strong>某个网络（或信道、接口）</strong>的数据量。</p>
+</blockquote>
+<p>吞吐量受网络的带宽或网络的额定速率的限制。</p>
+<p>吞吐量是<strong>实时的</strong>，是现实状态中的数据传输率，而带宽是<strong>理想状态</strong>中的。</p>
+<h2 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h2><blockquote>
+<p>指数据（报文/分组/比特流）从网络（或链路）的一端传送到另一端所需要的的时间，也叫延迟、迟延。单位是s。</p>
+</blockquote>
+<p>一次数据的发送的时延可由以下产生</p>
+<ul>
+<li>发送时延 = 数据长度/信道带宽(发送速率)</li>
+<li>传播时延 = 信道长度/电磁波在信道上的传播速率</li>
+<li>排队时延 ：数据发送到交换机等待处理</li>
+<li>处理时延 ：检错、找出口</li>
+</ul>
+<h2 id="时延带宽积"><a href="#时延带宽积" class="headerlink" title="时延带宽积"></a>时延带宽积</h2><p><strong>时延带宽积(bit) = 传播时延(s) * 带宽(b/s)</strong></p>
+<p>时延带宽积又称以<strong>比特为单位的链路长度</strong>。即<strong>某段链路现在有多少比特</strong>。</p>
+<img src="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/1603123253213.png" class="" title="b">
+
+
+
+<h2 id="往返时延RTT"><a href="#往返时延RTT" class="headerlink" title="往返时延RTT"></a>往返时延RTT</h2><blockquote>
+<p>从发送方发送数据开始，到发送方收到接收方的确定（接收方收到数据后立即发送确认），总共经历的时延。</p>
+</blockquote>
+<p>RTT越大，在收到确认之前，可以发送的数据越多。</p>
+<p>RTT包括</p>
+<ul>
+<li>往返传播时延 = 传播时延 * 2（主要）</li>
+<li>末端处理时间（一般忽略）</li>
+</ul>
+<h2 id="利用率"><a href="#利用率" class="headerlink" title="利用率"></a>利用率</h2><ul>
+<li>信通利用率 = 有数据通过时间 / (有+无)数据通过时间</li>
+<li>网络利用率 = 信通利用率加权平均值</li>
+</ul>
+<p><strong>注意：</strong>利用率越高，时延也会越大。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-标准化工作及相关组织" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1189,175 +1315,6 @@
 
 
   
-    <article id="post-工厂模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">工厂模式</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-04T17:11:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><p>OOP七大原则：</p>
-<ul>
-<li>开闭原则：一个软件的实体应当对拓展开放，对修改关闭</li>
-<li>依赖倒转原则：要针对接口编程，不要针对实现编程</li>
-<li>迪米特法则：只与你直接的朋友通信，而避免和陌生人通信</li>
-</ul>
-<h3 id="工厂模式核心本质："><a href="#工厂模式核心本质：" class="headerlink" title="工厂模式核心本质："></a>工厂模式核心本质：</h3><ul>
-<li>实例化对象不使用new，用工厂方法代替</li>
-<li>将选择实现类，创建对象 统一管理和控制，从而将调用者跟我们的实现类解耦。</li>
-</ul>
-<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><blockquote>
-<p>用来生产同一等级结构中的任意产品(对于增加新的产品，需要扩展已有代码)</p>
-</blockquote>
-<p>比如我们现在有一家汽车生产商</p>
-<p>那么按照简单工厂模式，我们就可以写出这样的结构</p>
-<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850704336.png" class="" title="a">
-
-
-
-<blockquote>
-<p>产品实现car接口，车工厂统一管理所有的对象生产</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//方法一：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getCar</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (name==<span class="string">"Tesla"</span>)&#123;</span><br><span class="line">            Tesla tesla = <span class="keyword">new</span> Tesla();</span><br><span class="line">            <span class="keyword">return</span> tesla;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(name==<span class="string">"WuLin"</span>)&#123;</span><br><span class="line">            WuLin wuLin = <span class="keyword">new</span> WuLin();</span><br><span class="line">            <span class="keyword">return</span> wuLin;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//方法二：</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getTesla</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Car <span class="title">getWuLin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"><span class="comment">//        Tesla tesla = new Tesla();</span></span><br><span class="line"><span class="comment">//        WuLin wuLin = new WuLin();</span></span><br><span class="line"><span class="comment">//        tesla.name();</span></span><br><span class="line"><span class="comment">//        wuLin.name();</span></span><br><span class="line">        <span class="comment">//在不使用工厂模式下，我们对对象的操作都是基于new的</span></span><br><span class="line">        <span class="comment">//在使用工厂模式后，用户不在需要处理对象的初始化，而是直接调用工程的静态方法即可获取到对象</span></span><br><span class="line"></span><br><span class="line">        Car wuLin = CarFactory.getCar(<span class="string">"WuLin"</span>);</span><br><span class="line">        wuLin.name();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>显然</strong>我们可以看出，这个简单工厂模式其实并不满足OOP的开闭原则，因为一旦我们需要添加产品，按我们就必须去修改原来的工厂类，这对后期扩展会造成很大的麻烦，但是简单工厂的结构简单，代码量相对较少。</p>
-<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>同样的生产模式，我们用工厂方法模式实现的结构如下</p>
-<img src="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/1593850785721.png" class="" title="b">
-
-
-
-<blockquote>
-<p>产品实现car接口，工厂实现carFactory接口，每个工厂生产固定的产品</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">name</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="comment">//我们将工厂换为接口，相当于在产品与工厂又加了一层</span></span><br><span class="line">    <span class="comment">//而不同的产品我们有不同的工厂方法</span></span><br><span class="line">    <span class="function">Car <span class="title">getCar</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Tesla</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"特斯拉！！"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TeslaFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Tesla();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLin</span> <span class="keyword">implements</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">name</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"五菱宏光!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WuLinFactory</span> <span class="keyword">implements</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">getCar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> WuLin();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>显然</strong>工厂方法模式满足OOP闭合原则，有着不错的扩展性，我们不在需要修改原有的工厂类，只需要增加新的产品和对应的接口即可，但是代码量大，结构复杂</p>
-<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><ul>
-<li>定义：抽象工厂模式提供了一个创建一系列相关或者相互依赖对象的接口，无需指定他们具体的类</li>
-<li>适用场景：<ul>
-<li>客户端(应用层)不依赖产品类实例如何被创建，实现等细节</li>
-<li>强调一系列相关的产品对象(属于同一产品族)一起使用创建对象需要大量的重复代码</li>
-<li>提供一个产品类的库，所有的产品以同样的接口出现，从而使得客户端不依赖于具体的实现</li>
-</ul>
-</li>
-<li>优点：<ul>
-<li>具体产品在应用层的代码隔离，无需关心创建的细节</li>
-<li>将一个系列的产品统一到一起创建</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>规定了所有可能被创建的产品集合，产品族中扩展新的产品困难；</li>
-<li>增加了系统的抽象性和理解难度</li>
-</ul>
-</li>
-</ul>
-<p><strong>抽象工厂就是工厂的工厂，是一层更加抽象的内容，类似于一个什么都能造的工厂，然后根据不同的品牌创建出不同品牌的工厂。所以抽象工厂中有比较复杂的系统逻辑，类与类之间也有相互依赖，所以其扩展性非常差，只适合在设计好，不会有频繁更新的产品集合之间使用</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">工厂模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/05/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1476,6 +1433,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -1484,15 +1445,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">网络编程</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">Floyd算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">MybaitsPlus</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1500,19 +1453,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">MybaitsPlus</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">kmp</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javase</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1520,11 +1465,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color1">Redis</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javase</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">prim算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">kmp</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1536,19 +1497,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">二叉树</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">建造者模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
               </li>
              
               <li class="article-tag-list-item">
