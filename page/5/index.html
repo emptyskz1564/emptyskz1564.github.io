@@ -154,6 +154,99 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-StringBuffer和StringBuilder" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">StringBuffer和StringBuilder</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" class="archive-article-date">
+  	<time datetime="2020-05-03T11:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="StringBuffer和StringBuilder"><a href="#StringBuffer和StringBuilder" class="headerlink" title="StringBuffer和StringBuilder"></a>StringBuffer和StringBuilder</h2><ul>
+<li><p>StringBuffer和StringBuilder是可变长的，而String是不可边长的字符串</p>
+<p>先来看看下面的代码</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String str=<span class="string">"abc"</span>;</span><br><span class="line">System.out.println(str);</span><br><span class="line">str=str+<span class="string">"de"</span>;</span><br><span class="line">System.out.println(str);</span><br></pre></td></tr></table></figure>
+
+<p>​        很明显这里会先输出abc，然后再输出adcde，看似是对str进行了修改，实则不然，JVM对这里的处理是，首先创建一个String对象str，并把“abc”赋值给str，然后在第三行中，其实JVM又创建了一个新的对象也名为str，然后再把原来的str的值和“de”加起来再赋值给新的str，而原来的str就会被JVM的垃圾回收机制（当指向这个对象的引用为0时，回收这个对象）给回收掉了，所以，str实际上并没有被更改，也就是前面说的String对象一旦创建之后就不可更改了。 </p>
+<p>​        所以当我们要是用的字符串进行多次更改的时候，使用String效率是非常低的，因为在这个更改的过程中，会有多次的对象创建和对象的回收操作。因此这时我们便要使用SringBuffer和StringBuilder了，这两者创建出的对象都是变量，所有的更改操作都是直接操作的，所以速度会更快</p>
+<ul>
+<li><p>在线程安全上，StringBuilder是线程不安全的，而StringBuffer是线程安全的</p>
+<pre><code>如果一个StringBuffer对象在字符串缓冲区被多个线程使用时，StringBuffer中很多方法可以带有synchronized(方法锁)关键字，所以可以保证线程是安全的，但StringBuilder的方法则没有该关键字，所以不能保证线程安全，有可能会出现一些错误的操作。所以如果要进行的操作是多线程的，那么就要使用StringBuffer，但是在单线程的情况下，还是建议使用速度比较快的StringBuilder。 </code></pre></li>
+<li><p>总结一下就是：</p>
+<ul>
+<li>String类：不可变性final，操作量较少的时候使用</li>
+<li>StringBuffer：可变长，多线程数据量较大的时候使用，效率低，但是线程安全</li>
+<li>StringBuilder：可变长，单线程数据量较大的时候使用，效率高，但是线程不安全</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javase</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-虚拟机无法连接网络的一种解决办法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -768,6 +861,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
             
             <div class="clearfix"></div>

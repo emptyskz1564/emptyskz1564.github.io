@@ -154,6 +154,230 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringBoot基础复健" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/07/29/SpringBoot%E5%9F%BA%E7%A1%80%E5%A4%8D%E5%81%A5/">SpringBoot基础复健</a>
+    </h1>
+  
+
+        
+        <a href="/2024/07/29/SpringBoot%E5%9F%BA%E7%A1%80%E5%A4%8D%E5%81%A5/" class="archive-article-date">
+  	<time datetime="2024-07-28T20:05:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="写在前面的一些话"><a href="#写在前面的一些话" class="headerlink" title="写在前面的一些话"></a>写在前面的一些话</h2><p>研究生两年学到了什么？我说不出来，甚至感觉不如本科毕业时候的我，每天干着没有意义的“科研”，发了几篇毫无意义的论文，不断被导师PUA，甚至不让实习，还幻想着20天干一篇AAAI？什么时间段了，金九银十，本来就已经因为你所谓的“科研梦浪费了2年时间”，现在还想让我用我的一生去赌你一个幻想？别开玩笑了。</p>
+<p>==研究生总结：选不好导师，白读三年！！！！！！==</p>
+<h2 id="配置信息书写与获取"><a href="#配置信息书写与获取" class="headerlink" title="配置信息书写与获取"></a>配置信息书写与获取</h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">email:</span></span><br><span class="line">	<span class="attr">user:</span> <span class="string">xxxx@qq.com</span></span><br><span class="line">	<span class="attr">code:</span> <span class="string">asdawqewqe</span></span><br><span class="line">	<span class="attr">host:</span> <span class="string">smtp.qq.com</span></span><br><span class="line">	<span class="attr">auth:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>==获取：==</p>
+<ol>
+<li>@Value(“${键名}”)：@Value(“${email.user}”)</li>
+<li>@ConfigurationProperties(prefix=”前缀”)：@ConfigurationProperties(prefix=”email”)，实体变量名与配置中的变量名保持一致。</li>
+</ol>
+<h2 id="Bean扫描"><a href="#Bean扫描" class="headerlink" title="Bean扫描"></a>Bean扫描</h2><p>在MVC中实现Bean扫描我们需要提供以下两个东西中的一个：</p>
+<ul>
+<li>在xml配置文件中加入标签：&lt;context:component-scan base-package=”com.itheima”/&gt;</li>
+<li>在配置类中加入@ComponentScan(basePackage=”com.itheima”)</li>
+</ul>
+<p>而在SpringBoot中，我们不需要提供任何东西，因为启动类上的==@SpringBootApplication==注解，它是一个组合注解，它组合了@ComponentScan，由于约定大于配置的原因，@ComponentScan没有指定扫描的路径，因为它默认扫描启动类所在的包及其子包下面。</p>
+<h2 id="Bean注册"><a href="#Bean注册" class="headerlink" title="Bean注册"></a>Bean注册</h2><p>使用以下注解可以将对象注册到IOC容器</p>
+<table>
+<thead>
+<tr>
+<th align="center">注解</th>
+<th>说明</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">@Component</td>
+<td>声明Bean的基础注解</td>
+<td>不属于以下三类时，用此注解</td>
+</tr>
+<tr>
+<td align="center">@Controller</td>
+<td>@Component的衍生注解</td>
+<td>标注在控制器类上</td>
+</tr>
+<tr>
+<td align="center">@Service</td>
+<td>@Component的衍生注解</td>
+<td>标注在业务类上</td>
+</tr>
+<tr>
+<td align="center">@Repository</td>
+<td>@Component的衍生注解</td>
+<td>标注在数据访问类上（由于与Mybatis整合，用的少）</td>
+</tr>
+</tbody></table>
+<p>==但是如果是第三方jar包要注册到IOC容器中，是无法用@Component来声明的==</p>
+<p>要注入第三方jar包中的bean对象需要使用以下两个注解：</p>
+<ol>
+<li>@Bean</li>
+<li>@Import</li>
+</ol>
+<h4 id="方法一-不建议"><a href="#方法一-不建议" class="headerlink" title="方法一(不建议)"></a>方法一(不建议)</h4><p>在启动类上写一个方法返回第三方包中类，并在方法上写上@Bean注解。获取就用<code>context.getBean(类名.class)</code>或者<code>context.getBean(方法名)</code>即可，如果方法中需要IOC容器中已存在的Bean对象，只需要在参数列表写入就可以了，IOC会自动注入。</p>
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><p>在配置类中集中注册</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Resolver <span class="title">resolver</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Resolver();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h4><p>在启动类上使用==@Import(Xxx.class)==，这样启动时会将这个类自动注入IOC容器。开发中一般导入以下两种类：</p>
+<ol>
+<li>配置类</li>
+<li>ImportSelector接口实现类</li>
+</ol>
+<p>配置类的写法如上，下面主要说一下ImportSelector接口实现类该如何写。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonImportSelector</span> <span class="keyword">implements</span> <span class="title">ImportSelector</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String[] selectImports(AnnotationMetadata importingClassMetadata) &#123;</span><br><span class="line">        <span class="comment">//这里可以直接返回需要注入的全类名，但是为了将配置与项目分离，我们将读取imports文件</span></span><br><span class="line">        List&lt;String&gt; imports = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        InputStream is = CommonImportSelector.class.getClassLoader().getResourceAsStream("xxx.imports");</span><br><span class="line">        BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(is));</span><br><span class="line">        String line = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">while</span>((line = br.readLine()) != <span class="keyword">null</span>)&#123;</span><br><span class="line">            imports.add(line);</span><br><span class="line">        &#125;</span><br><span class="line">        br.close();</span><br><span class="line">        <span class="keyword">return</span> imports.toArray(<span class="keyword">new</span> String[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>imports文件中写入需要注入类的全类名</p>
+<h2 id="注册条件"><a href="#注册条件" class="headerlink" title="注册条件"></a>注册条件</h2><p>如果注入的bean对象需要传入值，那么我们只需要在配置文件中写参数，然后使用@Value注解在注入方法的参数列表上去获取即可。但是这样写后，如果配置文件中没有配置参数，则会报错，这时候我们使用@Conditional注解就可以控制注入的条件。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@ConditionalOnProperty</td>
+<td>配置文件中存在对应的属性，才声明该bean</td>
+</tr>
+<tr>
+<td>@ConditionalOnMissingBean</td>
+<td>当不存在当前类型的bean时，才声明该bean</td>
+</tr>
+<tr>
+<td>@ConditionalOnClass</td>
+<td>当前环境存在指定的这个类时，才声明该bean</td>
+</tr>
+</tbody></table>
+<p>==@ConditionalOnProperty(prefix = “country”,name = {“name”,”system”})==：表示只有在配置文件的country前缀下定义了name和system属性时才会注入该bean对象。</p>
+<h2 id="自动配置原理"><a href="#自动配置原理" class="headerlink" title="自动配置原理"></a>自动配置原理</h2><p><strong>作用：</strong></p>
+<ol>
+<li>自定义starter</li>
+<li>面试</li>
+</ol>
+<h4 id="自动配置"><a href="#自动配置" class="headerlink" title="自动配置"></a>自动配置</h4><p>遵循约定大于配置的原则，在boot程序启动后，起步依赖中的一些bean对象会自动注入到ioc容器。</p>
+<p>pojo到，config类注入想要的bean，最后在启动类上导入配置类。这并没有实现自动配置。</p>
+<h4 id="自动配置-源码分析"><a href="#自动配置-源码分析" class="headerlink" title="自动配置-源码分析"></a>自动配置-源码分析</h4><p>程序引入spring-boot-starter-web起步依赖，启动后，会自动往ioc容器中注入DispatcherServlet。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span>	<span class="comment">//自动配置的重要注解</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(ExcludeFilters = &#123; <span class="meta">@Filter</span>(type = FilterType.CUSTOM, classes = TypeExcludeFilter<span class="class">.<span class="keyword">class</span>), @<span class="title">Filter</span>(<span class="title">type</span> </span>= FilterType.CUSTOM, <span class="class"><span class="keyword">class</span> </span>= SutoConfigurationExcludeFilter<span class="class">.<span class="keyword">class</span>)&#125;)</span></span><br><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">SpringBootApplication</span></span>&#123;</span><br><span class="line">    <span class="comment">//SpringBootApplication 是个组合注解</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import</span>(AutoConfigurationImportSelector<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class"><span class="title">public</span> @<span class="title">interface</span> <span class="title">EnableAutoConfiguration</span></span>&#123;</span><br><span class="line">    <span class="comment">//EnableAutoConfiguration也是个组合注解</span></span><br><span class="line">    <span class="comment">//它导入了ImportSelector的一个实现类，他会重写String[] selectImports(...)，他会返回一系列的全类名，而这些全类名则是从spring-boot-autoconfigure包中META-INF底下的.imports文件中读取的。而这些全类名其实也是一些配置类，其中就有DispatcherServlet的配置类，如下。</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoConfiguration</span>	<span class="comment">//这是个自动配置类</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(DispatcherServlet<span class="class">.<span class="keyword">class</span>)	//设置<span class="title">bean</span>注册的条件，如果环境中有这个类（引入<span class="title">web</span>启步依赖）那么这个配置类就生效，下面就是自动注入的核心代码。</span></span><br><span class="line"><span class="class"><span class="title">public</span> <span class="title">class</span> <span class="title">DispatcherServletAutoConfiguration</span></span>&#123;</span><br><span class="line">    <span class="meta">@Configuration</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DispatcherServletConfiguration</span></span>&#123;</span><br><span class="line">        <span class="meta">@Bean</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> DispatcherServlet <span class="title">dispatcherServlet</span><span class="params">()</span></span>&#123;</span><br><span class="line">            DispatcherServlet dispatcherServlet = <span class="keyword">new</span> DispatcherServlet();</span><br><span class="line">            <span class="keyword">return</span> dispatcherServlet;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="自定义自动装配类"><a href="#自定义自动装配类" class="headerlink" title="自定义自动装配类"></a>自定义自动装配类</h4><p>综上所述，如果我们需要使用自动装配机制，那么我们有5步</p>
+<ol>
+<li>定义bean对象</li>
+<li>定义配置类，配置类中需要写入返回bean对象的方法</li>
+<li>定义自动配置类，使用<code>@AutoConfiguration</code>和<code>@Import(CommonConfig.class)</code>两个注解</li>
+<li>需要一个.imports配置文件</li>
+<li>在imports文件中写入自动配置类的全类名</li>
+</ol>
+<p>经过上述五步后，我们将其打包成一个jar包，然后再mvn中引入，这样就能被springIOC自动注入了，使用如下代码来验证。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在启动类中</span></span><br><span class="line">ApplicationContext context = SpringApplication.run(SpringboorAutoConfigApplication<span class="class">.<span class="keyword">class</span>, <span class="title">args</span>)</span>;</span><br><span class="line">context.getBean(<span class="string">"类名"</span>).sout;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h4 id="面试：说一说SpringBoot自动装配原理"><a href="#面试：说一说SpringBoot自动装配原理" class="headerlink" title="面试：说一说SpringBoot自动装配原理"></a>面试：说一说SpringBoot自动装配原理</h4><ol>
+<li>在主启动类上添加了SpringBootApplication注解，这个注解组合了EnableAutoConfiguration注解</li>
+<li>EnableAutoConfiguration注解又组合了Import注解，导入了AutoConfigurationImportSelector类</li>
+<li>实现selectImports方法，这个方法经过层层调用，最终会读取META-INF目录下的imports文件，2.7以前为spring.factories文件 </li>
+<li>读取到全类名了之后，会解析注册条件，也就是@Conditional及其衍生注解，把满足注册条件的Bean对象自动注入到IOC容器中</li>
+</ol>
+<h2 id="自定义Starter"><a href="#自定义Starter" class="headerlink" title="自定义Starter"></a>自定义Starter</h2><blockquote>
+<p>场景：在实际开发中，经常会定义一些公共组件，提供给各个项目团队使用。而在SpringBoot的项目中，一般会将这些公共组件封装为SpringBoot的starter。</p>
+</blockquote>
+<p>自定义Starter的两个必须的模块：</p>
+<ul>
+<li>xxx-autoconfigure：自动配置功能</li>
+<li>xxx-starter：依赖管理功能</li>
+</ul>
+<blockquote>
+<p>需求：自定义mybatis的starter</p>
+</blockquote>
+<p>==步骤：==</p>
+<ol>
+<li>创建dmybatis-spring-boot-autoconfigure模块，提供自动配置功能，并自定义配置文件 META-INF/spring/xxx.imports</li>
+<li>创建dmybatis-spring-boot-starter模块，在starter的mvn文件中引入自动配置模块，不需要其他任何代码。</li>
+</ol>
+<p>下面我们写上核心代码，第一步中，我们在AutoConfiguration模块中添加一个MyBatisAutoConfig自动配置类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoCnofiguration</span> <span class="comment">//这是一个自动配置类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBatisAutoConfig</span></span>&#123;</span><br><span class="line">    <span class="comment">//SQLSessionFactory		//mybatis需要注入的两个bean对象</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SqlSessionFactoryBean <span class="title">sqlSessionFactoryBean</span><span class="params">(DataSource dataSource)</span></span>&#123;</span><br><span class="line">        <span class="comment">//dataSource是数据库连接源</span></span><br><span class="line">        SqlSessionFactoryBean sqlSessionFactoryBean = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">        sqlSessionFactoryBean.setDataSource(dataSource);</span><br><span class="line">        <span class="keyword">return</span> sqlSessionFactoryBean;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// MapperScannerConfigure</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MapperScannerConfigure <span class="title">mapperScannerConfigurer</span><span class="params">(BeanFactory beanFactory)</span></span>&#123;</span><br><span class="line">        <span class="comment">//beanFactory会被Spring自动注入</span></span><br><span class="line">        MapperScannerConfigure mapperScannerConfigurer=<span class="keyword">new</span> MapperScannerConfigure();</span><br><span class="line">        <span class="comment">//扫描的包：启动类所在的包及其子包</span></span><br><span class="line">        List&lt;String&gt; packages = AutoConfigurationPackages.get(beanFactory);</span><br><span class="line">        String p = packages.get(<span class="number">0</span>);</span><br><span class="line">        mapperScannerConfigurer.setBasePackage(p);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//扫描的注解</span></span><br><span class="line">        mapperScannerConfigurer.setAnnotationClass(Mapper<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="keyword">return</span> mapperScannerConfigurer;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自动配置类想要被Spring读取到，就需要提供imports文件。</p>
+<p>imports文件需要再resources包下的META-INF包的spring包下。</p>
+<p>最后将自动配置类的全类名写入imports文件下即可。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/07/29/SpringBoot%E5%9F%BA%E7%A1%80%E5%A4%8D%E5%81%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MySQL基础复习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1532,117 +1756,6 @@
 
 
   
-    <article id="post-分层结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">分层结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="分层结构"><a href="#分层结构" class="headerlink" title="分层结构"></a>分层结构</h1><h2 id="怎么分层"><a href="#怎么分层" class="headerlink" title="怎么分层"></a>怎么分层</h2><blockquote>
-<p>分层的基本原则</p>
-</blockquote>
-<ul>
-<li>1.各层之间相互<strong>独立</strong>，每层只实现一种相对独立的功能。</li>
-<li>2.各层之间<strong>界面自然清新</strong>，易于理解，相互交流尽可能少。</li>
-<li>3.结构上可分割 开。每层都采用<strong>最合适的技术</strong>来实现。</li>
-<li>4.保持<strong>下层</strong>对<strong>上层</strong>的独立性，<strong>上层单向使用下层提供的服务</strong>。</li>
-<li>5.整个分层结构应该能促进标准化工作。</li>
-</ul>
-<p><strong>通常各层所要完成的功能主要有以下一些</strong></p>
-<ul>
-<li>1.差错控制：使相应层次对等实体的通信更加可靠</li>
-<li>2.流量控制：发送端的发送速率必须使接收端来的及接受，不要太快</li>
-<li>3.分段和重装：发送端将要发送的数据块划分为更小的单位，在接受端将其还原。</li>
-<li>4.复用和分用：发送端几个高层会话复用一条低层的连接，在接收端再进行分用。</li>
-<li>5.连接建立和释放：交换数据前先建立一条逻辑连接，数据传送结束后释放连接。</li>
-</ul>
-<h2 id="正式认识分层结构"><a href="#正式认识分层结构" class="headerlink" title="正式认识分层结构"></a>正式认识分层结构</h2><ul>
-<li><strong>1.实体：</strong>第n层中的活动元素称为<strong>n层实体</strong>。同一层的实体叫<strong>对等实体</strong>。</li>
-<li><strong>2.协议：</strong>为进行网络中的<strong>对等实体</strong>数据交换而建立的规则、标准或约定称为网络协议。【水平】<ul>
-<li>语法：规定传输数据的格式</li>
-<li>语义：规定所要完成的功能</li>
-<li>同步：规定各种操作的顺序</li>
-</ul>
-</li>
-<li><strong>3.接口（访问服务点SAP）：</strong>上层使用下层服务的入口。</li>
-<li><strong>4.服务：</strong>下层为相邻上层提供的功能调用。【垂直】</li>
-</ul>
-<h2 id="概念总结"><a href="#概念总结" class="headerlink" title="概念总结"></a>概念总结</h2><ul>
-<li>网络体系结构是从功能上来描述计算机网络结构</li>
-<li>计算机网络体系结构简称网络体系结构是分层结构</li>
-<li>每层遵循某个/些网络协议以完成本层功能 。</li>
-<li>计算机网络体系结构是计算机网络的各层及其协议的集合。</li>
-<li>第n层在向n+1层提供服务时，此服务不仅包含第n层本身的功能，还包含由下层服务提供的功能。</li>
-<li>仅仅在相邻层间有接口，且所提供服务的具体实现细节对上一层完全屏蔽。</li>
-<li>体系结构是抽象的，而实现是指能运行的一些软件和硬件。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1862,6 +1975,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
             
             <div class="clearfix"></div>

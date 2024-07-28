@@ -154,6 +154,117 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-分层结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">分层结构</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="分层结构"><a href="#分层结构" class="headerlink" title="分层结构"></a>分层结构</h1><h2 id="怎么分层"><a href="#怎么分层" class="headerlink" title="怎么分层"></a>怎么分层</h2><blockquote>
+<p>分层的基本原则</p>
+</blockquote>
+<ul>
+<li>1.各层之间相互<strong>独立</strong>，每层只实现一种相对独立的功能。</li>
+<li>2.各层之间<strong>界面自然清新</strong>，易于理解，相互交流尽可能少。</li>
+<li>3.结构上可分割 开。每层都采用<strong>最合适的技术</strong>来实现。</li>
+<li>4.保持<strong>下层</strong>对<strong>上层</strong>的独立性，<strong>上层单向使用下层提供的服务</strong>。</li>
+<li>5.整个分层结构应该能促进标准化工作。</li>
+</ul>
+<p><strong>通常各层所要完成的功能主要有以下一些</strong></p>
+<ul>
+<li>1.差错控制：使相应层次对等实体的通信更加可靠</li>
+<li>2.流量控制：发送端的发送速率必须使接收端来的及接受，不要太快</li>
+<li>3.分段和重装：发送端将要发送的数据块划分为更小的单位，在接受端将其还原。</li>
+<li>4.复用和分用：发送端几个高层会话复用一条低层的连接，在接收端再进行分用。</li>
+<li>5.连接建立和释放：交换数据前先建立一条逻辑连接，数据传送结束后释放连接。</li>
+</ul>
+<h2 id="正式认识分层结构"><a href="#正式认识分层结构" class="headerlink" title="正式认识分层结构"></a>正式认识分层结构</h2><ul>
+<li><strong>1.实体：</strong>第n层中的活动元素称为<strong>n层实体</strong>。同一层的实体叫<strong>对等实体</strong>。</li>
+<li><strong>2.协议：</strong>为进行网络中的<strong>对等实体</strong>数据交换而建立的规则、标准或约定称为网络协议。【水平】<ul>
+<li>语法：规定传输数据的格式</li>
+<li>语义：规定所要完成的功能</li>
+<li>同步：规定各种操作的顺序</li>
+</ul>
+</li>
+<li><strong>3.接口（访问服务点SAP）：</strong>上层使用下层服务的入口。</li>
+<li><strong>4.服务：</strong>下层为相邻上层提供的功能调用。【垂直】</li>
+</ul>
+<h2 id="概念总结"><a href="#概念总结" class="headerlink" title="概念总结"></a>概念总结</h2><ul>
+<li>网络体系结构是从功能上来描述计算机网络结构</li>
+<li>计算机网络体系结构简称网络体系结构是分层结构</li>
+<li>每层遵循某个/些网络协议以完成本层功能 。</li>
+<li>计算机网络体系结构是计算机网络的各层及其协议的集合。</li>
+<li>第n层在向n+1层提供服务时，此服务不仅包含第n层本身的功能，还包含由下层服务提供的功能。</li>
+<li>仅仅在相邻层间有接口，且所提供服务的具体实现细节对上一层完全屏蔽。</li>
+<li>体系结构是抽象的，而实现是指能运行的一些软件和硬件。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-性能指标" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1149,172 +1260,6 @@
 
 
   
-    <article id="post-建造者模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">建造者模式</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-07T06:00:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="建造者模式"><a href="#建造者模式" class="headerlink" title="建造者模式"></a>建造者模式</h1><h2 id="传统模式"><a href="#传统模式" class="headerlink" title="传统模式"></a>传统模式</h2><p><strong>比如我们现在有个建房子的任务，先来看看传统模式下的代码如何实现</strong></p>
-<ul>
-<li>一个建造的抽象类，具体实现交给子类</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">builder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span></span>;   <span class="comment">//打地基</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span></span>;  <span class="comment">//建围墙</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span></span>;   <span class="comment">//封顶</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">buildAll</span><span class="params">()</span></span>&#123;</span><br><span class="line">        buildBase();</span><br><span class="line">        buildWalls();</span><br><span class="line">        buildRoof();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>子类实现建造方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonHouse</span> <span class="keyword">extends</span> <span class="title">builder</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 地基建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildWalls</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 围墙建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">" 屋顶建造完成 "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>用户调用建造方法</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CommonHouse commonHouse = <span class="keyword">new</span> CommonHouse();</span><br><span class="line">        commonHouse.buildAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>分析：</strong></p>
-<ul>
-<li>优点是比较好理解，简单易操作</li>
-<li>设计的程序结构，过于简单，没有设计缓存层对象，程序的扩展和维护不好，也就是说，这种设计方案把产品(房子)和建造产品的过程(buildAll方法)封装在了一起，耦合性增强了。</li>
-<li>解决方案：将产品和产品的建造过程解耦，这便是建造者模式</li>
-</ul>
-<h2 id="建造者模式-1"><a href="#建造者模式-1" class="headerlink" title="建造者模式"></a>建造者模式</h2><p>又叫生成器模式，它可以将复杂对象的建造过程抽象出来，使得这个抽象过程的不同实现方法可以构造出不同的对象，它是一步一步创建复杂的对象，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。</p>
-<p><strong>建造者模式的四个角色：</strong></p>
-<ul>
-<li>Product(产品角色)：一个具体的产品对象。</li>
-<li>Builder(抽象创建者)：创建一个Product对象的各个部件指定的接口/抽象类，它只需要指定建造的流程，建造的具体细节是不管的。</li>
-<li>ConcreteBuilder(具体建造者)：实现接口，构建和装配各个部件。</li>
-<li>Director(指挥者)：构建一个使用Builder接口的对象。它主要是用于创建一个复杂的对象。它主要有两个作用，一是：隔离客户与对象的生产过程，二是：负责控制产品对象的生产过程。</li>
-</ul>
-<img src="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/1594021954431.png" class="" title="a">
-
-
-
-<blockquote>
-<p><strong>上代码</strong></p>
-</blockquote>
-<blockquote>
-<p>产品类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//对应我们的产品</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">House</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String Base;</span><br><span class="line">    <span class="keyword">private</span> String Wall;</span><br><span class="line">    <span class="keyword">private</span> String Roof;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">House</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">House</span><span class="params">(String base, String wall, String roof)</span> </span>&#123;</span><br><span class="line">        Base = base;</span><br><span class="line">        Wall = wall;</span><br><span class="line">        Roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getWall</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Wall;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getRoof</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBase</span><span class="params">(String base)</span> </span>&#123;</span><br><span class="line">        Base = base;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWall</span><span class="params">(String wall)</span> </span>&#123;</span><br><span class="line">        Wall = wall;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setRoof</span><span class="params">(String roof)</span> </span>&#123;</span><br><span class="line">        Roof = roof;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>抽象建造者类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//建造者，指定建造有哪些步骤</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseBuilder</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> House house = <span class="keyword">new</span> House();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildWall</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildBase</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">buildRoof</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> House <span class="title">buildHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> house;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>建造者实现类</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;具体建造对象，实现其中的建造步骤的细节</span><br><span class="line">public class CommonBuilder extends HouseBuilder &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void buildWall() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子建墙&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buildBase() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子打地基&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void buildRoof() &#123;</span><br><span class="line">        System.out.println(&quot;给普通房子盖房顶&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>指挥者类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//指挥者，规定建造的流程</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Directer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> HouseBuilder houseBuilder ;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Directer</span><span class="params">(HouseBuilder houseBuilder)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.houseBuilder = houseBuilder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHouseBuilder</span><span class="params">(HouseBuilder houseBuilder)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.houseBuilder = houseBuilder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> House <span class="title">buildHouse</span><span class="params">()</span></span>&#123;</span><br><span class="line">        houseBuilder.buildBase();</span><br><span class="line">        houseBuilder.buildWall();</span><br><span class="line">        houseBuilder.buildRoof();</span><br><span class="line">        House house = houseBuilder.buildHouse();</span><br><span class="line">        <span class="keyword">return</span> house;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<blockquote>
-<p>用户类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CommonBuilder commonBuilder = <span class="keyword">new</span> CommonBuilder();</span><br><span class="line">        Directer directer = <span class="keyword">new</span> Directer(commonBuilder);</span><br><span class="line">        House house = directer.buildHouse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="两种方法的对比"><a href="#两种方法的对比" class="headerlink" title="两种方法的对比"></a>两种方法的对比</h3><p>​        对比上面两种实现方法，建造者模式将生产对象、生产过程、生产流程解耦，分离出来，让代码的扩展性更好，以后我们需要新增产品便只需要设计不同的Builder即可，符合了OOP的开闭原则。其实我们应该先明确我们的生产对象其实都是同一类的东西，这些东西有着不同的属性，将这些属性的赋值、初始化交给builder而不是让用户去做，便是这种设计模式的核心思想。其中对于建造者的抽象，与衍生出的建造者之间我们也要明确是is-a的关系，不同的产品对应于不同的建造者，而我们将建造者抽象出来的目的就是实现代码的扩展性。</p>
-<h2 id="建造者模式的注意事项和细节"><a href="#建造者模式的注意事项和细节" class="headerlink" title="建造者模式的注意事项和细节"></a>建造者模式的注意事项和细节</h2><ul>
-<li><p>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使的相同的创建过程可以创建不同的产品对象</p>
-</li>
-<li><p>每一个具体创建者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的建造者，用户使用不同的具体建造者即可得到不同的产品对象</p>
-</li>
-<li><p>可以更加精细地控制产品的创建过程。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更加方便使用程序来控制创建过程</p>
-</li>
-<li><p>增加新的具体建造者无需修改原有的类库，指挥者类针对抽象建造者类编程，系统扩展方便，符合开闭原则。</p>
-</li>
-<li><p>建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，如果产品之间的差异性很大，则不适合使用建造者模式，因此其使用范围受到一定的限制。</p>
-</li>
-<li><p>如果产品的内部变化复杂，可能会导致需要定义很多具体的建造者类来实现这种变化，导致系统变得很庞大，因此这种情况下就要考虑是否需要使用建造者模式</p>
-</li>
-<li><p><strong>抽象工厂模式VS建造者模式</strong></p>
-<p>抽象工厂模式实现对产品家族的创建，一个产品家族是这样的一系列产品：具有不同分类维度的产品组合，采用抽象工厂模式不需要关心构建过程，只关心什么产品由什么工厂生产即可。而建造者模式则是要求按照指定的蓝图建造产品，他的主要目的是通过组装零配件而产生一个新产品</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">建造者模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/07/%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
@@ -1534,6 +1479,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
               </li>
             
             <div class="clearfix"></div>
