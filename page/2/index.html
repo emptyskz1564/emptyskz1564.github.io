@@ -154,6 +154,142 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-TCP-IP参考模型及5层参考模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/">TCP/IP参考模型及5层参考模型</a>
+    </h1>
+  
+
+        
+        <a href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
+  	<time datetime="2020-11-01T14:17:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="TCP-IP参考模型和5层参考模型"><a href="#TCP-IP参考模型和5层参考模型" class="headerlink" title="TCP/IP参考模型和5层参考模型"></a>TCP/IP参考模型和5层参考模型</h1><h2 id="OSI参考模型与TCP-IP参考模型"><a href="#OSI参考模型与TCP-IP参考模型" class="headerlink" title="OSI参考模型与TCP/IP参考模型"></a>OSI参考模型与TCP/IP参考模型</h2><img src="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/1603371413939.png" class="" title="a">
+
+
+
+<blockquote>
+<p>相同点：</p>
+</blockquote>
+<ul>
+<li>1.都分层</li>
+<li>2.基于独立的协议栈的概率</li>
+<li>3.可以实现异构网络互联</li>
+</ul>
+<blockquote>
+<p>不同点：</p>
+</blockquote>
+<ul>
+<li><p>1.OSI定义三点：服务、协议、接口</p>
+</li>
+<li><p>2.OSI先出现，参考模型先于协议发明，不偏向特定协议</p>
+</li>
+<li><p>3.TCP/IP设计之初就考虑到异构网互联的问题，将IP作为重要层次</p>
+</li>
+<li><p>4.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ISO/OSI参考慢模型</th>
+<th>TCP/IP模型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网络层</td>
+<td>无连接+面向连接</td>
+<td>无连接</td>
+</tr>
+<tr>
+<td>传输层</td>
+<td>面向连接</td>
+<td>无连接+面向连接</td>
+</tr>
+</tbody></table>
+<ul>
+<li>面向连接：分为三个阶段，第一个是建立连接，在此阶段，发出一个建立连接的请求。只要在连接成功建立之后，才能开始数据传输，这是第二阶段。接着，当数据传输完毕，必须释放连接。</li>
+<li>无连接：没有那么多阶段，它直接进行数据传输。</li>
+</ul>
+</li>
+</ul>
+<h2 id="五层参考模型"><a href="#五层参考模型" class="headerlink" title="五层参考模型"></a>五层参考模型</h2><blockquote>
+<p>综合了OSI和TCP/IP的优点</p>
+</blockquote>
+<ul>
+<li>应用层：支持各种网络应用 FTP、SMTP、HTTP</li>
+<li>传输层：进程-进程的数据传输 TCP、UDP</li>
+<li>网络层：源主机到目的主机的数据分组路由与转发 IP、ICMP、OSPF等</li>
+<li>数据链路层：把网络层传下来的数据报组装成帧 Ethernet、PPP</li>
+<li>物理层：比特传输</li>
+</ul>
+<h2 id="五层参考模型的数据封装与解封装"><a href="#五层参考模型的数据封装与解封装" class="headerlink" title="五层参考模型的数据封装与解封装"></a>五层参考模型的数据封装与解封装</h2><img src="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/1603374669691.png" class="" title="b">
+
+
+
+<p>A发送端从应用层开始逐层开始封装，每次封装都会加上相应层的控制信息，最后在物理层转化为比特，通过链路传送到B端，然后逐层解封装。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-分层结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1103,134 +1239,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/07/17/%E8%A3%85%E9%A5%B0%E8%80%85%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-适配器模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">适配器模式</a>
-    </h1>
-  
-
-        
-        <a href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2020-07-12T13:24:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h1><blockquote>
-<p>基本介绍</p>
-</blockquote>
-<ul>
-<li>Adapter将某个类的接口转换成客户端期望的另一种接口表示，主要的目的是兼容性，让原本因接口不匹配不能一起工作的两个类可以协同工作。起别名为包装器</li>
-<li>适配器模式属于结构性模式</li>
-<li>主要分为三类：类适配器模式、对象适配器模式、接口适配器模式</li>
-</ul>
-<blockquote>
-<p>工作原理</p>
-</blockquote>
-<ul>
-<li><p>适配器模式：将一个类的接口转换成另一种接口，让原本接口不兼容的类可以兼容</p>
-</li>
-<li><p>从用户的角度看不到被适配者，是解耦的</p>
-</li>
-<li><p>用户调用适配器转化出来的目标接口方法，适配器再调用配适配者的相关接口方法</p>
-</li>
-<li><p>用户受到反馈结果，感觉只是和目标接口交互。</p>
-</li>
-</ul>
-<h2 id="类适配器"><a href="#类适配器" class="headerlink" title="类适配器"></a>类适配器</h2><p><strong>思想：使用继承</strong></p>
-<p>使用一个手机充电的例子</p>
-<p><code>一般的220V电压</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实际拥有的方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Voltage220V</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> src = <span class="number">220</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">output220V</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"输出电压"</span>+src+<span class="string">"伏"</span>);</span><br><span class="line">        <span class="keyword">return</span> src;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>手机需要的5V电压</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我们所需要的接口</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Volatage5V</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">output</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>适配器类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span> <span class="keyword">extends</span> <span class="title">Voltage220V</span> <span class="keyword">implements</span> <span class="title">Volatage5V</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">output</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> src = <span class="keyword">super</span>.output220V();</span><br><span class="line">        System.out.println(<span class="string">"转换为5V电压！"</span>);</span><br><span class="line">        <span class="keyword">return</span> src/<span class="number">44</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>手机类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Phone</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> input;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Phone</span><span class="params">(Volatage5V input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.input = input.output();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">charming</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(input == <span class="number">5</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"使用5V电压充电！"</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"请使用正确的电压充电！！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>用户类</code></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Phone phone = <span class="keyword">new</span> Phone(<span class="keyword">new</span> Adapter());</span><br><span class="line">        phone.charming();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="对象适配器"><a href="#对象适配器" class="headerlink" title="对象适配器"></a>对象适配器</h2><p><strong>思想：使用组合</strong></p>
-<p>对于被适配的对象，我们正在适配器中采用组合的方法而不是继承，这样使得成本更低更灵活，也符合我们JAVA编程思想中的优先使用组合而不是继承的思想，代码较为简单，只选要对类适配器的代码稍做修改即可。</p>
-<h2 id="接口适配器"><a href="#接口适配器" class="headerlink" title="接口适配器"></a>接口适配器</h2><p><strong>使用：继承抽象类，抽象类中继承接口并以空方法实现所有的方法，这样继承抽象类的子类可以任意只实现接口中的任意个方法。</strong></p>
-<ul>
-<li>一些书籍称为：缺省适配器模式</li>
-<li>当不需要全部实现接口提供的方法时，可以设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现（空方法），那么该抽象类的子类可以有选择的覆盖父类中的某些方法来实现需求</li>
-<li>使用一个接口不需要使用其他方法的情况</li>
-</ul>
-<p><strong>当然我们也可以考虑将接口拆为多个接口。</strong></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">适配器模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/07/12/%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
         </p>
       
 

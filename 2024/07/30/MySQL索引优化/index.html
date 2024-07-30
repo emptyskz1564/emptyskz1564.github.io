@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2024 | Emptyskz的博客</title>
+  <title>MySQL索引优化 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/archives/2024/index.html">
+  <meta name="description" content="完整性约束   约束条件 约束描述    primary key 主键约束，约束字段的值可唯一标识对应记录   not null 非空约束，字段值不能为空   unique 唯一约束，约束字段的值是唯一的   check 检查约束，限制某个字段的取值范围   default 默认值约束   auto_increment 自增   foreign key 外键   联合主键1234567create">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL索引优化">
+<meta property="og:url" content="http://yoursite.com/2024/07/30/MySQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="完整性约束   约束条件 约束描述    primary key 主键约束，约束字段的值可唯一标识对应记录   not null 非空约束，字段值不能为空   unique 唯一约束，约束字段的值是唯一的   check 检查约束，限制某个字段的取值范围   default 默认值约束   auto_increment 自增   foreign key 外键   联合主键1234567create">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-30T13:32:59.000Z">
+<meta property="article:modified_time" content="2024-07-30T13:34:04.530Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
@@ -152,36 +157,247 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-MySQL索引优化" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      MySQL索引优化
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/30/MySQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" class="archive-article-date">
+
+        
+        <a href="/2024/07/30/MySQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" class="archive-article-date">
   	<time datetime="2024-07-30T13:32:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-30</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/30/MySQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/">MySQL索引优化</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="完整性约束"><a href="#完整性约束" class="headerlink" title="完整性约束"></a>完整性约束</h2><table>
+<thead>
+<tr>
+<th>约束条件</th>
+<th>约束描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>primary key</td>
+<td>主键约束，约束字段的值可唯一标识对应记录</td>
+</tr>
+<tr>
+<td>not null</td>
+<td>非空约束，字段值不能为空</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>唯一约束，约束字段的值是唯一的</td>
+</tr>
+<tr>
+<td>check</td>
+<td>检查约束，限制某个字段的取值范围</td>
+</tr>
+<tr>
+<td>default</td>
+<td>默认值约束</td>
+</tr>
+<tr>
+<td>auto_increment</td>
+<td>自增</td>
+</tr>
+<tr>
+<td>foreign key</td>
+<td>外键</td>
+</tr>
+</tbody></table>
+<h4 id="联合主键"><a href="#联合主键" class="headerlink" title="联合主键"></a>联合主键</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> SC</span><br><span class="line">(</span><br><span class="line">	SNO <span class="built_in">int</span>,</span><br><span class="line">    CNO <span class="built_in">int</span>,</span><br><span class="line">    SCGRADE <span class="built_in">int</span>,</span><br><span class="line">    primary <span class="keyword">key</span> (SNO,CNO)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="DML-（CRUD）"><a href="#DML-（CRUD）" class="headerlink" title="DML （CRUD）"></a>DML （CRUD）</h2><ol>
+<li><p>select</p>
+</li>
+<li><p>insert</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> xx <span class="keyword">values</span>()</span><br><span class="line"><span class="keyword">insert</span> <span class="built_in">int</span> xx(c1,c2) <span class="keyword">values</span>(xx,xx)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>update</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> xx <span class="keyword">set</span> xx=xx,xx=xx <span class="keyword">where</span> xx</span><br><span class="line">//不加<span class="keyword">where</span>就是所有都更新</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>delete</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">delete</span> <span class="keyword">from</span> xx <span class="keyword">where</span> xx</span><br><span class="line">//不加<span class="keyword">where</span>就是全删</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+<h2 id="索引入门"><a href="#索引入门" class="headerlink" title="索引入门"></a>索引入门</h2><p>数据库的优化第一步应该想到的就是索引</p>
+<p><strong>MySQL常用的索引有两种</strong></p>
+<ul>
+<li>B+树</li>
+<li>Hash（InnoDB不支持）</li>
+</ul>
+<p><strong>创建索引&amp;删除索引&amp;查看索引</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_email <span class="keyword">on</span> student(email)</span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">index</span> idx_email <span class="keyword">on</span> student </span><br><span class="line"></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">index</span> idx_email <span class="keyword">using</span> <span class="keyword">hash</span> <span class="keyword">on</span> student(enial) <span class="comment">#或使用BTree</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">index</span> <span class="keyword">from</span> xx</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="索引优化前置知识：磁盘预读"><a href="#索引优化前置知识：磁盘预读" class="headerlink" title="索引优化前置知识：磁盘预读"></a>索引优化前置知识：磁盘预读</h4><p>也就是不把数据全部读入内存，只读取部分页。</p>
+<h4 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h4><ul>
+<li>索引是帮助MySQL高效获取数据的数据结构</li>
+<li>索引存储在文件系统中</li>
+<li>索引的文件存储形式与存储引擎有关</li>
+<li>索引文件的结构<ul>
+<li>hash</li>
+<li>二叉树</li>
+<li>B树</li>
+<li>B+树</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>为什么最终会选择B+树？</p>
+</blockquote>
+<h4 id="不使用哈希的原因"><a href="#不使用哈希的原因" class="headerlink" title="不使用哈希的原因"></a>不使用哈希的原因</h4><p>hash表的索引是使用hash算法+数组+联表+红黑树的方式实现的。</p>
+<p><strong>缺点：</strong></p>
+<ol>
+<li>利用hash存储的话需要将所有的数据文件添加到内存，比较浪费内存空间</li>
+<li>如果所有的查询都是等值查询，hash确实很快，但是实际中范围查找比等值查找多得多，因此hash不适合</li>
+<li>会产生hash冲突（使用扰动函数减少hash冲突）</li>
+</ol>
+<p>而内存中自己使用的是hash因为它本身在内存中，而且也速度快，而数据库是在磁盘中，需要进行慢速的交互的，所以这个时候用hash就不合适了。</p>
+<h4 id="不使用二叉树的原因"><a href="#不使用二叉树的原因" class="headerlink" title="不使用二叉树的原因"></a>不使用二叉树的原因</h4><p>无论是二叉树还是红黑树，都会因为树的深度过深而造成IO次数变多，影响读写效率，这是为什么要少用select * 的原因，select * 会扫描全盘，降低IO速度。</p>
+<h4 id="为什么B树可以"><a href="#为什么B树可以" class="headerlink" title="为什么B树可以"></a>为什么B树可以</h4><ol>
+<li>B树的每个节点都有多个数据，减少IO</li>
+<li>B树的深度更潜，减少IO</li>
+</ol>
+<h4 id="为什么最终使用B-树"><a href="#为什么最终使用B-树" class="headerlink" title="为什么最终使用B+树"></a>为什么最终使用B+树</h4><p>因为B树的非叶子结点中存储数据会导致B树能够容纳的范围变小。</p>
+<p>优势：</p>
+<ol>
+<li>B+树在相同内存空间中能够容纳更多的数据</li>
+<li>B+树有两种头指针，一个指向根节点一个指向最小叶子结点，所以既可以范围查找，又可以从根节点开始随机查找</li>
+</ol>
+<h4 id="B-树到底是3层还是4层？"><a href="#B-树到底是3层还是4层？" class="headerlink" title="B+树到底是3层还是4层？"></a>B+树到底是3层还是4层？</h4><p>取决于索引的类型，一个节点能够容纳的范围等于，节点大小除以索引的大小，所以索引越小，能够容纳的越多，层数也就越小，所以多建议使用int来做索引而不是varchar或text。</p>
+<h4 id="前缀索引"><a href="#前缀索引" class="headerlink" title="前缀索引"></a>前缀索引</h4><p>​        有时候需要索引很长的字符串，这会让索引变大且慢，通常情况下可以使用某个列开始的部分字符串，这样大大的节约索引空间，从而提高索引效率，但这会降低索引的选择性，索引的选择性是指不重复的索引值和数据表记录总数的比值，索引的选择性越高则查询效率越高，因为选择性高的索引可以让，mysql在查找的时候过滤掉更多的行。</p>
+<p>​        一般情况下某个列前缀的选择性也是足够高的，足以满足查询的性能，但是对应BLOB，TEXT，VARCHAR类型的列，必须使用前缀索引，因为mysql不允许索引这些列的完整长度，使用该方法的诀窍在于要选择足够长的前缀以保证较高的选择性，通过又不能太长。</p>
+<p>添加前缀索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> xxx <span class="keyword">add</span> <span class="keyword">index</span> index_1(city);</span><br></pre></td></tr></table></figure>
+
+<p>==注意：前缀索引是一种能使索引最小最块的有效方法，但是也包含缺点：mysql无法使用前缀索引做order by和group by。==</p>
+<h4 id="不同数据库引擎在B-树叶子节点中存放的内容不同"><a href="#不同数据库引擎在B-树叶子节点中存放的内容不同" class="headerlink" title="不同数据库引擎在B+树叶子节点中存放的内容不同"></a>不同数据库引擎在B+树叶子节点中存放的内容不同</h4><ul>
+<li>InnoDB叶子节点直接放置整行数据<ul>
+<li>InnoDB默认对主键创建索引，如果没有主键，那么会选择唯一键，如果还没有，就会生成一个6字节的row_id作为主键，此时叶子节点是整行数据</li>
+<li>如果创建索引的键是其他字段，那么叶子结点存放的是该记录的主键，然后通过主键索引找到对应的记录。这个叫==回表==。数据量小的时候回表负优化，数据量大才有用。</li>
+</ul>
+</li>
+<li>MyISAM存放的是一个指针，指针指向的位置为表的数据</li>
+</ul>
+<h4 id="不同主键策略对索引的影响"><a href="#不同主键策略对索引的影响" class="headerlink" title="不同主键策略对索引的影响"></a>不同主键策略对索引的影响</h4><p>​        如果是单体系统，那么推荐使用主键自增，这样会减少索引的维护开销，如果使用随机生成的话，如果一直往中间区域插入的话，会一直产生页分裂，索引的维护开销会很大。</p>
+<p>​        如果是分布式系统，一般使用雪花算法生成主键</p>
+<h4 id="一些额外的专有名词"><a href="#一些额外的专有名词" class="headerlink" title="一些额外的专有名词"></a>一些额外的专有名词</h4><ul>
+<li><p>回表：查多次索引</p>
+</li>
+<li><p>索引覆盖：不触发回表，索引查主键，或主键查整列</p>
+</li>
+<li><p>最左匹配：在使用组合索引的时候，只有匹配到第一个字段才会走索引如下</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">现有组合索引：(name,age)</span><br><span class="line">where name=? and age=?;		//走索引</span><br><span class="line">where name=?;	//走索引</span><br><span class="line">where age=?;		//不走</span><br><span class="line">where age=? and name=?;		//走索引因为mysql优化器</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>索引下推：mysql中数据的拉取过程如下</p>
+<p>==用户—&gt;mysql server—–&gt;存储引擎—-&gt;磁盘==</p>
+<p>考虑这样一条sql：select * from table where name=? and age=?</p>
+<p>如果没有索引下推就会按照上述的流程，如果有，那么拉取数据的时候直接根据name，age来获取数据，不需要server做任何的数据筛选。这样会减少IO量。</p>
+<p>==缺点==：需要再磁盘上多做数据筛选，原来的筛选是放在内存中的，现在放在磁盘，看起来成本很高，但是数据是排序的，数据是聚集的，所以性能不会有影响，而且整体IO量会少，性能会提升。</p>
+</li>
+<li><p>谓词下推：</p>
+<p>考虑这样一条sql：select t1.name,t2.name from t1 join t2 on t1.id=t2.id;</p>
+<p>这条sql有两种做法：</p>
+<ul>
+<li>现做表连接，组合出一个中间表，然后再查询需要的列</li>
+<li>先把需要的列都拿出来，然后再做关联：谓词下推，IO量少，效率高</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>解释一下什么是MMR？</p>
+</blockquote>
+<p>MMR：mult_range read</p>
+<p>在数据回表的时候，我们根据第一个B+树获取到了id，然后通过排序来执行范围查询，避免了一个一个查找。</p>
+<blockquote>
+<p>解释一下什么是FIC？</p>
+</blockquote>
+<p>FIC：fast index create </p>
+<p>在删除或插入数据的时候，需要更新索引，更新索引的过程是会先创建一个新的表，然后把所有数据插到新表，并创建索引，然后删除原表。有了FIC之后，会先给表上一个锁，读不影响，写会被影响。</p>
+<h4 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h4><ul>
+<li>主键索引</li>
+<li>唯一索引</li>
+<li>普通索引：给除主键、唯一键之外的其他字段创建的索引，也叫辅助索引或二级索引</li>
+<li>全文索引：一般不用而是用ES</li>
+<li>组合索引</li>
+</ul>
+<h4 id="索引匹配方式"><a href="#索引匹配方式" class="headerlink" title="索引匹配方式"></a>索引匹配方式</h4><ol>
+<li>全值匹配：和索引中的所有列进行匹配，出现在组合索引中。</li>
+<li>匹配最左前缀：只匹配索引中的前面几个字段</li>
+<li>匹配列前缀：匹配某一列的值的开头部分<code>explain select * from staffs where name like &#39;J%&#39;</code></li>
+<li>匹配范围值：可以查找某一范围的数据<code>explain select * from staffs where name &gt;&#39;Mary&#39;</code></li>
+<li>精确匹配某一列并范围匹配另外一列：可以查询第一列的全部，和第二列的部分<code>explain select * from staffs where name=&#39;Mary&#39; and age &gt; 25</code>，==范围查找后的索引会失效==</li>
+<li>只访问索引的查询：查询的时候只需要访问索引，不需要访问数据行，本质上就是覆盖索引。<code>explain select name,age,pos from staffs where name=&#39;Mary&#39; and age=25 and pos=&#39;Beijin&#39;</code></li>
+</ol>
+<h4 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h4><ol>
+<li>基于哈希表的实现，只有精确匹配索引所有类的查询才有效</li>
+<li>在mysql中，只有memory的存储引擎显式支持哈希索引</li>
+<li>哈希索引自身只需存储对应的hash值，所以索引的结构十分紧凑，这让哈希索引查找的速度非常快</li>
+</ol>
+<p>==限制==：</p>
+<ol>
+<li>哈希索引只包含哈希值和行指针，而不存储字段值，索引不能使用索引中的值来避免读取行</li>
+<li>哈希索引数据并不是按照索引值顺序存储的，所以无法进行排序</li>
+<li>不支持部分列匹配，因为hash值使用全部内容来计算的</li>
+<li>不支持任何范围查找</li>
+<li>访问速度非常快，但是当有很多冲突的时候，要遍历所有的行指针</li>
+<li>哈希冲突多的话，维护代价也会很高</li>
+</ol>
+<p>==案例：==</p>
+<p>当需要存储大量的URL时，可以用CRC32做哈希，CRC32会把URL编码为10位的数字，这样最后的索引体量会小很多，查询效率会很高。</p>
+<h4 id="组合索引"><a href="#组合索引" class="headerlink" title="组合索引"></a>组合索引</h4><p>当包含多个列作为索引，需要注意的事正确的顺序依赖于该索引的查询，同时需要考虑如何更好的满足排序和分组的需要。</p>
+<p>==or在组合索引中的特殊性==：如果组合索引包含全部字段，并使用了or，那么索引生效，并且使用的是整个组合索引；如果组合索引不包含全部字段，并使用了or，那么索引不生效，但是如果只查询索引列，又会生效。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">表1(a,b,c)	//abc是组合索引，or走索引</span><br><span class="line">表2(a,b,c,d)		//abc是组合索引，or不走索引</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="聚簇索引与非聚簇索引"><a href="#聚簇索引与非聚簇索引" class="headerlink" title="聚簇索引与非聚簇索引"></a>聚簇索引与非聚簇索引</h4><ul>
+<li>聚簇索引（InnoDB）：不是单独的索引类型，而是一种输出存储方式，指的事数据行跟相邻的键值紧凑的存储在一起</li>
+<li>非聚簇索引（MyISAM）：数据文件跟索引文件分开存放</li>
+</ul>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -193,175 +409,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2024/07/30/MySQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/29/SpringBoot%E5%9F%BA%E7%A1%80%E5%A4%8D%E5%81%A5/" class="archive-article-date">
-  	<time datetime="2024-07-28T20:05:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-29</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2024/07/29/SpringBoot%E5%9F%BA%E7%A1%80%E5%A4%8D%E5%81%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SpringBoot基础复健</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/29/SpringBoot%E5%9F%BA%E7%A1%80%E5%A4%8D%E5%81%A5/">SpringBoot基础复健</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">SpringBoot</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/27/MySQL%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0/" class="archive-article-date">
-  	<time datetime="2024-07-27T11:56:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/27/MySQL%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0/">MySQL基础复习</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/25/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2024-07-25T12:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-25</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/25/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">Java网络编程</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2024/07/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
-  	<time datetime="2024-07-24T12:14:22.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-07-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2024/07/24/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AD%A6%E4%B9%A0/">Java多线程学习</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -385,8 +532,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
