@@ -6,15 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Emptyskz的博客</title>
+  <title>事务与锁 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/page/4/index.html">
+  <meta name="description" content="事务事务操作 查看&#x2F;设置事务提交方式 12select @@autocommit;	&#x2F;&#x2F;查看提交方式set @@autocommit&#x3D;0;		&#x2F;&#x2F;设置手动提交  开启事务 1start transaction 或 begin；  提交事务 1commit;  回滚事务 1rollback;    事务四大特性 原子性：不可分割，要么全成功，要么全失败 一致性：事务完成时，所有数据保持一致状态 隔离">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事务与锁">
+<meta property="og:url" content="http://yoursite.com/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="事务事务操作 查看&#x2F;设置事务提交方式 12select @@autocommit;	&#x2F;&#x2F;查看提交方式set @@autocommit&#x3D;0;		&#x2F;&#x2F;设置手动提交  开启事务 1start transaction 或 begin；  提交事务 1commit;  回滚事务 1rollback;    事务四大特性 原子性：不可分割，要么全成功，要么全失败 一致性：事务完成时，所有数据保持一致状态 隔离">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/1.png">
+<meta property="og:image" content="http://yoursite.com/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/.%5C%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81%5C1.png">
+<meta property="article:published_time" content="2024-08-05T07:16:19.000Z">
+<meta property="article:modified_time" content="2024-08-05T07:21:43.248Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -152,148 +160,279 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-Kruskal算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-事务与锁" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/">Kruskal算法</a>
+    <h1 class="article-title" itemprop="name">
+      事务与锁
     </h1>
   
 
         
-        <a href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-17T07:52:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+        <a href="/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/" class="archive-article-date">
+  	<time datetime="2024-08-05T07:16:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-05</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="克鲁斯卡尔-Kruskal-算法"><a href="#克鲁斯卡尔-Kruskal-算法" class="headerlink" title="克鲁斯卡尔(Kruskal)算法"></a>克鲁斯卡尔(Kruskal)算法</h1><ul>
-<li>克鲁斯卡尔算法，是用来求加权连通图的最小生成树的算法。</li>
-<li>基本思想：按照权值从小到大的顺序选择n-1条边，并保证这n-1条边不构成回路</li>
-<li>具体做法：首现构造一个只含n个顶点的森林，然后依权值从小到大从连通网中选择边加入到森林中，并是森林中不产生回路，直至森林变成一颗树为止</li>
-</ul>
-<p><strong>由上我们可以知道，我么需要三个核心方法，一个是排序的方法，一个是由顶点获取下标的方法，还一个是传入一个下标，获取这个下标对应顶点的终点。</strong></p>
-<img src="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/1589691859352.png" class="" title="a">
+        <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><h4 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h4><ul>
+<li><p>查看/设置事务提交方式</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @@autocommit;	//查看提交方式</span><br><span class="line"><span class="keyword">set</span> @@autocommit=<span class="number">0</span>;		//设置手动提交</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开启事务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span> 或 <span class="keyword">begin</span>；</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交事务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">commit</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回滚事务</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">rollback</span>;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-<p><strong>其中排序很好解决，判断是否形成回路，我们需要一些技巧</strong></p>
-<ul>
-<li>处理方式：记录顶点在“最小生成树”中的终点，顶点的终点是在“最小生成树”中与它连通的最大顶点。每次需要将一条边加入到最小生成树时，判断该边的两个顶点的终点是否重合，重合的话则会构成回路。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getEnd</span><span class="params">(<span class="keyword">int</span>[] ends,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(ends[i] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">//这个操作就是比如A-&gt;B,返回B，然后再用B去找下一个,B-&gt;C,如果C没有下一个了，便返回C，于是得到了终点</span></span><br><span class="line">        i = ends[i];	</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="核心算法"><a href="#核心算法" class="headerlink" title="核心算法"></a>核心算法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kruskal</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] ends = <span class="keyword">new</span> <span class="keyword">int</span>[edgeNum];	<span class="comment">//用于保存"已有最小生成树"中的每个顶点在最小生成树中的终点</span></span><br><span class="line">    <span class="comment">//创建结果数组，保存最后的最小生成树</span></span><br><span class="line">    EData[] rets = <span class="keyword">new</span> EData[edgeNum];</span><br><span class="line">    <span class="comment">//EData类中有start、end、weight三个属性，分别表示起点终点权值。</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//通过邻接矩阵获取图中所有边的集合</span></span><br><span class="line">    EData[] edges = getEdges();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//按照边的权值大小进行排序</span></span><br><span class="line">    sortEdges(edges);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//遍历edges数组，将边添加到最小生成树中时，判断准备加入的边是否会形成回路，如果没有就加入到rets，否则就不加入</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; endgeNum;i ++)&#123;</span><br><span class="line">        <span class="comment">//获取第i条边的第一个顶点,和第二个顶点的下标 顶点的存储为 ['A','B','C','D'...]</span></span><br><span class="line">        <span class="keyword">int</span> p1 = getPosition(edges[i].start);</span><br><span class="line">        <span class="keyword">int</span> p2 = getPosition(edges[i].end);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> m = getEnd(ends,p1);		<span class="comment">//获取p1的终点</span></span><br><span class="line">        <span class="keyword">int</span> n = getEnd(ends,p2);		<span class="comment">//获取p2的终点</span></span><br><span class="line">        <span class="keyword">if</span>(m!=n)&#123;</span><br><span class="line">            ends[m] = n;</span><br><span class="line">            rets[index++] = edges[i];	<span class="comment">//加入这条边</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/17/Kruskal%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-prim算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/16/prim%E7%AE%97%E6%B3%95/">prim算法</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/16/prim%E7%AE%97%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-16T07:08:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="prim算法"><a href="#prim算法" class="headerlink" title="prim算法"></a>prim算法</h1><ul>
-<li>普利姆算法求最小生成树，也就是在包含n个顶点的连通图中，找出只有(n-1)条边包含所有n个顶点的连通子图，也就是所谓的极小连通子图</li>
-<li>普利姆算法如下<ul>
-<li>设G=(V,E)是连通图，T=(U,D)是最小生成树，V,U是顶点集合，E，D是边的集合</li>
-<li>若从顶u开始构造最小生成树，则从集合V中取出顶点u放入集合U中，标记顶点v的visited[u]=1</li>
-<li>若集合U中顶点ui与集合V-U中的顶点vj之间存在边，则寻找这些边中权值最小的边，但不能构成回路，将顶点vj加入集合U中，将边(ui，vj)加入集合D中，标记visited[vj]=1</li>
-<li>重复步骤2，直到U与V相等，即所有顶点都被标记访问过，此时D中有n-1条边</li>
-</ul>
 </li>
 </ul>
-<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><img src="/2020/05/16/prim%E7%AE%97%E6%B3%95/1589608212675.png" class="" title="a">
+<h4 id="事务四大特性"><a href="#事务四大特性" class="headerlink" title="事务四大特性"></a>事务四大特性</h4><ul>
+<li>原子性：不可分割，要么全成功，要么全失败</li>
+<li>一致性：事务完成时，所有数据保持一致状态</li>
+<li>隔离性：数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行，事务与事务之间不会影响。</li>
+<li>持久性：一旦提交或回滚，改变是永久的</li>
+</ul>
+<a id="more"></a>
+
+<h4 id="并发事务问题"><a href="#并发事务问题" class="headerlink" title="并发事务问题"></a>并发事务问题</h4><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>脏读</td>
+<td>一个事务读取到另一个事务还没提交的数据</td>
+</tr>
+<tr>
+<td>不可重复读</td>
+<td>一个事务先后读取到同一条记录，但两次读取的数据不同，称之为不可重复度，中间被其他事务影响</td>
+</tr>
+<tr>
+<td>幻读</td>
+<td>一个事务按照条件查询数据时，没有对应的数据行，但是在插入数据时又发现了这行数据已经存在。</td>
+</tr>
+</tbody></table>
+<h4 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h4><table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读</th>
+<th>幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>read uncommitted</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>read committed</td>
+<td>x</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>repeatable read（默认）</td>
+<td>x</td>
+<td>x</td>
+<td>√</td>
+</tr>
+<tr>
+<td>serializable</td>
+<td>x</td>
+<td>x</td>
+<td>x</td>
+</tr>
+</tbody></table>
+<p>==隔离性逐渐升高，性能逐渐降低，安全性逐渐升高== </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 查看事务隔离级别</span><br><span class="line">select @@transaction_isolation</span><br><span class="line"></span><br><span class="line">-- 设置事务隔离级别</span><br><span class="line">set [session|global] transaction isolation level [read uncommitted...]</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="核心代码片段"><a href="#核心代码片段" class="headerlink" title="核心代码片段"></a>核心代码片段</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//代码中graph类中verxs属性表示节点的个数</span></span><br><span class="line"><span class="comment">//graph.weight数组为节点的邻接矩阵，值为权值，用10000代表不通</span></span><br><span class="line"><span class="comment">//graph.data为节点信息或者值</span></span><br><span class="line"><span class="comment">//用visited[]数组记录是否已经访问</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">visited[<span class="number">0</span>] = <span class="number">1</span>;	<span class="comment">//从第一个节点开始，可以自定</span></span><br><span class="line"><span class="comment">//第一层for循环代表我们要产生n-1条边</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">1</span>; k &lt; graph.verxs; k++)&#123;</span><br><span class="line">    <span class="comment">//第二层for循环是我们在遍历已经访问过的点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; graph.verxs &amp;&amp; visited[i] == <span class="number">1</span>;i++)&#123;</span><br><span class="line">        <span class="comment">//第二层for循环是我们通过我们已经访问过的节点，去访问未访问过的节点</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt; graph.verxs &amp;&amp; visited[j] == <span class="number">0</span>;j++)&#123;</span><br><span class="line">            <span class="comment">// 判断是为了从这些未访问的与访问过的节点所产生的边中选出最短边，用h1、h2记录下来</span></span><br><span class="line">            <span class="keyword">if</span>(graph.weight[i][j] &lt; minWeight)&#123;</span><br><span class="line">                minWeight = graph.weight[i][j];</span><br><span class="line">                h1 = i;</span><br><span class="line">                h2 = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//打印选出的最短边</span></span><br><span class="line">    System.out.println(<span class="string">"边&lt;"</span> + graph.data[h1] + <span class="string">","</span> + graph.data[h2] + <span class="string">"&gt; 权值："</span> + minWeight);</span><br><span class="line">    <span class="comment">//标记这个未访问的节点</span></span><br><span class="line">    visited[h2] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//重置最小权值</span></span><br><span class="line">    minWeight = <span class="number">10000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="事务原理"><a href="#事务原理" class="headerlink" title="事务原理"></a>事务原理</h4><p>原子性、一致性、持久性由以下两个日志实现：</p>
+<ul>
+<li>redo log</li>
+<li>undo log</li>
+</ul>
+<p>隔离性由以下两个技术实现</p>
+<ul>
+<li>锁</li>
+<li>MVCC：多版本并发控制</li>
+</ul>
+<p><strong>redo log</strong></p>
+<p>重做日志，记录的是事务提交时数据页的物理修改，是用来==实现事务的持久性==。</p>
+<p>该日志文件由两部分组成：重做日志缓冲(redo log buffer)以及重做日志文件(redo log file)，前者是在内存中，后者在磁盘中。当事务提交之后会把所有修改信息都存到该日志文件中，用于在刷新脏页到磁盘，发生错误时，进行数据恢复使用。</p>
+<img src="/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/1.png" class="" title="a">
 
+<p><img src=".%5C%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81%5C1.png" alt="1722670878598"></p>
+<ul>
+<li>事务提交时先将磁盘的数据页读到buffer中</li>
+<li>然后再buffer中执行更新操作，此时数据页叫脏页</li>
+<li>一段时间之后，将脏页的数据刷新到磁盘中</li>
+<li>再次之前，会将数据页的变化记录在redo log buffer当中</li>
+<li>事务一旦提交就会将log中的记录刷新到磁盘当中</li>
+<li>此时如果脏页刷新失败了，就可以用log中的记录恢复磁盘中的数据</li>
+<li>如果脏页的数据成功刷新到磁盘中，那么redo log中的记录会被清理。</li>
+</ul>
 <blockquote>
-<p>核心思想：贪心算法，每次都是选出局部最优解，最终求出全局最优解。</p>
+<p>为什么不立即将buffer写入磁盘？</p>
 </blockquote>
-<hr>
-<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><ul>
-<li><p>优化后只有两层循环，时间复杂度降为O(n²)</p>
+<p>因为buffer与磁盘之间的读写是随机的，而随机IO的性能很低，而redo log写到磁盘是顺序的效率高（WAL write-ahead logging，先写日志机制）。</p>
+<p><strong>undo log</strong></p>
+<p>undo log是==保证原子性==的。</p>
+<p>又叫回滚日志用于记录数据被修改前的信息，作用包含两个：提供回滚和MVCC。</p>
+<p>undo log和redo log记录物理日志不一样，他是逻辑日志，当执行一条语句时，它会记录一条相反的操作。当执行roll back时，就可以从undo log中的逻辑记录读取到相应的内容并进行回滚。</p>
+<ul>
+<li>undo log销毁：undo log在事务执行时产生，事务提交时，并不会立即删除undo log，因为这些日志可能还用于MVCC。</li>
+<li>undo log存储：undo log采用段的方式进行管理和记录，存放在rollback segment回滚段中，内部包含1024个undo log segment</li>
+</ul>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h4 id="锁的分类"><a href="#锁的分类" class="headerlink" title="锁的分类"></a>锁的分类</h4><p>MySQL中的锁，按照锁的粒度分，分为以下三类：</p>
+<ol>
+<li>全局锁：锁定数据库中的所有表</li>
+<li>表级锁：每次操作锁住整张表。</li>
+<li>行级锁：每次操作锁住对应的行元素</li>
+</ol>
+<h4 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h4><p>全局锁就是对整个数据库实例加锁，加锁后整个实例就处于只读状态，后续的DML的写操作，DDL语句，已经更新操作的事务提交语句都将被阻塞。</p>
+<p>其典型的使用场景是做全库的逻辑备份，对所有表进行锁定，从而获取一致性视图，保证数据的完整性。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">flush</span> <span class="keyword">tables</span> <span class="keyword">with</span> <span class="keyword">read</span> <span class="keyword">lock</span>;</span><br><span class="line">mysqldump -uroot -p123 itcast &gt; itcast.sql;</span><br><span class="line"><span class="keyword">unlock</span> <span class="keyword">tables</span>;</span><br></pre></td></tr></table></figure>
+
+<p>==特点==</p>
+<ol>
+<li>如果在主库上备份，那么在备份期间都不能执行更新</li>
+<li>如果在从库上备份，那么在备份期间从库不能执行主库同步过来的二进制日志(binlog)，从而导致主从延迟</li>
+</ol>
+<p>在InnoDB中，我们可以在备份时加上参数 –single-transaction参数来完成不加锁的一致性数据备份。</p>
+<h4 id="表级锁"><a href="#表级锁" class="headerlink" title="表级锁"></a>表级锁</h4><p>每次操作锁住整张表，锁定粒度大，发生锁冲突的概率最高，并发度最低。</p>
+<p>对于表级锁，主要分为以下三类：</p>
+<ol>
+<li><p>表锁</p>
+<ul>
+<li>表共享读锁（共享锁）：都只能读</li>
+<li>表独占写锁（排他锁）：加锁方能读能写，但是其他客户端既不能读也不能写</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">加锁：<span class="keyword">lock</span> <span class="keyword">tables</span> 表名... <span class="keyword">read</span>/write</span><br><span class="line">释放锁：<span class="keyword">unlock</span> <span class="keyword">tables</span>	/ 断开客户端连接</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
-<li><p>优化点：</p>
-<p>可以这么理解，上面的方法是遍历顶点，所以在既要遍历出发顶点又要遍历终点，所以会出现三重循环，而优化后，我们引进了一个dist数组，用来存放侯选边，所以是对边进行遍历从而只有两层循环</p>
+</ol>
+<ol start="2">
+<li><p>元数据锁(meta data lock, MDL)：MDL加锁过程是系统自动控制，无需显式使用，在访问一张表的时候会自动加上。DML锁主要作用是维护表元数据的数据一致性，在表上有活动业务的时候，不可以对元数据（表结构）进行写入操作。==为了避免DML与DDL冲突，保证读写的正确性==</p>
+<p>当对一张表进行CRUD的时候，加MDL读锁(共享)；当对表结构进行变更操作时，加MDL写锁(排他)。</p>
 </li>
-<li><p>侯选边dist数组的解释：我们不关心出发点具体是哪一个(但是是从已经访问过的顶点出发的)，只关心终点，数组中存放的是到达这个终点的最短距离，而被选取的对象是从我们已经访问过的顶点出发的边。所以初始化时，将出发点的所有邻接点的距离都存入dist，而更新时，我们只需要比较最新访问的顶点的所有邻接点的距离和原dist数组的距离进行比较，存入短边即可。</p>
+<li><p>意向锁</p>
+<p>为了避免DML在执行时，加的行锁与表锁的冲突，在InnoDB中引入了意向锁，使得表锁不用检查每行数据是否加锁，使用意向锁来减少表锁的</p>
+<ul>
+<li>意向共享锁(IS)：与表锁共享锁(read)兼容，与表锁排它锁(write)互斥。</li>
+<li>意向排它锁(IX)：与表锁共享锁(read)及排它锁(write)都互斥。意向锁之间不会互斥。 </li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可以使用以下SQL，查看意向锁及行锁的加锁情况</span><br><span class="line"><span class="keyword">select</span> object_schema,object_name,index_name,lock_type,lock_mode,lock_data <span class="keyword">from</span> performance_schema.data_locks;</span><br></pre></td></tr></table></figure>
+
+
+
 </li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> INF 10000</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">bool</span> visit[N];</span><br><span class="line"><span class="keyword">int</span> dist[N] = &#123; <span class="number">0</span>, &#125;;</span><br><span class="line"><span class="keyword">int</span> graph[N][N] = &#123; &#123;INF,<span class="number">7</span>,<span class="number">4</span>,INF,INF,INF&#125;,  <span class="comment">//INF代表两点之间不可达</span></span><br><span class="line">                    &#123;<span class="number">7</span>,INF,<span class="number">6</span>,<span class="number">2</span>,INF,<span class="number">4</span>&#125;,</span><br><span class="line">                    &#123;<span class="number">4</span>,<span class="number">6</span>,INF,INF,<span class="number">9</span>,<span class="number">8</span>&#125;,</span><br><span class="line">                    &#123;INF,<span class="number">2</span>,INF,INF,INF,<span class="number">7</span>&#125;,</span><br><span class="line">                    &#123;INF,INF,<span class="number">9</span>,INF,INF,<span class="number">1</span>&#125;,</span><br><span class="line">                    &#123;INF,<span class="number">4</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">1</span>,INF&#125;</span><br><span class="line">                  &#125;;</span><br><span class="line">intprim(<span class="keyword">int</span> cur)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">int</span> index = cur;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">memset</span>(visit,<span class="literal">false</span>, <span class="keyword">sizeof</span>(visit));</span><br><span class="line">    visit[cur] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">        dist[i] = graph[cur][i];<span class="comment">//初始化，每个与a邻接的点的距离存入dist</span></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &lt; N; i++)		<span class="comment">//生成n-1条边</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">int</span> minor = INF;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[j] &amp;&amp; dist[j] &lt; minor)          <span class="comment">//找到未访问的点中，距离当前最小生成树距离最小的点</span></span><br><span class="line">            &#123;</span><br><span class="line">                minor = dist[j];</span><br><span class="line">                index = j;				<span class="comment">//由新加入的顶点去更新dist数组，因为dist中的终点可能可以由新的顶点产生更小的路径，而这个更小的路径我们就需要更新到dist中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        visit[index] = <span class="literal">true</span>;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; index &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">        sum += minor;</span><br><span class="line">        <span class="keyword">for</span>(j = <span class="number">0</span>; j &lt; N; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(!visit[j] &amp;&amp; dist[j]&gt;graph[index][j])    <span class="comment">//dist数组中只存放到达j顶点的最短边，更新后的dist数组会经过下一次循环获取到新的最短边</span></span><br><span class="line">            &#123;</span><br><span class="line">                dist[j] = graph[index][j];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> sum;               <span class="comment">//返回最小生成树的总路径值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; prim(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;<span class="comment">//从顶点a开始</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+</ol>
+<h4 id="行级锁"><a href="#行级锁" class="headerlink" title="行级锁"></a>行级锁</h4><p>每次操作锁住对应的行数据。锁定粒度最小，发生锁冲突的概率最低，并发度最高。应用在InnoDB存储引擎中。</p>
+<p>InnoDB的数据是基于索引组织的，行锁是通过对索引上的索引项加锁来实现的，而不是对记录加的锁。对于行级锁主要分为三类：</p>
+<ol>
+<li>行锁(Record Lock)：锁定单个行记录的锁，防止其他事务对此进行update和delete。在RC、RR隔离级别下都支持。</li>
+<li>间隙锁(Gap Lock)：锁定索引记录间隙（不含该记录），确保索引记录间隙不变，防止其他事务在这个间隙进行insert，产生幻读。在RR隔离级别下都支持。</li>
+<li>临键锁(Next-Key Lock)：行锁和间隙锁组合，同时锁住数据，并锁住数据前面的间隙。在RR隔离级别下支持。</li>
+</ol>
+<p><strong>行锁</strong></p>
+<p>InnoDB实现了两种行锁：</p>
+<ol>
+<li>共享锁(S)：允许一个事务去读一行，阻止其他事务获得相同数据集的排它锁。</li>
+<li>排他锁(X)：允许获取排他锁的事务更新数据，防止其他事务获得相同数据集的共享锁和排它锁。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>行锁类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Insert</td>
+<td>排它锁</td>
+<td>自动加锁</td>
+</tr>
+<tr>
+<td>update</td>
+<td>排它锁</td>
+<td>自动加锁</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>排它锁</td>
+<td>自动加锁</td>
+</tr>
+<tr>
+<td>select</td>
+<td>不加锁</td>
+<td></td>
+</tr>
+<tr>
+<td>select…LOCK In SHARE MODE</td>
+<td>共享锁</td>
+<td>需要再select后加LOCK In SHARE MODE</td>
+</tr>
+<tr>
+<td>select .. for update</td>
+<td>排它锁</td>
+<td>需要再select后加for update</td>
+</tr>
+</tbody></table>
+<p>==默认情况下，InnoDB在repeatable read事务隔离级别运行，InnoDB使用next-key锁进行搜索和索引扫描，以防止幻读。==</p>
+<ol>
+<li>针对唯一索引进行检索时，对已存在的记录进行等值匹配时，将会自动优化为行锁。</li>
+<li>InnoDB的行锁是针对于索引加的锁，不通过索引条件检索数据，那么InnoDB将对表中的所有记录加锁，==此时升级为表锁==</li>
+</ol>
+<p><strong>间隙锁</strong></p>
+<ol>
+<li>索引上的等值查询（唯一索引），给不存在的记录加锁时，优化为间隙锁</li>
+<li>索引上的等值查询（普通索引），向右遍历时最后一个值不满足查询需求时，next-key lock退化为间隙锁，满足条件的行进行加锁，并在满足条件的前后加间隙锁。</li>
+<li>索引上的范围查询（唯一索引），会访问到不满足条件的第一个值为止，会把满足条件的第一行加行锁，然后为后面所有记录加上临键锁</li>
+</ol>
+<p>==间隙锁唯一目的是防止其他事务插入间隙。间隙锁可以共存，一个事务采用的间隙锁不会阻止另一个事务在同一间隙上采用间隙锁。==</p>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -304,19 +443,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">prim算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
         		</li>
       		
 		</ul>
@@ -325,16 +452,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/16/prim%E7%AE%97%E6%B3%95/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2024/07/30/MySQL%E7%B4%A2%E5%BC%95%E4%BC%98%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL索引优化</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -354,828 +540,14 @@
 
 
 
-
-  
-    <article id="post-虚拟存储器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">虚拟存储器</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2020-05-14T14:30:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="虚拟存储器"><a href="#虚拟存储器" class="headerlink" title="虚拟存储器"></a>虚拟存储器</h1><blockquote>
-<p>虚拟存储器是一个逻辑模型</p>
-</blockquote>
-<h2 id="功能："><a href="#功能：" class="headerlink" title="功能："></a>功能：</h2><p>用户给出一个地址，叫做虚地址或逻辑地址，虚拟存储器要给出该地址对应的数据。</p>
-<h2 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h2><p>由辅助硬件将虚地址映射到主存当中的某个单元，主存单元地址称为实地址或物理地址</p>
-<h2 id="虚拟空间与主存空间的映射方式"><a href="#虚拟空间与主存空间的映射方式" class="headerlink" title="虚拟空间与主存空间的映射方式"></a>虚拟空间与主存空间的映射方式</h2><h3 id="方式一：页式虚拟存储器"><a href="#方式一：页式虚拟存储器" class="headerlink" title="方式一：页式虚拟存储器"></a>方式一：页式虚拟存储器</h3><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589437188055.png" class="" title="a">
-
-
-
-<ul>
-<li>页表实际在主存中</li>
-<li>页表拼接页表起始地址指向主存地址所在的页表地址，然后取出实际地址</li>
-<li>再去Cache-主存中去寻找数据</li>
-</ul>
-<h3 id="方式二：段式虚拟存储器"><a href="#方式二：段式虚拟存储器" class="headerlink" title="方式二：段式虚拟存储器"></a>方式二：段式虚拟存储器</h3><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589437869744.png" class="" title="b">
-
-
-
-<h3 id="方式三：段页虚拟存储器"><a href="#方式三：段页虚拟存储器" class="headerlink" title="方式三：段页虚拟存储器"></a>方式三：段页虚拟存储器</h3><p>把程序按逻辑结构分段，每段再划分为固定大小的页，主存空间也划分为大小相等的页，程序对主存的调入、调出仍以页为基本传送单位。每个程序对应一个段表，每段对应一个页表。</p>
-<p>虚拟地址：段号+段内页号+页内地址</p>
-<img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589458019204.png" class="" title="c">
-
-
-
-<h1 id="一个例题"><a href="#一个例题" class="headerlink" title="一个例题"></a>一个例题</h1><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589459336971.png" class="" title="d">
-
-
-
-<ul>
-<li>虚拟地址的高5位03FFF对应实页号的4位，表中为0153，然后替换掉虚拟地址，得到主存实地址</li>
-<li>第二个的FF180对应的实页地址位为0002，但是我们发现有效位为0，因为这是个快表，所以是在Cache中，有效位为0代表没有命中，所以为TLB缺失。</li>
-</ul>
-<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><img src="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/1589459765986.png" class="" title="e">
-
-
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟存储器</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/14/%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-BFS和DFS" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/12/BFS%E5%92%8CDFS/">BFS和DFS</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/12/BFS%E5%92%8CDFS/" class="archive-article-date">
-  	<time datetime="2020-05-12T12:21:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="DFS和BFS"><a href="#DFS和BFS" class="headerlink" title="DFS和BFS"></a>DFS和BFS</h1><h2 id="预备知识："><a href="#预备知识：" class="headerlink" title="预备知识："></a>预备知识：</h2><p>对于图的存储，除了直接使用Map来进行存储之外，我们还可以使用邻接矩阵和邻接表来进行存储图结构</p>
-<ul>
-<li>邻接矩阵：</li>
-</ul>
-<img src="/2020/05/12/BFS%E5%92%8CDFS/1589285445907.png" class="" title="a">
-
-
-
-<ul>
-<li>邻接表</li>
-</ul>
-<img src="/2020/05/12/BFS%E5%92%8CDFS/1589285494864.png" class="" title="b">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">BFS DFS</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/12/BFS%E5%92%8CDFS/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-平衡二叉树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">平衡二叉树</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/" class="archive-article-date">
-  	<time datetime="2020-05-11T10:21:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="平衡二叉树-AVL树"><a href="#平衡二叉树-AVL树" class="headerlink" title="平衡二叉树(AVL树)"></a>平衡二叉树(AVL树)</h1><blockquote>
-<p>左子树与右子树的高度差不大于1的二叉树叫做平衡二叉树(AVL树)</p>
-</blockquote>
-<h3 id="树的高度"><a href="#树的高度" class="headerlink" title="树的高度"></a>树的高度</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">leftHight</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> left.Hight();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rightHight</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(right == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> right.Hight();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Hight</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Math.max(left == <span class="keyword">null</span> ? <span class="number">0</span>:left.Hight(),right == <span class="keyword">null</span> ? <span class="number">0</span> : right.Hight())+<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h3 id="左旋转"><a href="#左旋转" class="headerlink" title="左旋转"></a>左旋转</h3><ul>
-<li>1、创建一个新节点，值为当前根节点的值，新节点的左子树设置为根节点的左子树</li>
-<li>2、新节点的右子树设置为根节点的右子树的左子树。</li>
-<li>3、将根节点的值设为根节点右子节点的值</li>
-<li>4、将根节点的右子树设为根节点的右子树的右子树(此时没有引用指向原来的右子树，根据jvm的资源回收原则，原来的右子节点将会被回收)</li>
-<li>5、将根节点的左子树设为上面创建的新节点</li>
-</ul>
-
-
-
-
-
-
-
-
-<h3 id="右旋转"><a href="#右旋转" class="headerlink" title="右旋转"></a>右旋转</h3><ul>
-<li>1、创建一个新节点，以根节点为值，新节点的右子树为当前根节点的右子树</li>
-<li>2、新节点的左子树设为根节点的左子树的右子树</li>
-<li>3、将根节点的值换为左子节点的值</li>
-<li>4、将根节点的左子树设为左子节点的左子树(原左子节点被回收)</li>
-<li>5、将根节点的右子树设为上述得到新节点</li>
-</ul>
-
-
-
-
-
-
-
-
-<h3 id="双旋转"><a href="#双旋转" class="headerlink" title="双旋转"></a>双旋转</h3><blockquote>
-<p>当要进行右旋转时，如果他的左子树的右子树高度大于他的左子树的左子树的高度，便要进行双旋转</p>
-</blockquote>
-
-
-
-
-
-
-<p>因为我们进行右旋转时，是将左子树的右子树，挂在了根节点的右子树的左子树上，由于右旋转导致左子树高度失去了左子树的右子树部分的高度(而且是导致不平衡的一部分),所以右旋转之后还是不平衡的。</p>
-<ul>
-<li>先对根节点的左节点进行左旋</li>
-<li>再对根节点进行右旋</li>
-</ul>
-
-
-
-
-<blockquote>
-<p>同理当要进行左旋转时，如果根节点的右子树的左子树(被移动的部分)的高度大于它的右子树的右子树的高度</p>
-</blockquote>
-<ul>
-<li>先对右子树进行右旋转</li>
-<li>再对根节点进行左旋</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">二叉树</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/11/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-母亲节快乐" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/">母亲节快乐</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/" class="archive-article-date">
-  	<time datetime="2020-05-10T14:16:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="祝妈妈母亲节快乐"><a href="#祝妈妈母亲节快乐" class="headerlink" title="祝妈妈母亲节快乐"></a>祝妈妈母亲节快乐</h1><img src="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/webp.webp.png" class="" title="a">
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">母亲节</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/10/%E6%AF%8D%E4%BA%B2%E8%8A%82%E5%BF%AB%E4%B9%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-通过Jedis操作Redis" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">通过Jedis操作Redis</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/" class="archive-article-date">
-  	<time datetime="2020-05-09T09:48:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="通过Jedis操作Redis"><a href="#通过Jedis操作Redis" class="headerlink" title="通过Jedis操作Redis"></a>通过Jedis操作Redis</h2><p>我们要使用java来操作Redis</p>
-<blockquote>
-<p>什么是Jedis 是Redis官方推荐的java连接开发工具！使用java操作Redis中间件！如果你要使用java操作redis，那么一定要对Jedis十分熟悉！</p>
-</blockquote>
-<blockquote>
-<p>测试</p>
-</blockquote>
-<p>1、导入依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.28<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>2、编码测试：</p>
-<ul>
-<li>连接数据库</li>
-<li>操作命令</li>
-<li>断开连接！</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.liu.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis.clients.jedis.Jedis;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPing</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1、创建Jedis对象</span></span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>,<span class="number">6379</span>);</span><br><span class="line">        <span class="comment">//jedis所有的方法就是我们之前学习的命令</span></span><br><span class="line">        System.out.println(jedis.ping());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>之前学过的基本命令都被改写为了Jedis对象中的同名方法，直接使用即可</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/09/%E9%80%9A%E8%BF%87Jedis%E6%93%8D%E4%BD%9CRedis/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Cache的设计由来" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">Cache的设计由来</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/" class="archive-article-date">
-  	<time datetime="2020-05-08T16:31:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Cache的设计由来"><a href="#Cache的设计由来" class="headerlink" title="Cache的设计由来"></a>Cache的设计由来</h2><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588770908260.png" class="" title="a">
-
-
-
-
-
-<h3 id="程序访问的局部性"><a href="#程序访问的局部性" class="headerlink" title="程序访问的局部性"></a>程序访问的局部性</h3><img src="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/1588772623598.png" class="" title="b">
-
-
-
-<p><strong>这里需要注意的有：</strong></p>
-<ul>
-<li>主存与CPU之间只能通过字来进行传输，所以数组中的每一个元素都要进过一次传输</li>
-<li>而主存和Cache之间是可以通过块来进行传输的，所以在1000ns中已经传输了10个元素到Cache中了。</li>
-<li>Cache与CPU之间的传输十分的快，所以利用了Cache的储存结构，比不使用Cache的存储结构会快一个数量级。</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/09/Cache%E7%9A%84%E8%AE%BE%E8%AE%A1%E7%94%B1%E6%9D%A5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Redis入门" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">Redis入门</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-05-07T15:40:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="NoSQL的四大分类"><a href="#NoSQL的四大分类" class="headerlink" title="NoSQL的四大分类"></a>NoSQL的四大分类</h2><p><strong>KV键值对：</strong></p>
-<ul>
-<li>新浪：Redis</li>
-<li>美团：Redis+Tair</li>
-<li>阿里、百度：Redis+memecache</li>
-</ul>
-<p><strong>文档型数据库（bson格式 和json一样）：</strong></p>
-<ul>
-<li>MongoDB(一般必须掌握)<ul>
-<li>MongoDB是一个基于分布式文件存储的数据库，c++编写，主要用来处理大量的文档！</li>
-<li>MongoDB是一个介于关系型数据库和非关系型数据的中间产品！MongoDB是非关系型数据库中功能最丰富，最像关系型数据库的！</li>
-</ul>
-</li>
-<li>ConthDB</li>
-</ul>
-<p><strong>列存储数据库：</strong></p>
-<ul>
-<li>HBASE</li>
-<li>分布式文件系统</li>
-</ul>
-<p><strong>图关系数据库：</strong></p>
-<ul>
-<li>它不是用来存图形的，放的是关系，比如：朋友圈社交网络，广告推荐</li>
-<li>Neo4j，InfoGrid</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NoSQL概述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">NoSQL概述</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" class="archive-article-date">
-  	<time datetime="2020-05-06T05:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Redis课程安排"><a href="#Redis课程安排" class="headerlink" title="Redis课程安排"></a>Redis课程安排</h2><ul>
-<li>nosql讲解</li>
-<li>阿里巴巴架构演进</li>
-<li>nosql数据模型</li>
-<li>Nosql四大分类</li>
-<li>CAP</li>
-<li>BASE</li>
-<li>Redis入门</li>
-<li>Redis安装(Windows &amp; Linux服务器)</li>
-<li>五大基本数据类型<ul>
-<li>String</li>
-<li>List</li>
-<li>Set</li>
-<li>Hash</li>
-<li>Zset</li>
-</ul>
-</li>
-<li>三种特殊数据类型<ul>
-<li>geo</li>
-<li>hyperloglog</li>
-<li>bitmap</li>
-</ul>
-</li>
-<li>Redis配置详解</li>
-<li>Redis持久化<ul>
-<li>RDB</li>
-<li>AOF</li>
-</ul>
-</li>
-<li>Redis事务操作</li>
-<li>Redis实现订阅发布</li>
-<li>Redis主从复制</li>
-<li>Redis哨兵模式</li>
-<li>缓存穿透及解决方案</li>
-<li>缓存击穿及解决方案</li>
-<li>缓存雪崩及解决方案</li>
-<li>基础API之jedis详解</li>
-<li>SpringBoot集成Redis操作</li>
-<li>Redis的时间分析</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/3/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -1199,8 +571,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
