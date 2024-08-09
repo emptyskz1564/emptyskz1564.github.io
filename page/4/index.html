@@ -154,6 +154,120 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Floyd算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/">Floyd算法</a>
+    </h1>
+  
+
+        
+        <a href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2020-05-22T08:34:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="弗洛伊德-Floyd-算法"><a href="#弗洛伊德-Floyd-算法" class="headerlink" title="弗洛伊德(Floyd)算法"></a>弗洛伊德(Floyd)算法</h1><blockquote>
+<p>多源最短路劲算法</p>
+</blockquote>
+<p><strong>与迪杰斯特拉算法的区别：</strong></p>
+<ul>
+<li>迪杰斯特拉算法是求出某一节点到其他所有节点的最短路劲</li>
+<li>弗洛伊德算法是求出所有节点之间的最短路径</li>
+</ul>
+<h2 id="算法思想"><a href="#算法思想" class="headerlink" title="算法思想"></a>算法思想</h2><ul>
+<li>设置顶点vi到顶点vk的最短路径已知为Lik，顶点vk到vj的最短路径已知为Lkj，顶点vi到vj的路径为Lij，则vi到vj的最短路径为：min((Lik+Lkj),Lij)，vk的取值为图中所有顶点，则可获得vi到vj 的最短路径</li>
+<li>至于vi到vk的最短路径Lik或者vk到vj的最短路径Lkj，是以同样的方式获得的</li>
+</ul>
+<p><strong>重点递推公式：min((Lik+Lkj),Lij)</strong></p>
+<p>解释：两点之间的最短距离要么为这两点的直连距离，要么为这两点经过其他某个(或者多个，这里的多个意思是Lik、Lkj中可能还经过了其他节点)的距离。</p>
+<h2 id="算法核心部分"><a href="#算法核心部分" class="headerlink" title="算法核心部分"></a>算法核心部分</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//算法中dis为图的邻接矩阵，经过算法后更新为点与点之间的最短距离的数组</span></span><br><span class="line"><span class="comment">//pre为各个点的前驱节点，初始时，每个节点到达另一个节点的前驱节点为自身，循环过程中，如果要经过其他节点则会进行更新</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">floyd</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = <span class="number">0</span>;	<span class="comment">//用于保存距离</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//第一层循环，用于遍历中间节点，k就是中间节点的下标</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; dis.length; k++)&#123;</span><br><span class="line">        <span class="comment">//第二层循环从第i个顶点出发</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; dis.length; i++)&#123;</span><br><span class="line">            <span class="comment">//第三层循环到达第j个顶点出发</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; dis.length ; j++)&#123;</span><br><span class="line">                len = dis[i][k] + dis[k][j];	<span class="comment">//从i出发，经过k，到达j的距离</span></span><br><span class="line">                <span class="keyword">if</span>(len &lt; dis[i][j])&#123;	<span class="comment">//小于直连的距离</span></span><br><span class="line">                    dis[i][j] = len;	<span class="comment">//更新距离</span></span><br><span class="line">                    pre[i][j] = pre[k][j]	<span class="comment">//更新前驱顶点</span></span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>算法解释：</strong></p>
+<p>三层for循环是以每个节点为中间节点，然后去一个一个的匹配出发节点和终点节点，比较以这个节点为中间节点时的距离和出发节点到终点节点的直连距离的大小。</p>
+<img src="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/1590136149258.png" class="" title="a">
+
+
+
+<p>比如在示例图中，我们以A为中间节点，就会有以下的情况</p>
+<ul>
+<li>c-&gt;a-&gt;g [9]    ：  对比C-&gt;G    [不通] -&gt; 更新</li>
+<li>c-&gt;a-&gt;b [12]  ：对比C-&gt;B    [不通] -&gt; 更新</li>
+<li>g-&gt;a-&gt;b [7]    :   对比G-&gt;B    [3] -&gt; 不更新</li>
+<li>…..</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">图</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Floyd算法</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/05/22/Floyd%E7%AE%97%E6%B3%95/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Kruskal算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1030,119 +1144,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/05/07/Redis%E5%85%A5%E9%97%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-NoSQL概述" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">NoSQL概述</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" class="archive-article-date">
-  	<time datetime="2020-05-06T05:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Redis课程安排"><a href="#Redis课程安排" class="headerlink" title="Redis课程安排"></a>Redis课程安排</h2><ul>
-<li>nosql讲解</li>
-<li>阿里巴巴架构演进</li>
-<li>nosql数据模型</li>
-<li>Nosql四大分类</li>
-<li>CAP</li>
-<li>BASE</li>
-<li>Redis入门</li>
-<li>Redis安装(Windows &amp; Linux服务器)</li>
-<li>五大基本数据类型<ul>
-<li>String</li>
-<li>List</li>
-<li>Set</li>
-<li>Hash</li>
-<li>Zset</li>
-</ul>
-</li>
-<li>三种特殊数据类型<ul>
-<li>geo</li>
-<li>hyperloglog</li>
-<li>bitmap</li>
-</ul>
-</li>
-<li>Redis配置详解</li>
-<li>Redis持久化<ul>
-<li>RDB</li>
-<li>AOF</li>
-</ul>
-</li>
-<li>Redis事务操作</li>
-<li>Redis实现订阅发布</li>
-<li>Redis主从复制</li>
-<li>Redis哨兵模式</li>
-<li>缓存穿透及解决方案</li>
-<li>缓存击穿及解决方案</li>
-<li>缓存雪崩及解决方案</li>
-<li>基础API之jedis详解</li>
-<li>SpringBoot集成Redis操作</li>
-<li>Redis的时间分析</li>
-</ul>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">展开全文 >></a>
         </p>
       
 

@@ -6,15 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Emptyskz的博客</title>
+  <title>MVCC | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/archives/page/5/index.html">
+  <meta name="description" content="MVCC基本概念 当前读 读取的是记录的最新版本，读取时还要保证其他并发事务不能修改当前记录，会对读取的记录加锁。对于我们日常的操作，如：   12select ... lock in share mode；select ... for update&#x2F; insert &#x2F; delete  ​    都是一种当前读。  快照读 不加锁的select就是快照读，读取的事记录数据的可见版本，有可能是历史数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVCC">
+<meta property="og:url" content="http://yoursite.com/2024/08/09/MVCC/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="MVCC基本概念 当前读 读取的是记录的最新版本，读取时还要保证其他并发事务不能修改当前记录，会对读取的记录加锁。对于我们日常的操作，如：   12select ... lock in share mode；select ... for update&#x2F; insert &#x2F; delete  ​    都是一种当前读。  快照读 不加锁的select就是快照读，读取的事记录数据的可见版本，有可能是历史数">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://yoursite.com/2024/08/09/MVCC/1722844488437.png">
+<meta property="og:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722844488437.png">
+<meta property="og:image" content="http://yoursite.com/2024/08/09/MVCC/1722850012747.png">
+<meta property="og:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722850012747.png">
+<meta property="og:image" content="http://yoursite.com/2024/08/09/MVCC/1722851180263.png">
+<meta property="og:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722851180263.png">
+<meta property="og:image" content="http://yoursite.com/2024/08/09/MVCC/1722851371280.png">
+<meta property="og:image" content="c:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722851371280.png">
+<meta property="article:published_time" content="2024-08-09T14:01:42.000Z">
+<meta property="article:modified_time" content="2024-08-09T14:05:24.042Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2024/08/09/MVCC/1722844488437.png">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
   
@@ -152,74 +166,148 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-MVCC" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/" class="archive-article-date">
-  	<time datetime="2020-05-06T05:37:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-06</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/06/NoSQL%E6%A6%82%E8%BF%B0/">NoSQL概述</a>
+    <h1 class="article-title" itemprop="name">
+      MVCC
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">NoSQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/" class="archive-article-date">
-  	<time datetime="2020-05-04T11:19:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
+        
+        <a href="/2024/08/09/MVCC/" class="archive-article-date">
+  	<time datetime="2024-08-09T14:01:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-09</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/MySQL%E8%81%94%E8%A1%A8%E6%9F%A5%E8%AF%A2/">MySQL联表查询</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="MVCC基本概念"><a href="#MVCC基本概念" class="headerlink" title="MVCC基本概念"></a>MVCC基本概念</h2><ul>
+<li><p>当前读</p>
+<p>读取的是记录的最新版本，读取时还要保证其他并发事务不能修改当前记录，会对读取的记录加锁。对于我们日常的操作，如：</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> ... <span class="keyword">lock</span> <span class="keyword">in</span> <span class="keyword">share</span> <span class="keyword">mode</span>；</span><br><span class="line"><span class="keyword">select</span> ... <span class="keyword">for</span> <span class="keyword">update</span>/ <span class="keyword">insert</span> / <span class="keyword">delete</span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
+<p>​    都是一种当前读。</p>
+<ul>
+<li><p>快照读</p>
+<p>不加锁的select就是快照读，读取的事记录数据的可见版本，有可能是历史数据，不加锁是非阻塞读。</p>
+<ul>
+<li>Read Committed：每次select，都生成一个快照读</li>
+<li>Repeatable Read：开启事务后第一个select语句才是快照读</li>
+<li>Serializable：快照读会退化为当前读</li>
+</ul>
+</li>
+<li><p>MVCC</p>
+<p>多版本并发控制。指维护一个数据的多个版本，使得读写操作之间没有冲突，快照读为MySQL实现MVCC提供了一个非阻塞读功能。MVCC的具体实现，还需要依赖数据库记录中的三个隐式字段、undo log、readView。</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="MVCC实现原理"><a href="#MVCC实现原理" class="headerlink" title="MVCC实现原理"></a>MVCC实现原理</h2><ul>
+<li><p>记录中的隐式字段</p>
+<ul>
+<li><p>DB_TRX_ID：最近修改事务ID，记录插入这条记录或最后一次修改该记录的事务ID</p>
+</li>
+<li><p>DB_ROLL_PTR：回滚指针，指向这条记录的上一个版本，用于配合undo log，指向上一个版本。</p>
+</li>
+<li><p>DB_ROW_ID：隐藏主键，如果表结构没有指定主键，将会生成该隐藏字段。</p>
+</li>
+</ul>
+</li>
+<li><p>undo log</p>
+<p>回滚日志，在insert、update、delete的时候产生的便于数据回滚的日志。</p>
+<p>当insert的时候，产生的undo log日志只在回滚时需要，在事务提交之后，可被立即删除。</p>
+<p>而update、delete的时候，产生的undo log不仅在回滚时需要，在快照读时也需要，不会立即被删除。</p>
+</li>
+<li><p>undo log版本链</p>
+<p>不同事务或相同事务对同一条记录进行修改，会导致该记录的undo log生成一条记录版本链，链表的头部是最新的记录号，联表尾是最老的旧记录。</p>
+</li>
+</ul>
+<img src="/2024/08/09/MVCC/1722844488437.png" class="" title="a">
+
+<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722844488437.png" alt="1722844488437"></p>
+<ul>
+<li><p>readView</p>
+<p>ReadView(读视图)是快照读SQL执行时MVCC提取数据的依据，记录并维护系统当前活跃的事务（未提交）id。</p>
+<p>ReadView中包含了四个核心字段：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>m_ids</td>
+<td>当前活跃的事务ID集合</td>
+</tr>
+<tr>
+<td>min_trx_id</td>
+<td>最小活跃事务id</td>
+</tr>
+<tr>
+<td>max_trx_id</td>
+<td>预分配事务ID，当前最大事务ID+1</td>
+</tr>
+<tr>
+<td>creator_trx_id</td>
+<td>ReadView创建者的事务ID</td>
+</tr>
+</tbody></table>
+<img src="/2024/08/09/MVCC/1722850012747.png" class="" title="b">
+
+<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722850012747.png" alt="1722850012747"></p>
+<p>不同的隔离级别，生成ReadView的时机不同：</p>
+<ul>
+<li>read committed：在事务中每一次执行快照读时生成ReadView。</li>
+<li>Repeatable Read：仅在事务中第一次执行快照读时生成ReadView，后续复用该ReadView</li>
+</ul>
+</li>
+</ul>
+<h4 id="RC级别"><a href="#RC级别" class="headerlink" title="RC级别"></a>RC级别</h4><p>在事务中每一次执行快照读时生成ReadView。</p>
+<p>按照左下角的undo log版本链来一个一个查询是否符合要求，如果符合就把ReadView返回。</p>
+<img src="/2024/08/09/MVCC/1722851180263.png" class="" title="c">
+
+<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722851180263.png" alt="1722851180263"></p>
+<h4 id="RR级别"><a href="#RR级别" class="headerlink" title="RR级别"></a>RR级别</h4><p>仅在事务中第一次执行快照读时生成ReadView，后续复用该ReadView，所以在上图中只有一个ReadView，并且是第一个ReadView。后续查询undo log版本链的过程个规则是一样的。</p>
+<h2 id="总结图"><a href="#总结图" class="headerlink" title="总结图"></a>总结图</h2><img src="/2024/08/09/MVCC/1722851371280.png" class="" title="d">
+
+<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1722851371280.png" alt="1722851371280"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -231,201 +319,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2024/08/09/MVCC/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-04T08:11:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-04</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2024/08/05/%E4%BA%8B%E5%8A%A1%E4%B8%8E%E9%94%81/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">事务与锁</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/04/spring%E4%B8%ADGET%E5%92%8CPOST%E6%96%B9%E6%B3%95%E8%8E%B7%E5%8F%96%E5%8F%82%E6%95%B0%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95/">spring中GET和POST方法获取参数的几种方法</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/" class="archive-article-date">
-  	<time datetime="2020-05-03T11:19:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-03</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/03/StringBuffer%E5%92%8CStringBuilder/">StringBuffer和StringBuilder</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">javase</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2020-05-02T05:49:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-02</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/02/%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%BD%91%E7%BB%9C%E7%9A%84%E4%B8%80%E7%A7%8D%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/">虚拟机无法连接网络的一种解决办法</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">虚拟机 Ubuntu</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/" class="archive-article-date">
-  	<time datetime="2020-04-30T16:26:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-01</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/01/MybatisPlus%E5%85%A5%E9%97%A8/">MybatisPlus入门</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">MybaitsPlus</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-04-29T08:35:07.245Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/04/29/%E5%AD%98%E5%82%A8%E7%B3%BB%E7%BB%9F/">存储系统</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/4/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><span class="page-number current">5</span>
-    </nav>
   
 
 
@@ -450,8 +442,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
