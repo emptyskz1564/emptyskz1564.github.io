@@ -154,6 +154,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-责任链模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">责任链模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-08-09T10:23:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="责任链模式"><a href="#责任链模式" class="headerlink" title="责任链模式"></a>责任链模式</h1><ul>
+<li><p>将请求和处理分开，实现解耦，提高系统的灵活性</p>
+</li>
+<li><p>简化了对象，是对象不需要知道链的结构</p>
+</li>
+<li><p>性能会受到影响，特别是链比较长的时候，因此需控制链中最大节点数量，一般通过Handler中设置最大节点数，在setNext()方法中判断是否已经超过阀值，超过阀值则不允许建立链，避免出现超长链无意识的破坏系统性能</p>
+</li>
+<li><p>调试不方便，采用类似递归的方式，调试时逻辑可能比较复杂，处理函数中一般有三个参数：request，response，filterChain，先对request进行处理，然后调用filterChain处理下一个filter，然后再是对response的处理，这种递归调用导致处理response的filter是反向的。</p>
+</li>
+<li><p>最佳应用场景：有多个对象可以处理同一个请求时，比如：多级请求、请假/加薪等审批流程、JavaWeb中Tomcat中对Encoding的处理、拦截器</p>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><blockquote>
+<p>定义一个msg类，模拟request</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Msg</span> </span>&#123;</span><br><span class="line">    String msg;</span><br><span class="line">    String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Msg</span><span class="params">(String msg,String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Msg&#123;"</span> +</span><br><span class="line">                <span class="string">"msg='"</span> + msg + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p>定义一个MyFilter接口</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>以下是三个实现类，返回值为boolean以控制是否继续下一个Filter</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HtmlFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">"&lt;"</span>,<span class="string">"["</span>);</span><br><span class="line">        result = result.replace(<span class="string">"&gt;"</span>,<span class="string">"]"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SensitiveFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">"996"</span>,<span class="string">"955"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">if</span>(result.contains(<span class="string">"sb"</span>))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SignFilter</span> <span class="keyword">implements</span> <span class="title">MyFilter</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        String result = msg.getMsg();</span><br><span class="line">        result = result.replace(<span class="string">":)"</span>,<span class="string">"^v^"</span>);</span><br><span class="line">        msg.setMsg(result);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>FilterChain类也实现了Filter接口，以实现链与链之间的拼接</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FilterChain</span> <span class="keyword">implements</span> <span class="title">MyFilter</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;MyFilter&gt; Filters = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回this对象，实现链式编程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> FilterChain <span class="title">add</span><span class="params">(MyFilter filter)</span></span>&#123;</span><br><span class="line">        Filters.add(filter);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">doMyFilter</span><span class="params">(Msg msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (MyFilter f: Filters) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!f.doMyFilter(msg))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>客户类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        String msg = <span class="string">"大家好:)，我是emptyskz，&lt;scrpy&gt;欢迎访问emptyskz.io，大家都是996"</span>;</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        Msg msg1 = <span class="keyword">new</span> Msg(msg, <span class="string">"empty"</span>);</span><br><span class="line"></span><br><span class="line">        FilterChain filterChain = <span class="keyword">new</span> FilterChain();</span><br><span class="line">        filterChain.add(<span class="keyword">new</span> HtmlFilter()).add(<span class="keyword">new</span> SensitiveFilter());</span><br><span class="line">        FilterChain filterChain1 = <span class="keyword">new</span> FilterChain();</span><br><span class="line">        filterChain1.add(<span class="keyword">new</span> SignFilter());</span><br><span class="line">        filterChain.add(filterChain1);</span><br><span class="line"></span><br><span class="line">        filterChain.doMyFilter(msg1);</span><br><span class="line">        System.out.println(msg1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">责任链模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/08/09/%E8%B4%A3%E4%BB%BB%E9%93%BE%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-两数之和" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1239,93 +1359,6 @@
 
 
   
-    <article id="post-指令系统" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">指令系统</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/" class="archive-article-date">
-  	<time datetime="2020-05-24T13:58:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="指令系统"><a href="#指令系统" class="headerlink" title="指令系统"></a>指令系统</h1><img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590148235849.png" class="" title="a">
-
-
-
-<h2 id="指令-又称机器指令"><a href="#指令-又称机器指令" class="headerlink" title="指令(又称机器指令)"></a>指令(又称机器指令)</h2><ul>
-<li>是指示计算机执行某种操作的命令，是计算机运行的最小功能单位。</li>
-<li>一台计算机的所有指令的集合构成该机的指令系统，也称为指令集。</li>
-<li>一台计算机只能执行自己指令系统中的指令，不能执行其他系统的指令。</li>
-</ul>
-<h2 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h2><ul>
-<li>一条指令就是机器语言的一个语句，它是一组有意义的二进制代码。</li>
-<li>一条指令通常要包括操作码字段和地址码字段两部分：</li>
-</ul>
-<img src="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/1590149307217.png" class="" title="b">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/24/%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next &amp;raquo;</a>
@@ -1444,10 +1477,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Floyd算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -1456,7 +1485,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color3">Floyd算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1464,7 +1493,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1472,11 +1501,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javase</a>
+                <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1484,7 +1513,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javase</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">prim算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1492,11 +1533,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">prim算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1508,7 +1545,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1516,19 +1553,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">建造者模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">母亲节</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1536,7 +1561,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
+                <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">母亲节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1544,11 +1573,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">责任链模式</a>
+                <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">责任链模式</a>
               </li>
             
             <div class="clearfix"></div>

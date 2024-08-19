@@ -154,6 +154,316 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SpringIOC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/20/SpringIOC/">SpringIOC</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/20/SpringIOC/" class="archive-article-date">
+  	<time datetime="2024-08-19T16:11:23.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="IoC"><a href="#IoC" class="headerlink" title="IoC"></a>IoC</h2><p>IoC是控制反转的缩写，它是一种设计思想，是一种面向对象编程法则，能够指导我们设计出松耦合、更优良的程序。</p>
+<p>spring通过IoC容器来管理所有java对象的实例化和初始化，控制对象和对象之间的依赖关系。我们将IOC容器管理的java对象称为Bean，它与new出来的对象没有区别。</p>
+<p>IOC容器是spring的核心组件之一。</p>
+<p>IOC存储对象的数据结构是Map。</p>
+<h4 id="控制反转"><a href="#控制反转" class="headerlink" title="控制反转"></a>控制反转</h4><ul>
+<li>控制反转是一种思想</li>
+<li>为了降低程序耦合度，提高扩展度</li>
+<li>反转指将对象的创建和关系维护交给第三方容器</li>
+<li>实现方式：DI（Dependency Injection）：依赖注入</li>
+</ul>
+<h4 id="IOC的过程"><a href="#IOC的过程" class="headerlink" title="IOC的过程"></a>IOC的过程</h4><ol>
+<li>xml配置文件：包含bean的定义信息</li>
+<li>接口或抽象读取xml配置文件：BeanDefinitionReader</li>
+<li>IOC容器：<ol>
+<li>Bean定义信息—–&gt;实例化：BeanFactory + 反射</li>
+<li>实例化—–&gt;初始化：依赖注入1.set注入；2构造注入</li>
+</ol>
+</li>
+</ol>
+<h4 id="IOC在Spring中的实现"><a href="#IOC在Spring中的实现" class="headerlink" title="IOC在Spring中的实现"></a>IOC在Spring中的实现</h4><ol>
+<li><p>BeanFactory：这是IOC容器的基本实现，是Spring内部使用的接口，面向Spring本身，不提供给开发人员。</p>
+</li>
+<li><p>ApplicationContext：BeanFactory的子接口，提供了更多高级特征。面向Spring的使用者。</p>
+</li>
+<li><p>实现类</p>
+<table>
+<thead>
+<tr>
+<th>类名</th>
+<th>简介</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ClassPathXmlApplicationContext</td>
+<td>通过读取类路径下的xml格式的配置文件创建IOC容器对象</td>
+</tr>
+<tr>
+<td>FileSystemXmlApplicationContext</td>
+<td>通过系统路径读取XML</td>
+</tr>
+<tr>
+<td>ConfigurableApplicationContext</td>
+<td>ApplicationContext的子接口，包含一些扩展方法</td>
+</tr>
+<tr>
+<td>WebApplicationContext</td>
+<td>专门为web应用准备，基于Web环境创建IOC容器对象，并将对象存入ServletContext域中</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h3 id="基于XML管理"><a href="#基于XML管理" class="headerlink" title="基于XML管理"></a>基于XML管理</h3><p>首先在XML中配置Bean对象</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"xxx.User"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="获取Bean"><a href="#获取Bean" class="headerlink" title="获取Bean"></a>获取Bean</h4><p><strong>根据ID</strong></p>
+<p>根据配置的bean的id来获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ap = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"beans.xml"</span>);</span><br><span class="line">User user = ac.getBean(<span class="string">"user1"</span>);</span><br></pre></td></tr></table></figure>
+
+<p><strong>根据类型</strong></p>
+<p>如果相同类型中有多个不同id的bean，就会出错。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ap = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"beans.xml"</span>);</span><br><span class="line">User user = ac.getBean(User<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>根据ID和类型</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext ap = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"beans.xml"</span>);</span><br><span class="line">User user = ac.getBean(<span class="string">"user1"</span>,User<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>==注意：如果多个实现类实现了同一个接口，那么不能用接口类型来获取唯一bean对象。==</p>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><h4 id="set方法注入"><a href="#set方法注入" class="headerlink" title="set方法注入"></a>set方法注入</h4><p>在内种实现set方法，然后再XML中配置好property值，然后直接用geBean方法获取即可。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"xxx.User"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"Sihaoliu"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"24"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"xxx.User"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">value</span>=<span class="string">"Sihaoliu"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"24"</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="特殊值处理"><a href="#特殊值处理" class="headerlink" title="特殊值处理"></a>特殊值处理</h4><ol>
+<li>空值在<property>标签之间加入<null/>就行。</li>
+<li>xml实体：例如我们需要复制”&lt;”或”&gt;”，他们会和xml语法冲突，用&amp;lt与&amp;gt来代替</li>
+<li>CDATE节：在<property>标签之间用<value>标签来注入含有特殊符号的内容，内容用<![CDATA[a < b]]>包裹</li>
+</ol>
+<h4 id="特殊类型属性注入"><a href="#特殊类型属性注入" class="headerlink" title="特殊类型属性注入"></a>特殊类型属性注入</h4><h5 id="对象属性注入"><a href="#对象属性注入" class="headerlink" title="对象属性注入"></a>对象属性注入</h5><p><strong>方式一：引入外部Bean</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dept"</span> <span class="attr">class</span>=<span class="string">"xxxx.Dept"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dname"</span> <span class="attr">value</span>=<span class="string">"安保部"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"emp"</span> <span class="attr">class</span>=<span class="string">"xxxx.Emp"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ename"</span> <span class="attr">value</span>=<span class="string">"lucy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"25"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--ref引入外部类--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept"</span> <span class="attr">ref</span>=<span class="string">"dept"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：内部Bean</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"emp"</span> <span class="attr">class</span>=<span class="string">"xxxx.Emp"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ename"</span> <span class="attr">value</span>=<span class="string">"lucy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"25"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--内部Bean--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept"</span> <span class="attr">class</span>=<span class="string">"xxx.Dept"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dept"</span> <span class="attr">class</span>=<span class="string">"xxxx.Dept"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dname"</span> <span class="attr">value</span>=<span class="string">"安保部"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方式三：级联属性赋值</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dept"</span> <span class="attr">class</span>=<span class="string">"xxxx.Dept"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dname"</span> <span class="attr">value</span>=<span class="string">"安保部"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"emp"</span> <span class="attr">class</span>=<span class="string">"xxxx.Emp"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ename"</span> <span class="attr">value</span>=<span class="string">"lucy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"25"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--ref引入外部类--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept"</span> <span class="attr">ref</span>=<span class="string">"dept"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--级联复制--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept.dname"</span> <span class="attr">value</span>=<span class="string">"测试部"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="数组属性注入"><a href="#数组属性注入" class="headerlink" title="数组属性注入"></a>数组属性注入</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"emp"</span> <span class="attr">class</span>=<span class="string">"xxxx.Emp"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ename"</span> <span class="attr">value</span>=<span class="string">"lucy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"25"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept"</span> <span class="attr">ref</span>=<span class="string">"dept"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--数组类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"love"</span> <span class="attr">ref</span>=<span class="string">"dept"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">array</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">value</span>&gt;</span>唱<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>跳<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span>&gt;</span>rap<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">array</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="List属性注入"><a href="#List属性注入" class="headerlink" title="List属性注入"></a>List属性注入</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"emp"</span> <span class="attr">class</span>=<span class="string">"xxxx.Emp"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ename"</span> <span class="attr">value</span>=<span class="string">"lucy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"25"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept"</span> <span class="attr">ref</span>=<span class="string">"dept"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--list类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"love"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">Lsit</span>&gt;</span></span><br><span class="line">        	<span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"beanID"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"beanID"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"beanID"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Lsit</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="Map属性注入"><a href="#Map属性注入" class="headerlink" title="Map属性注入"></a>Map属性注入</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"emp"</span> <span class="attr">class</span>=<span class="string">"xxxx.Emp"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"ename"</span> <span class="attr">value</span>=<span class="string">"lucy"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">value</span>=<span class="string">"25"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dept"</span> <span class="attr">ref</span>=<span class="string">"dept"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--map类型--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"love"</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="name">map</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">entry</span>&gt;</span></span><br><span class="line">            	<span class="tag">&lt;<span class="name">key</span>&gt;</span>1001<span class="tag">&lt;/<span class="name">key</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"beanID"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">                 <span class="comment">&lt;!--如果是普通类型，用value包裹--&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">map</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="引用类型注入"><a href="#引用类型注入" class="headerlink" title="引用类型注入"></a>引用类型注入</h5><p>就是map、list等的另一种注入方式</p>
+<p>使用&lt;util:map&gt;包裹就行了，内部的书写方式一样。</p>
+<h5 id="p名称命名空间"><a href="#p名称命名空间" class="headerlink" title="p名称命名空间"></a>p名称命名空间</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"student"</span> <span class="attr">class</span>=<span class="string">"xxxx.Student"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">p:sid</span>=<span class="string">"100"</span> <span class="attr">p:sname</span>=<span class="string">"mary"</span> <span class="attr">p:lessonList-ref</span>=<span class="string">"lessonList"</span> <span class="attr">p:teacherMap-ref</span>=<span class="string">"teacherList"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="引入外部属性文件"><a href="#引入外部属性文件" class="headerlink" title="引入外部属性文件"></a>引入外部属性文件</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--引入外部属性文件--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:propoerty-placeholder</span> <span class="attr">location</span>=<span class="string">"classpath:jdbc.properties"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:propoerty-placeholder</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--完成数据库信息注入--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"druidDatraSource"</span> <span class="attr">class</span>=<span class="string">"com.alibaba.druid.pool.DruidDataSource"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.url&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.username&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.password&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;jdbc.driver&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Bean的作用域"><a href="#Bean的作用域" class="headerlink" title="Bean的作用域"></a>Bean的作用域</h3><table>
+<thead>
+<tr>
+<th>取值</th>
+<th>含义</th>
+<th>创建对象的时机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Singleton</td>
+<td>在IOC容器中，这个bean的对象始终为单实例</td>
+<td>IOC容器初始化时</td>
+</tr>
+<tr>
+<td>prototype</td>
+<td>这个bean在IOC中有多个实例</td>
+<td>获取bean时</td>
+</tr>
+</tbody></table>
+<p>如果在WebApplicationContext环境下还会有另外几个作用域：</p>
+<table>
+<thead>
+<tr>
+<th>取值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>requst</td>
+<td>在一个请求范围内有效</td>
+</tr>
+<tr>
+<td>session</td>
+<td>在一个会话范围内有效</td>
+</tr>
+</tbody></table>
+<h5 id="xml中控制作用域"><a href="#xml中控制作用域" class="headerlink" title="xml中控制作用域"></a>xml中控制作用域</h5><p>在scope属性中指定即可。</p>
+<h5 id="具体的生命周期"><a href="#具体的生命周期" class="headerlink" title="具体的生命周期"></a>具体的生命周期</h5><ul>
+<li>bean对象创建</li>
+<li>给bean对象设置属性</li>
+<li>bean的后置处理器（初始化之前）</li>
+<li>bean对象初始化（需在配置bean时指定初始化方法）：xml中的属性init-method</li>
+<li>bean的后置处理器（初始化之后）</li>
+<li>bean对象就绪可以使用</li>
+<li>bean对象销毁（需在配置bean时指定销毁方法）：xml中的属性destroy-method</li>
+<li>IOC容器关闭</li>
+</ul>
+<h5 id="Bean的后置处理器"><a href="#Bean的后置处理器" class="headerlink" title="Bean的后置处理器"></a>Bean的后置处理器</h5><p>继承BeanPostProcessor接口，实现里面的Before和After方法。然后将实现类注册到XML文件中，交给IOC容器管理。</p>
+<h3 id="FactoryBean"><a href="#FactoryBean" class="headerlink" title="FactoryBean"></a>FactoryBean</h3><p>主要用于整合第三方框架。spring提供的一个工厂方法，实现这个接口中的两个get方法，然后再XML注册，交给IOC，最后我们获取这个工厂Bean的时候，得到的是get方法返回的对象，而不是这个工厂的实现类。</p>
+<h3 id="基于XML自动装配"><a href="#基于XML自动装配" class="headerlink" title="基于XML自动装配"></a>基于XML自动装配</h3><p>例如我们要为Controller自动装配Service</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Controller中</span></span><br><span class="line"><span class="keyword">private</span> UserService userService;</span><br><span class="line"><span class="comment">//必须写UserService的set方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserService</span><span class="params">(UserService userService)</span></span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.userService = userService;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--xml中--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userController"</span> <span class="attr">class</span>=<span class="string">"xxx.UserController"</span> <span class="attr">autowire</span>=<span class="string">"byType/byName"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--userService交给IOC才能为Controller注入--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">class</span>=<span class="string">"xxx.UserService"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="基于注解管理Bean"><a href="#基于注解管理Bean" class="headerlink" title="基于注解管理Bean"></a>基于注解管理Bean</h3><p>spring通过注解实现自动装配的步骤如下：</p>
+<ol>
+<li>引入依赖</li>
+<li>开启组件扫描</li>
+<li>使用注解定义Bean</li>
+<li>依赖注入</li>
+</ol>
+<h5 id="开启组件扫描"><a href="#开启组件扫描" class="headerlink" title="开启组件扫描"></a>开启组件扫描</h5><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--开启了组件扫描的包和子包，只要用到了spring相关注解，就能被自动扫描到并且完成相应功能--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"包路径"</span>&gt;</span><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"包路径"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--设置排除扫描的注解--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">context:exclude-filter</span>&gt;</span><span class="tag">&lt;/<span class="name">context:exclude-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"包路径"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--设置仅扫描的注解--&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">context:include-filter</span>&gt;</span><span class="tag">&lt;/<span class="name">context:include-filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="使用注解定义Bean"><a href="#使用注解定义Bean" class="headerlink" title="使用注解定义Bean"></a>使用注解定义Bean</h5><p>以下的注解用于类上，直接创建类交给IOC</p>
+<ul>
+<li>@Component</li>
+<li>@Repository</li>
+<li>@Service</li>
+<li>@Controller</li>
+</ul>
+<p>以下注解用于方法上，要求该方法要返回一个对象，并把这个对象加载到IOC中</p>
+<ul>
+<li>@Bean</li>
+</ul>
+<h5 id="使用-Autowired注解注入"><a href="#使用-Autowired注解注入" class="headerlink" title="使用@Autowired注解注入"></a>使用@Autowired注解注入</h5><ul>
+<li><p>属性注入：直接在属性上加上就行了。</p>
+</li>
+<li><p>set方法注入</p>
+</li>
+<li><p>构造方法注入</p>
+</li>
+<li><p>形参注入</p>
+</li>
+<li><p>只有一个构造函数，不需要注解也可以注入</p>
+</li>
+<li><p>@Autowired注解和@Qualifier注解联合：@Autowired是根据类型注入的，如果有多个实现类就需要使用@Qualifier来实现根据名称注入。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier</span>(value=<span class="string">"userRedisDaoImpl"</span>)</span><br><span class="line"><span class="keyword">private</span> UserDao userDao;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="使用-Resource注解注入"><a href="#使用-Resource注解注入" class="headerlink" title="使用@Resource注解注入"></a>使用@Resource注解注入</h5><p>与@AutoWired注解的区别</p>
+<ul>
+<li>@Resource注解是JDK扩展包中的，也就是说属于JDK的一部分，所以该注解是标准注解，更加具有通用性。</li>
+<li>@Autowired注解是Spring自己的。</li>
+<li>@Resource注解默认根据名称装配，未指定name时，使用属性名作为name，通过name找不到的话会自动启动通过类型装配。</li>
+<li>@Autowired注解默认根据类型。</li>
+<li>@Resource用在属性、setter方法上</li>
+<li>@Autowired用在属性、setter、构造方法上、构造方法参数上。</li>
+</ul>
+<h3 id="Spring全注解开发-SpringBoot前身"><a href="#Spring全注解开发-SpringBoot前身" class="headerlink" title="Spring全注解开发(SpringBoot前身)"></a>Spring全注解开发(SpringBoot前身)</h3><p>写配置类，而不是XML配置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuraton</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(<span class="string">"xxx.xxx"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">SpringConfig</span><span class="params">()</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">    ApplicationContext ac = <span class="keyword">new</span> AnnotationConfigApplicationContext(SpringConfig<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    UserController uc = context.getBean(<span class="string">"userController"</span>,UserController<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/20/SpringIOC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-MVCC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1768,129 +2078,6 @@
 
 
   
-    <article id="post-奈氏准则与香农定理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/">奈氏准则与香农定理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:18:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="奈氏准则与香农定理"><a href="#奈氏准则与香农定理" class="headerlink" title="奈氏准则与香农定理"></a>奈氏准则与香农定理</h1><h2 id="失真"><a href="#失真" class="headerlink" title="失真"></a>失真</h2><img src="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/1603962136172.png" class="" title="a">
-
-
-
-<p><strong>信道带宽：</strong>是信道能通过的最高频率和最低频率之差。</p>
-<h2 id="柰氏准则"><a href="#柰氏准则" class="headerlink" title="柰氏准则"></a>柰氏准则</h2><blockquote>
-<p>在理想低通(无噪声，带宽受限)条件下，为了避免码间串扰(频率过高而无法分辨码元)，极限码元传输速率为2 W Baud，W是信道带宽，单位是Hz（一般为bit/s）。</p>
-</blockquote>
-<p><strong>极限数据率：</strong>理想低通信道下的极限数据传输率 = 2 W log V(b/s)</p>
-<p>W : 带宽（Hz）</p>
-<p>V：几种码元/码元的离散电平数目</p>
-<ul>
-<li>1.在任何信道中，码元传输的速率是有上限的，若传输速率超过此上限，就会出现严重的码间串扰问题，使接收端对码元的完全正确识别成为不可能。</li>
-<li>2.信道的频带越宽(即能通过的信号高频分量越多)，就可以用更高的速率进行码元的有效传输</li>
-<li>3.奈氏准则给出了码元传输速率的限制，但没有对信息传输速率给出限制。</li>
-<li>4.由于码元的传输速率受柰氏准则的制约，所以要提高数据的传输速率，就必须设法是每个码元能携带更多的比特的信息量，这就需要采用多元制的调制方法。</li>
-</ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题：</span></span><br><span class="line"><span class="code">	在无噪声的情况下，若某通信链路的带宽为3kHz，采用4个相位，每个相位具有4种振幅的QAM调制技术，则该通信链路的最大数据传输率是多少。</span></span><br><span class="line"><span class="code">	</span></span><br><span class="line">信号有4 * 4 = 16种变化，</span><br><span class="line">最大码元传输速率 = 2W = 6000 Baud</span><br><span class="line">最大数据传输率 = 2 <span class="emphasis">* 3k *</span> 4 = 24 kb/s</span><br></pre></td></tr></table></figure>
-
-<h2 id="香农定理"><a href="#香农定理" class="headerlink" title="香农定理"></a>香农定理</h2><blockquote>
-<p>噪声存在于所有的电子设备和通信信道中。由于噪声随机产生，他的瞬时值有时会很大，因此噪声会使接收端对码元的判决产生错误。但是噪声的影响是相对的，若信号较强，那么噪声影响相对较小。因此，信噪比就很重要。</p>
-</blockquote>
-<p>信噪比 = 信号的平均功率/噪声的平均功率，常记为S/N，并用分贝（dB）作为度量单位，即<strong>信噪比（dB） = 10 log<sub>10</sub> （S/N）</strong></p>
-<ul>
-<li>以dB为单位的信噪比，和S/N的信噪比只是单位不同而已。</li>
-</ul>
-<p><strong>香农定理：在带宽受限且有噪声的信道中，为了不产生误差，信息的数据传输速率有上限。</strong></p>
-<p><strong>信道的极限数据传输速率 = W log<sub>2</sub>(1+S/N)    (b/s)</strong></p>
-<ul>
-<li>1.信道的带宽或信道中的信噪比越大，则信息的极限传输速率就越高。</li>
-<li>2.对一定的传输带宽和一定的信噪比，信息传输速率上限就确定了。</li>
-<li>3.只要信息的传输速率小于信道的极限传输速率，就一定能找到某种方法实现无差错的传输。</li>
-<li>4.香农定理得出的为极限信息传输速率，实际信道能到达的传输速率要比它低不少。</li>
-</ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题</span></span><br><span class="line"><span class="code">	电话系统的典型参数是信道带宽为3000Hz，信噪比为30dB，则该系统最大的数据传输速率为多少？</span></span><br><span class="line"><span class="code">	</span></span><br><span class="line"><span class="bullet">- </span>30dB = 10log<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>10<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(S/N)</span><br><span class="line"><span class="bullet">- </span>S/N = 1000</span><br><span class="line"><span class="bullet">- </span>信道的极限数据传输速率 = W log<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>2<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(1 + S/N) = 3000 * 1og<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>2<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(1 + 1000)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="“Nice”和”香浓”"><a href="#“Nice”和”香浓”" class="headerlink" title="“Nice”和”香浓”"></a>“Nice”和”香浓”</h2><p>奈氏准则<code>内忧</code></p>
-<ul>
-<li>受自身带宽限制</li>
-<li>想要提高数据率，就要提高带宽/采用更多进制的码元</li>
-</ul>
-<p>香农定理<code>外患</code></p>
-<ul>
-<li>受带宽和噪声的限制</li>
-<li>想要提高数据率，就要提高带宽和信噪比</li>
-</ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题</span></span><br><span class="line"><span class="code">	二进制信号在信噪比为127:1的4KHz信道上传输，最大的数据率可达到多少？</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>Nice：2 <span class="emphasis">* 4000 *</span> log2 = 8000b/s</span><br><span class="line"><span class="bullet">- </span>香浓：4000 * log(1+127) = 28000b/s</span><br><span class="line"><span class="bullet">- </span>取最小值得最大的数据速率为8000b/s</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -2009,10 +2196,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Floyd算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
@@ -2021,7 +2204,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
+                <a href="javascript:void(0)" class="js-tag color3">Floyd算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2029,7 +2212,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
+                <a href="javascript:void(0)" class="js-tag color1">MySQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2037,11 +2220,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">javase</a>
+                <a href="javascript:void(0)" class="js-tag color1">NoSQL</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2049,7 +2232,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">SpringBoot</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">计算机网络</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">javase</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">prim算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2057,11 +2252,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">prim算法</a>
+                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2073,7 +2264,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">堆排序</a>
+                <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2081,19 +2272,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">工厂模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">建造者模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">母亲节</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2101,7 +2280,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
+                <a href="javascript:void(0)" class="js-tag color5">策略模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">母亲节</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2109,11 +2292,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">责任链模式</a>
+                <a href="javascript:void(0)" class="js-tag color1">虚拟机 Ubuntu</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">适配器模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">责任链模式</a>
               </li>
             
             <div class="clearfix"></div>
