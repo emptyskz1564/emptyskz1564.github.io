@@ -154,6 +154,125 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-策略模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">策略模式</a>
+    </h1>
+  
+
+        
+        <a href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
+  	<time datetime="2020-09-07T04:56:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h1><ul>
+<li>策略模式的关键是：分析项目中变化部分和不变部分</li>
+<li>策略模式的核心思想是：多用组合/聚合，少用继承；用行为类组合，而不是行为的继承。更具有弹性</li>
+<li>体现了OOP的开闭原则，客户端增加行为不用修改原有代码，只要添加一种策略(或者行为)即可，避免了使用多重转移语句if…else</li>
+<li>提供了可以替换继承关系的办法：策略模式将算法封装在独立的Strategy类中使得你可以独立于其Context改变它，使它易于切换、易于理解、易于扩展</li>
+<li>需要注意的是：每添加一个策略就要添加一个类，当策略过多时会导致类的数量庞大</li>
+<li>Array.sort中的Compare接口便明显使用了策略模式</li>
+</ul>
+<h2 id="思想："><a href="#思想：" class="headerlink" title="思想："></a>思想：</h2><ul>
+<li>策略模式中定义算法族(策略组)，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户</li>
+<li>设计原则：<ul>
+<li>把变化的代码从不变的代码中分离出来</li>
+<li>针对接口编程而不是具体类(定义了策略接口)</li>
+<li>多用组合/聚合，少用继承</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>类图</p>
+</blockquote>
+<img src="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/1595485280792.png" class="" title="a">
+
+
+
+<blockquote>
+<p>代码</p>
+</blockquote>
+<p><code>策略接口</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>策略1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyA</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"平稳飞行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>策略1</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrategyB</span> <span class="keyword">implements</span> <span class="title">Strategy</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"翻转飞行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>飞机类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Plane</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Strategy strategy;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Plane</span><span class="params">(Strategy strategy)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.strategy = strategy;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</span><br><span class="line">        strategy.fly();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>用户类</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//客机</span></span><br><span class="line">        Plane CivilAircraft = <span class="keyword">new</span> Plane(<span class="keyword">new</span> StrategyA());</span><br><span class="line">        <span class="comment">//战斗机</span></span><br><span class="line">        Plane fighter = <span class="keyword">new</span> Plane(<span class="keyword">new</span> StrategyB());</span><br><span class="line"></span><br><span class="line">        CivilAircraft.fly();</span><br><span class="line"></span><br><span class="line">        fighter.fly();</span><br><span class="line">		</span><br><span class="line">        <span class="comment">//特技飞机</span></span><br><span class="line">        Plane StuntPlane = <span class="keyword">new</span> Plane(() -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">"高难度俯冲"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        StuntPlane.fly();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">策略模式</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/09/07/%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-责任链模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1249,87 +1368,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/05/28/kmp%E7%AE%97%E6%B3%95next%E6%95%B0%E7%BB%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CPU的功能和结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/">CPU的功能和结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-05-27T07:31:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-27</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="CPU的功能和结构"><a href="#CPU的功能和结构" class="headerlink" title="CPU的功能和结构"></a>CPU的功能和结构</h1><blockquote>
-<p>本章总览</p>
-</blockquote>
-<img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590376566304.png" class="" title="a">
-
-
-
-<h2 id="CPU的功能"><a href="#CPU的功能" class="headerlink" title="CPU的功能"></a>CPU的功能</h2><img src="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/1590376843518.png" class="" title="b">
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">计算机组成原理</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/05/27/CPU%E7%9A%84%E5%8A%9F%E8%83%BD%E5%92%8C%E7%BB%93%E6%9E%84/">展开全文 >></a>
         </p>
       
 

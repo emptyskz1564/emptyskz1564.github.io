@@ -6,14 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Emptyskz的博客</title>
+  <title>SQL优化 | Emptyskz的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Emptyskz的博客">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+  <meta name="description" content="SQL优化Insert优化 执行批量插入  1Insert into tb values (),(),()...   手动提交事务  123start transaction;....commit;   主键顺序插入  乱序插入不如顺序插入的性能好  大批量插入数据  如果一次性需要插入大量数据，请使用load指令 123456#客户端连接服务端时，加上参数--local-infilemysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL优化">
+<meta property="og:url" content="http://yoursite.com/2024/08/27/SQL%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="Emptyskz的博客">
+<meta property="og:description" content="SQL优化Insert优化 执行批量插入  1Insert into tb values (),(),()...   手动提交事务  123start transaction;....commit;   主键顺序插入  乱序插入不如顺序插入的性能好  大批量插入数据  如果一次性需要插入大量数据，请使用load指令 123456#客户端连接服务端时，加上参数--local-infilemysql">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-08-27T12:55:55.000Z">
+<meta property="article:modified_time" content="2024-08-27T12:56:40.802Z">
 <meta property="article:author" content="Emptyskz">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Emptyskz的博客" type="application/atom+xml">
@@ -152,961 +157,97 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-物理层设备" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-SQL优化" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/">物理层设备</a>
+    <h1 class="article-title" itemprop="name">
+      SQL优化
     </h1>
   
 
         
-        <a href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:19:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
+        <a href="/2024/08/27/SQL%E4%BC%98%E5%8C%96/" class="archive-article-date">
+  	<time datetime="2024-08-27T12:55:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-27</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h1><h2 id="中继器"><a href="#中继器" class="headerlink" title="中继器"></a>中继器</h2><ul>
-<li><p><strong>诞生原因：</strong>由于存在损耗，在线路上传输的信号功率会逐渐衰减，衰减到一定程度时将造成信号失真，因此会导致接受错误。</p>
-</li>
-<li><p><strong>中继器的功能：</strong>对信号进行<strong>再生</strong>和<strong>还原</strong>，对衰减的信号进行放大，保持与原数据相同，以增加信号传输的距离，延长网络的长度。</p>
-</li>
-<li><p><strong>中继器的两端：</strong>两端的网络部分是网段，而不是子网，适用于完全相同的两类网络的互连，且两个网段速率要相同。中继器只将任何电缆段上的数据发送到另一段电缆上，他仅作用于信号的电气部分，并不管数据中是否有错误数据或不适于网段的数据。</p>
-<p>两端可连相同媒体，也可连不同媒体。</p>
-<p>中继器两端的网段一定要是同一协议。(中继器不会存储转发)</p>
-</li>
-<li><p><strong>5-4-3规则：</strong>网络标准中都对信号的延迟范围作了具体的规定，因而中继器只能在规定的范围内进行，否则会故障</p>
-<img src="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/1604230544858.png" class="" title="c">
-
-
-
-</li>
-</ul>
-<p>  5个网段，4个中继器，3个主机</p>
-<h2 id="集线器-多口中继器"><a href="#集线器-多口中继器" class="headerlink" title="集线器(多口中继器)"></a>集线器(多口中继器)</h2><p><strong>集线器的功能：</strong>对信号进行再生放大转发，对衰减的信号进行放大，接着转发到其他所有(除输入端口处)处于工作状态的端口上，以增加信号传输的距离，延长网络的长度，不具备信号的定向传送能力，只能进行广播，是一个共享设备。</p>
-<ul>
-<li>容易产生碰撞：当多台设备同时发送信号时就会产生碰撞，其他设备会等待第一台设备发送完信号，然后再一个随机事件发送。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-奈氏准则与香农定理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/">奈氏准则与香农定理</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:18:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="奈氏准则与香农定理"><a href="#奈氏准则与香农定理" class="headerlink" title="奈氏准则与香农定理"></a>奈氏准则与香农定理</h1><h2 id="失真"><a href="#失真" class="headerlink" title="失真"></a>失真</h2><img src="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/1603962136172.png" class="" title="a">
-
-
-
-<p><strong>信道带宽：</strong>是信道能通过的最高频率和最低频率之差。</p>
-<h2 id="柰氏准则"><a href="#柰氏准则" class="headerlink" title="柰氏准则"></a>柰氏准则</h2><blockquote>
-<p>在理想低通(无噪声，带宽受限)条件下，为了避免码间串扰(频率过高而无法分辨码元)，极限码元传输速率为2 W Baud，W是信道带宽，单位是Hz（一般为bit/s）。</p>
-</blockquote>
-<p><strong>极限数据率：</strong>理想低通信道下的极限数据传输率 = 2 W log V(b/s)</p>
-<p>W : 带宽（Hz）</p>
-<p>V：几种码元/码元的离散电平数目</p>
-<ul>
-<li>1.在任何信道中，码元传输的速率是有上限的，若传输速率超过此上限，就会出现严重的码间串扰问题，使接收端对码元的完全正确识别成为不可能。</li>
-<li>2.信道的频带越宽(即能通过的信号高频分量越多)，就可以用更高的速率进行码元的有效传输</li>
-<li>3.奈氏准则给出了码元传输速率的限制，但没有对信息传输速率给出限制。</li>
-<li>4.由于码元的传输速率受柰氏准则的制约，所以要提高数据的传输速率，就必须设法是每个码元能携带更多的比特的信息量，这就需要采用多元制的调制方法。</li>
-</ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题：</span></span><br><span class="line"><span class="code">	在无噪声的情况下，若某通信链路的带宽为3kHz，采用4个相位，每个相位具有4种振幅的QAM调制技术，则该通信链路的最大数据传输率是多少。</span></span><br><span class="line"><span class="code">	</span></span><br><span class="line">信号有4 * 4 = 16种变化，</span><br><span class="line">最大码元传输速率 = 2W = 6000 Baud</span><br><span class="line">最大数据传输率 = 2 <span class="emphasis">* 3k *</span> 4 = 24 kb/s</span><br></pre></td></tr></table></figure>
-
-<h2 id="香农定理"><a href="#香农定理" class="headerlink" title="香农定理"></a>香农定理</h2><blockquote>
-<p>噪声存在于所有的电子设备和通信信道中。由于噪声随机产生，他的瞬时值有时会很大，因此噪声会使接收端对码元的判决产生错误。但是噪声的影响是相对的，若信号较强，那么噪声影响相对较小。因此，信噪比就很重要。</p>
-</blockquote>
-<p>信噪比 = 信号的平均功率/噪声的平均功率，常记为S/N，并用分贝（dB）作为度量单位，即<strong>信噪比（dB） = 10 log<sub>10</sub> （S/N）</strong></p>
-<ul>
-<li>以dB为单位的信噪比，和S/N的信噪比只是单位不同而已。</li>
-</ul>
-<p><strong>香农定理：在带宽受限且有噪声的信道中，为了不产生误差，信息的数据传输速率有上限。</strong></p>
-<p><strong>信道的极限数据传输速率 = W log<sub>2</sub>(1+S/N)    (b/s)</strong></p>
-<ul>
-<li>1.信道的带宽或信道中的信噪比越大，则信息的极限传输速率就越高。</li>
-<li>2.对一定的传输带宽和一定的信噪比，信息传输速率上限就确定了。</li>
-<li>3.只要信息的传输速率小于信道的极限传输速率，就一定能找到某种方法实现无差错的传输。</li>
-<li>4.香农定理得出的为极限信息传输速率，实际信道能到达的传输速率要比它低不少。</li>
-</ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题</span></span><br><span class="line"><span class="code">	电话系统的典型参数是信道带宽为3000Hz，信噪比为30dB，则该系统最大的数据传输速率为多少？</span></span><br><span class="line"><span class="code">	</span></span><br><span class="line"><span class="bullet">- </span>30dB = 10log<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>10<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(S/N)</span><br><span class="line"><span class="bullet">- </span>S/N = 1000</span><br><span class="line"><span class="bullet">- </span>信道的极限数据传输速率 = W log<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>2<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(1 + S/N) = 3000 * 1og<span class="xml"><span class="tag">&lt;<span class="name">sub</span>&gt;</span></span>2<span class="xml"><span class="tag">&lt;/<span class="name">sub</span>&gt;</span></span>(1 + 1000)</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="“Nice”和”香浓”"><a href="#“Nice”和”香浓”" class="headerlink" title="“Nice”和”香浓”"></a>“Nice”和”香浓”</h2><p>奈氏准则<code>内忧</code></p>
-<ul>
-<li>受自身带宽限制</li>
-<li>想要提高数据率，就要提高带宽/采用更多进制的码元</li>
-</ul>
-<p>香农定理<code>外患</code></p>
-<ul>
-<li>受带宽和噪声的限制</li>
-<li>想要提高数据率，就要提高带宽和信噪比</li>
-</ul>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 例题</span></span><br><span class="line"><span class="code">	二进制信号在信噪比为127:1的4KHz信道上传输，最大的数据率可达到多少？</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>Nice：2 <span class="emphasis">* 4000 *</span> log2 = 8000b/s</span><br><span class="line"><span class="bullet">- </span>香浓：4000 * log(1+127) = 28000b/s</span><br><span class="line"><span class="bullet">- </span>取最小值得最大的数据速率为8000b/s</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E5%A5%88%E6%B0%8F%E5%87%86%E5%88%99%E4%B8%8E%E9%A6%99%E5%86%9C%E5%AE%9A%E7%90%86/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-码元、波特、速率、带宽" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E7%A0%81%E5%85%83%E3%80%81%E6%B3%A2%E7%89%B9%E3%80%81%E9%80%9F%E7%8E%87%E3%80%81%E5%B8%A6%E5%AE%BD/">码元、波特、速率、带宽</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E7%A0%81%E5%85%83%E3%80%81%E6%B3%A2%E7%89%B9%E3%80%81%E9%80%9F%E7%8E%87%E3%80%81%E5%B8%A6%E5%AE%BD/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:17:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="码元、波特、速率、带宽"><a href="#码元、波特、速率、带宽" class="headerlink" title="码元、波特、速率、带宽"></a>码元、波特、速率、带宽</h1><h2 id="码元"><a href="#码元" class="headerlink" title="码元"></a>码元</h2><p>码元是指用一个<strong>固定时长</strong>的<strong>信号波形</strong>(数字脉冲)，代表不同离散数值的基本波形，是数字通信中数字信号的计量单位，这个时长内的信号称为K进制码元，而该时长称为码元宽度。当码元的离散状态有M个时，此码元为M进制码元。</p>
-<h2 id="速率、波特、带宽"><a href="#速率、波特、带宽" class="headerlink" title="速率、波特、带宽"></a>速率、波特、带宽</h2><blockquote>
-<p>速率也叫数据率，是指数据的传输速率，表示单位时间内传输的数据量。可以用<strong>码元传输速率</strong>和<strong>信息传输速率</strong>表示。</p>
-</blockquote>
-<ul>
-<li>1、<strong>码元传输速率：</strong>别名码元速率，表示单位时间内数字通信系统所传输的码元个数（也可以称为脉冲个数或信号变化的次数），单位是<strong>波特</strong>（baud）。1波特表示数字通信系统每秒传输一个码元。这里的码元可以是多进制码元，但码元速率与进制无关。<code>一秒传输多少个码元</code></li>
-<li>2、<strong>信息传输速率：</strong>别名比特率，表示单位时间内数字通信系统传输的二进制码元个数（即比特数）。<code>一秒传输多少个比特</code></li>
-</ul>
-<blockquote>
-<p>关系：若一个码元携带n bit的信息量，则M Baud的码元传输速率所对应的信息传输速率为M * n bit/s</p>
-</blockquote>
-<p>比如，现在有个四进制码元用 00 01 10 11 表示四种信号量，所以一个码元携带2 bit 的信息量，5 Baud的码元传输速率对应的比特率为 2 * 5 = 10b/s</p>
-<ul>
-<li>带宽：表示单位时间内从网络的某一点到另一点所能通过的“最高数据率”，常用来表示网络的通信线路所能传输数据的能力。单位是b/s</li>
-</ul>
-<h2 id="练习题"><a href="#练习题" class="headerlink" title="练习题"></a>练习题</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 某一数字通信系统传输的是四进制码元，4s传输了8000个码元，求系统的码元传输速率是多少？信息传输速率是多少？若另一通信系统传输的是十六进码元，6s传输了7200个码元，求他的码元传输速率，信息传输速率是多少，并指出哪个系统传输速率快？</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>由四进制码元可知，一个码元携带2 b的数据</p>
-<p>码元的传输速率：8000/4 = 2000 Baud</p>
-<p>信息传输速率：2000*2 = 4000 b/s</p>
-<p>由十六进制码元可知，一个码元携带4 b的数据</p>
-<p>码元传输速率：7200/6 = 1200 Baud</p>
-<p>信息传输速率：1200 * 4 = 4800 b/s</p>
-<p>十六进制的系统更快</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E7%A0%81%E5%85%83%E3%80%81%E6%B3%A2%E7%89%B9%E3%80%81%E9%80%9F%E7%8E%87%E3%80%81%E5%B8%A6%E5%AE%BD/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-物理层基本概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">物理层基本概念</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:17:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="物理层基本概念"><a href="#物理层基本概念" class="headerlink" title="物理层基本概念"></a>物理层基本概念</h1><blockquote>
-<p>物理层解决如何在连接各种计算机的传输媒体上<strong>传输数据比特流</strong>，而不是指具体的传输媒体。</p>
-</blockquote>
-<p><strong>物理层主要任务：</strong>确定与传输媒体<strong>接口</strong>有关的一些特性—–&gt;定义标准</p>
-<ul>
-<li>1.机械特性：定义物理连接的特性，规定物理连接时所采用的规格、接口形状、引线数目、引脚数目和排列情况</li>
-<li>2.电气特性：规定传输二进制位时，线路上信号的<strong>电压范围</strong>、阻抗匹配、传输<strong>速率</strong>和<strong>距离</strong>限制等。</li>
-<li>3.功能特性：指明某条线上出现的某一<strong>电平表示何种意义</strong>，接口部件的信号线的用途。</li>
-<li>4.规程特性：(过程特性)定义各条物理线路的工作<strong>规程和时序</strong>关系。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-TCP-IP参考模型及5层参考模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/">TCP/IP参考模型及5层参考模型</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:17:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="TCP-IP参考模型和5层参考模型"><a href="#TCP-IP参考模型和5层参考模型" class="headerlink" title="TCP/IP参考模型和5层参考模型"></a>TCP/IP参考模型和5层参考模型</h1><h2 id="OSI参考模型与TCP-IP参考模型"><a href="#OSI参考模型与TCP-IP参考模型" class="headerlink" title="OSI参考模型与TCP/IP参考模型"></a>OSI参考模型与TCP/IP参考模型</h2><img src="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/1603371413939.png" class="" title="a">
-
-
-
-<blockquote>
-<p>相同点：</p>
-</blockquote>
-<ul>
-<li>1.都分层</li>
-<li>2.基于独立的协议栈的概率</li>
-<li>3.可以实现异构网络互联</li>
-</ul>
-<blockquote>
-<p>不同点：</p>
-</blockquote>
-<ul>
-<li><p>1.OSI定义三点：服务、协议、接口</p>
-</li>
-<li><p>2.OSI先出现，参考模型先于协议发明，不偏向特定协议</p>
-</li>
-<li><p>3.TCP/IP设计之初就考虑到异构网互联的问题，将IP作为重要层次</p>
-</li>
-<li><p>4.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>ISO/OSI参考慢模型</th>
-<th>TCP/IP模型</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>网络层</td>
-<td>无连接+面向连接</td>
-<td>无连接</td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>面向连接</td>
-<td>无连接+面向连接</td>
-</tr>
-</tbody></table>
-<ul>
-<li>面向连接：分为三个阶段，第一个是建立连接，在此阶段，发出一个建立连接的请求。只要在连接成功建立之后，才能开始数据传输，这是第二阶段。接着，当数据传输完毕，必须释放连接。</li>
-<li>无连接：没有那么多阶段，它直接进行数据传输。</li>
-</ul>
-</li>
-</ul>
-<h2 id="五层参考模型"><a href="#五层参考模型" class="headerlink" title="五层参考模型"></a>五层参考模型</h2><blockquote>
-<p>综合了OSI和TCP/IP的优点</p>
-</blockquote>
-<ul>
-<li>应用层：支持各种网络应用 FTP、SMTP、HTTP</li>
-<li>传输层：进程-进程的数据传输 TCP、UDP</li>
-<li>网络层：源主机到目的主机的数据分组路由与转发 IP、ICMP、OSPF等</li>
-<li>数据链路层：把网络层传下来的数据报组装成帧 Ethernet、PPP</li>
-<li>物理层：比特传输</li>
-</ul>
-<h2 id="五层参考模型的数据封装与解封装"><a href="#五层参考模型的数据封装与解封装" class="headerlink" title="五层参考模型的数据封装与解封装"></a>五层参考模型的数据封装与解封装</h2><img src="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/1603374669691.png" class="" title="b">
-
-
-
-<p>A发送端从应用层开始逐层开始封装，每次封装都会加上相应层的控制信息，最后在物理层转化为比特，通过链路传送到B端，然后逐层解封装。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/TCP-IP%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B%E5%8F%8A5%E5%B1%82%E5%8F%82%E8%80%83%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-分层结构" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">分层结构</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:16:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="分层结构"><a href="#分层结构" class="headerlink" title="分层结构"></a>分层结构</h1><h2 id="怎么分层"><a href="#怎么分层" class="headerlink" title="怎么分层"></a>怎么分层</h2><blockquote>
-<p>分层的基本原则</p>
-</blockquote>
-<ul>
-<li>1.各层之间相互<strong>独立</strong>，每层只实现一种相对独立的功能。</li>
-<li>2.各层之间<strong>界面自然清新</strong>，易于理解，相互交流尽可能少。</li>
-<li>3.结构上可分割 开。每层都采用<strong>最合适的技术</strong>来实现。</li>
-<li>4.保持<strong>下层</strong>对<strong>上层</strong>的独立性，<strong>上层单向使用下层提供的服务</strong>。</li>
-<li>5.整个分层结构应该能促进标准化工作。</li>
-</ul>
-<p><strong>通常各层所要完成的功能主要有以下一些</strong></p>
-<ul>
-<li>1.差错控制：使相应层次对等实体的通信更加可靠</li>
-<li>2.流量控制：发送端的发送速率必须使接收端来的及接受，不要太快</li>
-<li>3.分段和重装：发送端将要发送的数据块划分为更小的单位，在接受端将其还原。</li>
-<li>4.复用和分用：发送端几个高层会话复用一条低层的连接，在接收端再进行分用。</li>
-<li>5.连接建立和释放：交换数据前先建立一条逻辑连接，数据传送结束后释放连接。</li>
-</ul>
-<h2 id="正式认识分层结构"><a href="#正式认识分层结构" class="headerlink" title="正式认识分层结构"></a>正式认识分层结构</h2><ul>
-<li><strong>1.实体：</strong>第n层中的活动元素称为<strong>n层实体</strong>。同一层的实体叫<strong>对等实体</strong>。</li>
-<li><strong>2.协议：</strong>为进行网络中的<strong>对等实体</strong>数据交换而建立的规则、标准或约定称为网络协议。【水平】<ul>
-<li>语法：规定传输数据的格式</li>
-<li>语义：规定所要完成的功能</li>
-<li>同步：规定各种操作的顺序</li>
-</ul>
-</li>
-<li><strong>3.接口（访问服务点SAP）：</strong>上层使用下层服务的入口。</li>
-<li><strong>4.服务：</strong>下层为相邻上层提供的功能调用。【垂直】</li>
-</ul>
-<h2 id="概念总结"><a href="#概念总结" class="headerlink" title="概念总结"></a>概念总结</h2><ul>
-<li>网络体系结构是从功能上来描述计算机网络结构</li>
-<li>计算机网络体系结构简称网络体系结构是分层结构</li>
-<li>每层遵循某个/些网络协议以完成本层功能 。</li>
-<li>计算机网络体系结构是计算机网络的各层及其协议的集合。</li>
-<li>第n层在向n+1层提供服务时，此服务不仅包含第n层本身的功能，还包含由下层服务提供的功能。</li>
-<li>仅仅在相邻层间有接口，且所提供服务的具体实现细节对上一层完全屏蔽。</li>
-<li>体系结构是抽象的，而实现是指能运行的一些软件和硬件。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-性能指标" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">性能指标</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:16:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h1><h2 id="速率"><a href="#速率" class="headerlink" title="速率"></a>速率</h2><blockquote>
-<p>速率即<strong>数据率</strong>或称<strong>数据传输率</strong>或<strong>比特率</strong>。</p>
-</blockquote>
-<p>连接在计算机网络上的主机在数字信道上传送数据<strong>位数的速率</strong>。</p>
-<p>在通信领域中：<strong>速率</strong>单位是b/s,kb/s,Mb/s,Gb/s,Tb/s，单位跨度为10³</p>
-<p>在<strong>存储容量</strong>中：1Byte = 8bit</p>
-<p>1KB=2^10B=1024B=1024*8b</p>
-<p>1MB = 2^10KB = 1024KB    …….</p>
-<h2 id="带宽"><a href="#带宽" class="headerlink" title="带宽"></a>带宽</h2><ul>
-<li><p>“<strong>带宽</strong>”原本指某个信号具有的频带宽度，即最高频率与最低频率之差，单位是赫兹（Hz）。</p>
-</li>
-<li><p>计算机网络中，<strong>带宽</strong>用来表示网络的通信线路传送数据的能力，通常是指单位时间从网络中的某一点到另一点所能通过的“<strong>最高数据率</strong>”。单位是“比特每秒”，b/s，kb/s，Mb/s，Gb/s。</p>
-<p><strong>直观来说就是网络设备所支持的最高速度。</strong></p>
-<img src="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/1603117868643.png" class="" title="a">
-
-</li>
-</ul>
-<p>​    传输速度是不变的，变得是传送出的数据量。手枪与机枪的区别。</p>
-<h2 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h2><blockquote>
-<p>表示在<strong>单位时间</strong>内通过<strong>某个网络（或信道、接口）</strong>的数据量。</p>
-</blockquote>
-<p>吞吐量受网络的带宽或网络的额定速率的限制。</p>
-<p>吞吐量是<strong>实时的</strong>，是现实状态中的数据传输率，而带宽是<strong>理想状态</strong>中的。</p>
-<h2 id="时延"><a href="#时延" class="headerlink" title="时延"></a>时延</h2><blockquote>
-<p>指数据（报文/分组/比特流）从网络（或链路）的一端传送到另一端所需要的的时间，也叫延迟、迟延。单位是s。</p>
-</blockquote>
-<p>一次数据的发送的时延可由以下产生</p>
-<ul>
-<li>发送时延 = 数据长度/信道带宽(发送速率)</li>
-<li>传播时延 = 信道长度/电磁波在信道上的传播速率</li>
-<li>排队时延 ：数据发送到交换机等待处理</li>
-<li>处理时延 ：检错、找出口</li>
-</ul>
-<h2 id="时延带宽积"><a href="#时延带宽积" class="headerlink" title="时延带宽积"></a>时延带宽积</h2><p><strong>时延带宽积(bit) = 传播时延(s) * 带宽(b/s)</strong></p>
-<p>时延带宽积又称以<strong>比特为单位的链路长度</strong>。即<strong>某段链路现在有多少比特</strong>。</p>
-<img src="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/1603123253213.png" class="" title="b">
-
-
-
-<h2 id="往返时延RTT"><a href="#往返时延RTT" class="headerlink" title="往返时延RTT"></a>往返时延RTT</h2><blockquote>
-<p>从发送方发送数据开始，到发送方收到接收方的确定（接收方收到数据后立即发送确认），总共经历的时延。</p>
-</blockquote>
-<p>RTT越大，在收到确认之前，可以发送的数据越多。</p>
-<p>RTT包括</p>
-<ul>
-<li>往返传播时延 = 传播时延 * 2（主要）</li>
-<li>末端处理时间（一般忽略）</li>
-</ul>
-<h2 id="利用率"><a href="#利用率" class="headerlink" title="利用率"></a>利用率</h2><ul>
-<li>信通利用率 = 有数据通过时间 / (有+无)数据通过时间</li>
-<li>网络利用率 = 信通利用率加权平均值</li>
-</ul>
-<p><strong>注意：</strong>利用率越高，时延也会越大。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-标准化工作及相关组织" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E6%A0%87%E5%87%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87/">标准化工作及相关组织</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E6%A0%87%E5%87%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:15:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="标准化工作及相关组织"><a href="#标准化工作及相关组织" class="headerlink" title="标准化工作及相关组织"></a>标准化工作及相关组织</h1><blockquote>
-<p>要实现不同厂商的硬、软件之间相互连通，必须遵从统一的标准</p>
-</blockquote>
-<h2 id="标准的分类"><a href="#标准的分类" class="headerlink" title="标准的分类"></a>标准的分类</h2><ul>
-<li>法定标准：由权威机构制定的正式的、合法的标准 OSI</li>
-<li>事实标准：某些公司的产品在竞争中占据了主流，时间长了，这些产品中的协议和技术就成了标准 TCP/IP</li>
-</ul>
-<h2 id="标准化工作"><a href="#标准化工作" class="headerlink" title="标准化工作"></a>标准化工作</h2><blockquote>
-<p><strong>RFC</strong> —— 因特网标准的形式</p>
-</blockquote>
-<p>RFC上升为因特网正式标准的四个阶段</p>
-<ul>
-<li>1、互联网草案：还不能算是RFC</li>
-<li>2、建议标准：成为RFC</li>
-<li>3、互联网标准</li>
-</ul>
-<h2 id="标准化工作的相关组织"><a href="#标准化工作的相关组织" class="headerlink" title="标准化工作的相关组织"></a>标准化工作的相关组织</h2><ul>
-<li><strong>国际标准化组织ISO</strong>：建立OSI参考模型、HDLC协议</li>
-<li><strong>国际电信联盟ITU</strong>：制定通信规则</li>
-<li><strong>国际电气工程师协会IEEE</strong>：学术机构、IEEE802系列标准、5G</li>
-<li><strong>Internet工程任务组IETF</strong>：负责因特网相关标准的制定 RFC XXXX</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E6%A0%87%E5%87%86%E5%8C%96%E5%B7%A5%E4%BD%9C%E5%8F%8A%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-计算机网络的概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5/">计算机网络的概念</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:15:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="计算机网络的概念"><a href="#计算机网络的概念" class="headerlink" title="计算机网络的概念"></a>计算机网络的概念</h1><p>计算机网络：是一个将分散的、具有独立功能的<strong>计算机系统</strong>，通过<strong>通信设备</strong>与<strong>线路</strong>连接起来，由功能完善的<strong>软件</strong>实现<strong>资源共享</strong>和<strong>信息传递</strong>的系统。</p>
-<p>计算机网络是互联的、自治的计算机集合。</p>
-<ul>
-<li>互联-互通互联，通信链路</li>
-<li>自治-无主从关系</li>
-</ul>
-<h1 id="计算机网络的功能"><a href="#计算机网络的功能" class="headerlink" title="计算机网络的功能"></a>计算机网络的功能</h1><ul>
-<li><strong>1.数据通信</strong>(连通性)</li>
-<li><strong>2.资源共享</strong>(共享性)</li>
-<li>3.分布式处理</li>
-<li>4.提高可靠性</li>
-<li>5.负载均衡</li>
-</ul>
-<h1 id="计算机网络的组成"><a href="#计算机网络的组成" class="headerlink" title="计算机网络的组成"></a>计算机网络的组成</h1><ul>
-<li>1.组成部分：硬件、软件、协议</li>
-<li>2.工作方式（互联网的拓扑结构）<ul>
-<li>边缘部分：由所有连接在互联网上的主机组成，用户直接使用<ul>
-<li>C/S方式</li>
-<li>P2P方式</li>
-</ul>
-</li>
-<li>核心部分：由大量网络和连接这些网络的路由器组成，为边缘部分服务</li>
-</ul>
-</li>
-<li>功能组成<ul>
-<li>通信子网：实现<strong>数据通信</strong></li>
-<li>资源子网：实现<strong>资源共享</strong>/数据处理</li>
-</ul>
-</li>
-</ul>
-<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1601993965821.png" alt="1601993965821"></p>
-<h1 id="计算机网络的分类"><a href="#计算机网络的分类" class="headerlink" title="计算机网络的分类"></a>计算机网络的分类</h1><ol>
-<li>按分布范围分类<ul>
-<li>广域网WAN：交换技术</li>
-<li>城域网MAN</li>
-<li>局域网WAN：广播技术</li>
-<li>个人区域网PAN</li>
-</ul>
-</li>
-<li>按使用者分<ul>
-<li>公用网：中国电信</li>
-<li>专用网：政府、军队</li>
-</ul>
-</li>
-<li>按交换技术分<ul>
-<li>电路交换</li>
-<li>报文交换</li>
-<li>分组交换</li>
-</ul>
-</li>
-<li>按拓扑结构分<ul>
-<li>总线型</li>
-<li>星型</li>
-<li>环型</li>
-<li>网状型</li>
-</ul>
-</li>
-<li>按传输技术分<ul>
-<li>广播式网络：共享公共通信信道</li>
-<li>点对点网络：使用<strong>分组存储转发</strong>和<strong>路由选择</strong>机制</li>
-</ul>
-</li>
+        <h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h4 id="Insert优化"><a href="#Insert优化" class="headerlink" title="Insert优化"></a>Insert优化</h4><ol>
+<li>执行批量插入</li>
 </ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> tb <span class="keyword">values</span> (),(),()...</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>手动提交事务</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;</span><br><span class="line">....</span><br><span class="line"><span class="keyword">commit</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>主键顺序插入</li>
+</ol>
+<p>乱序插入不如顺序插入的性能好</p>
+<ol start="4">
+<li>大批量插入数据</li>
+</ol>
+<p>如果一次性需要插入大量数据，请使用load指令</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#客户端连接服务端时，加上参数--local-infile</span></span><br><span class="line">mysql <span class="comment">--local-infile -u root -p</span></span><br><span class="line"><span class="comment"># 设置全局参数local-infile为1，开启从本地加载文件导入数据的开关</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> local_infile=<span class="number">1</span>;</span><br><span class="line"><span class="comment">#执行load指令将准备好的数据，加载到表结构中</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> <span class="keyword">infile</span> <span class="string">'/root/sql1.log'</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="string">'tb'</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="主键优化"><a href="#主键优化" class="headerlink" title="主键优化"></a>主键优化</h4><p>补充InnoDB的逻辑存储结构：</p>
+<p>tablespace—-&gt;segment—–&gt;extent—–&gt;page——&gt;row</p>
+<p>页的合并：</p>
+<p>当删除一行数据时，实际上数据并没有被物理删除，只是被标记为删除，当页中的删除记录达到merge_threshold这个参数时，默认为50%，会进行页的合并。</p>
+<p><strong>主键设计原则</strong></p>
+<ul>
+<li>尽量降低长度</li>
+<li>尽量顺序插入，使用自增主键</li>
+<li>推荐使用代理主键</li>
+<li>避免对主键的修改</li>
+</ul>
+<h4 id="order-by优化"><a href="#order-by优化" class="headerlink" title="order by优化"></a>order by优化</h4><ul>
+<li>根据排序字段建立合适的索引，多字段排序时，页遵循最左前缀法则</li>
+<li>尽量使用覆盖索引，如果是select * 则不会走索引</li>
+<li>多字段排序，一个升序一个降序，此时需要注意联合索引在创建时的规则，默认不会用索引，索引是按升序排列</li>
+<li>如果不可避免的出现filesort，大数据量排序时，可以适当增大排序缓冲区大小sort_buffer_size</li>
+</ul>
+<h4 id="group-by优化"><a href="#group-by优化" class="headerlink" title="group by优化"></a>group by优化</h4><ul>
+<li>通过索引提高效率</li>
+<li>需要满足最左前缀法则</li>
+</ul>
+<h4 id="limit-优化"><a href="#limit-优化" class="headerlink" title="limit 优化"></a>limit 优化</h4><p>能用子查询就用子查询</p>
+<h4 id="count优化"><a href="#count优化" class="headerlink" title="count优化"></a>count优化</h4><p>count(*)与count(1)都是不取字段的。</p>
+<p>count(字段)&lt;count(主键 id)&lt;count(1) = count(*)</p>
+<h4 id="update语句优化"><a href="#update语句优化" class="headerlink" title="update语句优化"></a>update语句优化</h4><p>update的根据索引字段更新时是行锁效率高，根据普通字段更新时是表锁。</p>
 
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -1117,7 +258,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
         		</li>
       		
 		</ul>
@@ -1126,16 +267,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E5%BF%B5/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2024/08/27/SQL%E4%BC%98%E5%8C%96/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2024/08/20/SpringIOC/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SpringIOC</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -1155,94 +355,14 @@
 
 
 
-
-  
-    <article id="post-八皇后" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/">八皇后</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/" class="archive-article-date">
-  	<time datetime="2020-10-01T03:26:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="八皇后"><a href="#八皇后" class="headerlink" title="八皇后"></a>八皇后</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 这学期终于开设算法课了，之前自学了一段时间，也看过一些蓝桥杯算法题，但终归只是浮于表面，这学期将跟随学习进度，系统学习算法，算法这种东西，三天不练就手生，八皇后问题，我竟然想了好久才写出来，因为相对于传统的使用二维数组的解法，我还思考了些其他解法。虽然这个优化过程很简单，是很常见的优化策略，但是也值得记录。</span></span><br><span class="line"><span class="section">## 这里是要求使用递归求解八皇后。</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>先给出最常见的使用二维数组的解法，递归加回溯</p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/01/%E5%85%AB%E7%9A%87%E5%90%8E/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -1266,8 +386,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

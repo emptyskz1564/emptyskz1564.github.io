@@ -154,6 +154,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-SQL优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/27/SQL%E4%BC%98%E5%8C%96/">SQL优化</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/27/SQL%E4%BC%98%E5%8C%96/" class="archive-article-date">
+  	<time datetime="2024-08-27T12:55:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="SQL优化"><a href="#SQL优化" class="headerlink" title="SQL优化"></a>SQL优化</h2><h4 id="Insert优化"><a href="#Insert优化" class="headerlink" title="Insert优化"></a>Insert优化</h4><ol>
+<li>执行批量插入</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Insert</span> <span class="keyword">into</span> tb <span class="keyword">values</span> (),(),()...</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>手动提交事务</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">start</span> <span class="keyword">transaction</span>;</span><br><span class="line">....</span><br><span class="line"><span class="keyword">commit</span>;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>主键顺序插入</li>
+</ol>
+<p>乱序插入不如顺序插入的性能好</p>
+<ol start="4">
+<li>大批量插入数据</li>
+</ol>
+<p>如果一次性需要插入大量数据，请使用load指令</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#客户端连接服务端时，加上参数--local-infile</span></span><br><span class="line">mysql <span class="comment">--local-infile -u root -p</span></span><br><span class="line"><span class="comment"># 设置全局参数local-infile为1，开启从本地加载文件导入数据的开关</span></span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> local_infile=<span class="number">1</span>;</span><br><span class="line"><span class="comment">#执行load指令将准备好的数据，加载到表结构中</span></span><br><span class="line"><span class="keyword">load</span> <span class="keyword">data</span> <span class="keyword">local</span> <span class="keyword">infile</span> <span class="string">'/root/sql1.log'</span> <span class="keyword">into</span> <span class="keyword">table</span> <span class="string">'tb'</span> <span class="keyword">fields</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">','</span> <span class="keyword">lines</span> <span class="keyword">terminated</span> <span class="keyword">by</span> <span class="string">'\n'</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="主键优化"><a href="#主键优化" class="headerlink" title="主键优化"></a>主键优化</h4><p>补充InnoDB的逻辑存储结构：</p>
+<p>tablespace—-&gt;segment—–&gt;extent—–&gt;page——&gt;row</p>
+<p>页的合并：</p>
+<p>当删除一行数据时，实际上数据并没有被物理删除，只是被标记为删除，当页中的删除记录达到merge_threshold这个参数时，默认为50%，会进行页的合并。</p>
+<p><strong>主键设计原则</strong></p>
+<ul>
+<li>尽量降低长度</li>
+<li>尽量顺序插入，使用自增主键</li>
+<li>推荐使用代理主键</li>
+<li>避免对主键的修改</li>
+</ul>
+<h4 id="order-by优化"><a href="#order-by优化" class="headerlink" title="order by优化"></a>order by优化</h4><ul>
+<li>根据排序字段建立合适的索引，多字段排序时，页遵循最左前缀法则</li>
+<li>尽量使用覆盖索引，如果是select * 则不会走索引</li>
+<li>多字段排序，一个升序一个降序，此时需要注意联合索引在创建时的规则，默认不会用索引，索引是按升序排列</li>
+<li>如果不可避免的出现filesort，大数据量排序时，可以适当增大排序缓冲区大小sort_buffer_size</li>
+</ul>
+<h4 id="group-by优化"><a href="#group-by优化" class="headerlink" title="group by优化"></a>group by优化</h4><ul>
+<li>通过索引提高效率</li>
+<li>需要满足最左前缀法则</li>
+</ul>
+<h4 id="limit-优化"><a href="#limit-优化" class="headerlink" title="limit 优化"></a>limit 优化</h4><p>能用子查询就用子查询</p>
+<h4 id="count优化"><a href="#count优化" class="headerlink" title="count优化"></a>count优化</h4><p>count(*)与count(1)都是不取字段的。</p>
+<p>count(字段)&lt;count(主键 id)&lt;count(1) = count(*)</p>
+<h4 id="update语句优化"><a href="#update语句优化" class="headerlink" title="update语句优化"></a>update语句优化</h4><p>update的根据索引字段更新时是行锁效率高，根据普通字段更新时是表锁。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/27/SQL%E4%BC%98%E5%8C%96/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SpringIOC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1955,100 +2075,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-物理层设备" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/">物理层设备</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:19:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h1><h2 id="中继器"><a href="#中继器" class="headerlink" title="中继器"></a>中继器</h2><ul>
-<li><p><strong>诞生原因：</strong>由于存在损耗，在线路上传输的信号功率会逐渐衰减，衰减到一定程度时将造成信号失真，因此会导致接受错误。</p>
-</li>
-<li><p><strong>中继器的功能：</strong>对信号进行<strong>再生</strong>和<strong>还原</strong>，对衰减的信号进行放大，保持与原数据相同，以增加信号传输的距离，延长网络的长度。</p>
-</li>
-<li><p><strong>中继器的两端：</strong>两端的网络部分是网段，而不是子网，适用于完全相同的两类网络的互连，且两个网段速率要相同。中继器只将任何电缆段上的数据发送到另一段电缆上，他仅作用于信号的电气部分，并不管数据中是否有错误数据或不适于网段的数据。</p>
-<p>两端可连相同媒体，也可连不同媒体。</p>
-<p>中继器两端的网段一定要是同一协议。(中继器不会存储转发)</p>
-</li>
-<li><p><strong>5-4-3规则：</strong>网络标准中都对信号的延迟范围作了具体的规定，因而中继器只能在规定的范围内进行，否则会故障</p>
-<img src="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/1604230544858.png" class="" title="c">
-
-
-
-</li>
-</ul>
-<p>  5个网段，4个中继器，3个主机</p>
-<h2 id="集线器-多口中继器"><a href="#集线器-多口中继器" class="headerlink" title="集线器(多口中继器)"></a>集线器(多口中继器)</h2><p><strong>集线器的功能：</strong>对信号进行再生放大转发，对衰减的信号进行放大，接着转发到其他所有(除输入端口处)处于工作状态的端口上，以增加信号传输的距离，延长网络的长度，不具备信号的定向传送能力，只能进行广播，是一个共享设备。</p>
-<ul>
-<li>容易产生碰撞：当多台设备同时发送信号时就会产生碰撞，其他设备会等待第一台设备发送完信号，然后再一个随机事件发送。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E7%89%A9%E7%90%86%E5%B1%82%E8%AE%BE%E5%A4%87/">展开全文 >></a>
         </p>
       
 
