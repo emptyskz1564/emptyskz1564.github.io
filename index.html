@@ -154,6 +154,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JUC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2024/08/29/JUC/">JUC</a>
+    </h1>
+  
+
+        
+        <a href="/2024/08/29/JUC/" class="archive-article-date">
+  	<time datetime="2024-08-29T14:38:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2024-08-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="再谈锁机制"><a href="#再谈锁机制" class="headerlink" title="再谈锁机制"></a>再谈锁机制</h2><p>在JavaSE中，我们使用synchronized来实现锁，使用它一定是和某个对象相关联的，因为我们需要提供一个对象来作为锁本身：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (Main<span class="class">.<span class="keyword">class</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//这里使用的是Main类的CLass对象作为锁</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而synchronized的具体实现呢，我们使用jclasslib编译为字节码文件后可以看到其中最关键的就是monitorenter和monitorexit这两个关键字了。他们分别对应加锁和释放锁。在执行monitorenter之前需要尝试获取锁，每个对象都有一个monitor监视器与之对应，而这里正是去获取对象监视器的所有权，一旦monitor所有权被某个线程持有，那么其他线程就无法获取（管程模型的一种实现）。字节码文件中monitorexit会有两个，第二个是防止出现异常情况时没有释放资源而存在的。</p>
+<img src="/2024/08/29/JUC/1723796506098.png" class="" title="a">
+
+<p><img src="C:%5CUsers%5Cempty%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1723796506098.png" alt="1723796506098"></p>
+<p>实际上synchronized使用的锁是存储在Java对象头中的，我们知道，对象是存放在堆内存中，而每个对象内部都有一部分空间用于存储对象头信息，而对象头信息中，则包含了Mark Word存放hashCode和对象的锁信息。</p>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">多线程</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JUC</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2024/08/29/JUC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-SQL优化" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2010,100 +2095,6 @@
 
 
   
-    <article id="post-数据链路层" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">数据链路层</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/" class="archive-article-date">
-  	<time datetime="2020-11-01T14:19:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-01</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h1><h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><blockquote>
-<p>数据链路层负责通过一条链路从一个结点向另一个物理链路直接相连的相邻结点传送数据报。</p>
-</blockquote>
-<ul>
-<li>结点：主机、路由器</li>
-<li>链路：网络中两个结点之间的<strong>物理通道</strong>，链路的传输介质主要有双绞线、光纤和微波。分为有线链路、无线链路。</li>
-<li>数据链路：网络中两个结点之间的<strong>逻辑通道</strong>，把实现控制数据传输协议的硬件和软件加到链路上就构成数据链路。</li>
-<li>帧：链路层的协议数据单元，封装网络层数据报。</li>
-</ul>
-<h2 id="功能概述"><a href="#功能概述" class="headerlink" title="功能概述"></a>功能概述</h2><p>数据链路层在物理层提供服务的基础上<strong>向网络层提供服务</strong>，其最基本的服务是将源自网络层来的数据可靠地传输到相邻结点的目标机网络层。其主要作用是<strong>加强物理层传输原始比特流的功能</strong>，将物理层提供的可能出错的物理连接改造成为<strong>逻辑上无差错的数据链路</strong>，使之对网络层表现为一条无差错的链路。</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 注意点</span></span><br><span class="line"></span><br><span class="line"><span class="code">	计网的分层控制与公司中的分层管理、web中的三层框架都有着类似的思想，方便了管理保证了功能，却复杂的系统。</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">- </span>底层向上层提供服务</span><br><span class="line"><span class="bullet">- </span>数据链路层保证网络层的数据可靠传送(向上提供服务)</span><br><span class="line"><span class="bullet">- </span>数据链路层控制物理层出现的差错(使用下层服务并加强功能)</span><br></pre></td></tr></table></figure>
-
-
-
-<ul>
-<li>功能一：为网络层提供服务。无确认无连接服务，有确认无连接服务，有确认面向连接服务。<code>有连接一定有确认！</code></li>
-<li>功能二：链路管理，即连接的建立、维持。释放(用于面向连接的服务)。</li>
-<li>功能三：组帧。</li>
-<li>功能四：流量控制。限制发送方</li>
-<li>功能五：差错控制(帧错/位错)</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">计算机网络</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/01/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -2327,6 +2318,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">责任链模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">JUC</a>
               </li>
             
             <div class="clearfix"></div>
